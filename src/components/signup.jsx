@@ -1,63 +1,146 @@
 import React from 'react';
-import photo from '../images/catdog2.jpg';
-import Footer from './footer';
+import { Avatar, Button, Grid, Typography, Link, CssBaseline, TextField, FormControlLabel, Checkbox, Paper, Box } from '@material-ui/core';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { makeStyles } from '@material-ui/core/styles';
 
-
-
-const Signup = () => {
-    return ( 
-      <div>
-  <div className="container">
-
-  <div className="row">
-  <div className="col-sm-9 col-md-7 col-lg-5 mr-auto mt-5">
-        <img src={photo} alt="Logo" width="600" height="360"/>
-</div>
-
-  <div className="col-sm-9 col-md-7 col-lg-5 ml-auto mt-5">
-        <div className="card card-signin my-5">
-          <div className="card-body">
-            <h5 className="card-title text-center">Sign Up</h5>
-            <form className="form-signin">
-
-              <div className="form-label-group mt-2 mb-1">
-                <label for="inputEmail">First Name*</label>
-                <input type="text" id="inputName" className="form-control" placeholder="First name" />
-              </div>
-
-              <div className="form-label-group mt-2 mb-1">
-                <label for="inputEmail">Last Name*</label>
-                <input type="text" id="inputSurname" className="form-control" placeholder="Last name" />
-              </div>
-
-              <div className="form-label-group mt-3 mb-1">
-                <label for="inputEmail">Email Address*</label>
-                <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus/>
-              </div>
-
-              <div className="form-label-group mt-2 mb-1" >
-                <label for="inputPassword">Password*</label>
-                <input type="password" id="inputPassword" className="form-control" placeholder="Password" required/>
-              </div>
-
-              <div className="custom-control custom-checkbox mb-3">
-                <input type="checkbox" className="custom-control-input" id="customCheck1"/>
-                <label className="custom-control-label" for="customCheck1">Remember password</label>
-              </div>
-              <button className="btn btn-lg btn-success btn-block text-uppercase" type="submit">Sign up</button>
-              <hr className="my-4"/>
-              <span className="m-2">Already a member?</span><a href="signin">Sign In</a>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-</div>
-<Footer/>
-</div>
-
-
-     );
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="#">
+        Charo
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
 }
- 
-export default Signup;
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '100vh',
+  },
+  image: {
+    backgroundImage: 'url(https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg)',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor:
+      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  },
+  paper: {
+    margin: theme.spacing(8, 4),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%',
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+
+
+function SignUp() {
+  const classes = useStyles();
+
+  return (
+    <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <form className={classes.form} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="lname"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  label="I want to receive inspiration, marketing promotions and updates via email."
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign Up
+          </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link href="signin" variant="body2">
+                  Already have an account? Sign in
+              </Link>
+              </Grid>
+            </Grid>
+          </form>
+
+        </div>
+
+      </Grid>
+    </Grid>
+  );
+}
+
+export default SignUp

@@ -1,46 +1,38 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { AppBar, Toolbar, Typography, Button, IconButton } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
 
+function Navbar() {
+  const classes = useStyles();
 
-const Navbar = () => {
-    return ( 
-        <div>
-<nav className="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
-  <a className="navbar-brand" href="signin">Logo</a>
-  
-  
-  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span className="navbar-toggler-icon"></span>
-  </button>
-
-  <div className="collapse navbar-collapse " id="navbarNav">
-    <ul className="navbar-nav mx-auto">
-      <li className="nav-item">
-        <a className="nav-link" href="feed">Newsfeed</a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link" href="profile">Profile</a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link" href="profile">Friends</a>
-      </li>
-      <li className="nav-item ">
-        <a className="nav-link" href="#">Petfinder</a>
-      </li>
-      <li className="nav-item ">
-        <a className="nav-link" href="#">Services</a>
-      </li>
-    </ul>
-
-  </div>
-
-<button className="btn btn-warning"><a href="signin">Sign In</a></button>
-
-  
-</nav>
-</div>
-
-        );
+  return (
+    <div className={classes.root}>
+      <AppBar position="fixed">
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
+            Logo
+          </Typography>
+          <Button href="signin" color="inherit">Login</Button>
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
 }
 
 

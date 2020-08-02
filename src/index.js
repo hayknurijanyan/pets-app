@@ -3,12 +3,13 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import "bootstrap/dist/css/bootstrap.css";
-import "font-awesome/css/font-awesome.css";
 import "logo.svg";
 import { createStore } from "redux";
 import allReducers from "./reducers";
 import { Provider } from "react-redux";
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from './theme'
+
 
 export const store = createStore(
   allReducers,
@@ -17,10 +18,13 @@ export const store = createStore(
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>,
+
   document.getElementById("root")
 );
 
