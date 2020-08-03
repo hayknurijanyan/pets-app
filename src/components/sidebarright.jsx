@@ -44,55 +44,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Feed() {
+export default function SidebarRight() {
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <AppBar position="fixed" className={classes.appBar}>
-                <Toolbar>
-                    <Typography variant="h6" noWrap>
-                        Logo
-                        </Typography>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                className={classes.drawer}
-                variant="permanent"
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-            >
-                <Toolbar />
-                <div className={classes.drawerContainer}>
-                    <List>
-                        <ListItem button component="a" href="profile">
-                            <ListItemIcon>
-                                <Avatar alt="Hayk" src="/static/images/avatar/1.jpg" />
-                            </ListItemIcon>
-                            <ListItemText primary="My Account" />
-                        </ListItem>
-
-                    </List>
-                    <Divider />
-                    <List>
-                        {['Newsfeed', 'Friends', 'Groups', 'Petfinder', 'Services'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
-                </div>
-            </Drawer>
-            <main className={classes.content}>
-                <Toolbar />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-            </main>
+        <div>
             <Drawer
                 className={classes.drawer}
                 variant="permanent"

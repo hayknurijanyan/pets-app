@@ -3,10 +3,12 @@ import "./App.css";
 import Navbar from "./components/navbar";
 import SignIn from "./components/signin";
 import SignUp from "./components/signup";
-import Feed from "./components/feed";
+import Newsfeed from "./components/newsfeed";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Profile from "./components/profile";
 import Friends from "./components/friends";
+import Services from "./components/services";
+import Petfinder from "./components/petfinder";
 
 function App() {
   return (
@@ -18,8 +20,10 @@ function App() {
           <Route path="/friends" component={Friends} />
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
-          <Route path="/feed" component={Feed} />
+          <Route path="/newsfeed" component={Newsfeed} />
           <Route path="/profile" component={Profile} />
+          <Route path="/services" component={Services} />
+          <Route path="/petfinder" component={Petfinder} />
         </Switch>
       </div>
     </Router>
