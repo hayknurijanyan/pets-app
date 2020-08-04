@@ -3,6 +3,9 @@ import { db } from "../firebase.js";
 import { useDispatch, useSelector } from "react-redux";
 import { isLoggedAction } from "../actions";
 import { store } from "../index";
+import SidebarLeft from "./sidebarleft.jsx";
+import SidebarRight from "./sidebarright.jsx";
+
 let log = console.log;
 function Friends() {
   // useEffect(() => {
@@ -16,9 +19,11 @@ function Friends() {
   const dispatch = useDispatch();
   return (
     <div style={{ marginTop: 100 }}>
+      <SidebarLeft />
       {" "}
       <input type="text" onChange={() => log("asd")} value={isLogged} />
       <button onClick={() => dispatch(isLoggedAction())}>press me </button>
+      <SidebarRight />
     </div>
   );
 }
