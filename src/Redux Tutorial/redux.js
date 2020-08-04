@@ -16,11 +16,16 @@ const decrementAction = () => {
   };
 };
 
+// obj={
+//   name,
+//   sur
+// }
+
 // this is a reduser we can have multiple
-const counterReduser = (state = 0, action) => {
+const counterReduser = (state = obj, action) => {
   switch (action.type) {
     case "INCREMENT":
-      return state + 1;
+      return (state.name = 5 + 1);
     case "DECREMENT":
       return state - 1;
   }

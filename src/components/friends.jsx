@@ -5,12 +5,12 @@ import { isLoggedAction } from "../actions";
 import { store } from "../index";
 let log = console.log;
 function Friends() {
-  useEffect(() => {
-    const ref = db.collection("users").doc("asd");
-    const collection = ref.get();
-    const a = collection.then((asd) => asd);
-    log("db result", a);
-  });
+  // useEffect(() => {
+  //   const ref = db.collection("users").doc("asd");
+  //   const collection = ref.get();
+  //   const a = collection.then((asd) => asd);
+  //   log("db result", a);
+  // });
 
   const isLogged = useSelector((state) => state.isLogged);
   const dispatch = useDispatch();

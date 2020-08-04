@@ -1,54 +1,101 @@
-import React from 'react';
-import { Avatar, Button, Grid, Typography, Link, CssBaseline, TextField, FormControlLabel, Checkbox, Paper, Box } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-
+import React, { useState, useEffect } from "react";
+import * as firebase from "firebase";
+import {
+  Avatar,
+  Button,
+  Grid,
+  Typography,
+  Link,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Paper,
+  Box,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+let log = console.log;
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="#">
         Charo
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
+    height: "100vh",
   },
   image: {
-    backgroundImage: 'url(https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg)',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor: 'white',
-    backgroundSize: 'contain',
-    backgroundPosition: 'center',
+    backgroundImage:
+      "url(https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg)",
+    backgroundRepeat: "no-repeat",
+    backgroundColor: "white",
+    backgroundSize: "contain",
+    backgroundPosition: "center",
   },
   paper: {
     margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-
   },
 }));
 
 function SignIn() {
   const classes = useStyles();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      setUser(user);
+    });
+  });
+
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+    log(email);
+  };
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+    log(password);
+  };
+
+  const handleLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .catch((e) => e.message);
+  };
+
+  const handleSignIn = () => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => alert("welcome back"))
+      .catch((err) => log(err));
+    log(user);
+  };
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -63,18 +110,19 @@ function SignIn() {
             Sign in
           </Typography>
           <form className={classes.form} noValidate>
-            <TextField
+            <input
               variant="outlined"
               margin="normal"
               required
-              fullWidth
+              // fullWidth
               id="email"
               label="Email Address"
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handleEmail}
             />
-            <TextField
+            <input
               variant="outlined"
               margin="normal"
               required
@@ -84,20 +132,13 @@ function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handlePassword}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
+            <Button onClick={handleSignIn}>Sign In</Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -120,4 +161,4 @@ function SignIn() {
   );
 }
 
-export default SignIn
+export default SignIn;
