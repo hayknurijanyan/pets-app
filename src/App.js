@@ -6,14 +6,12 @@ import Newsfeed from "./components/newsfeed";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Profile from "./components/profile";
 import Friends from "./components/friends";
-<<<<<<< HEAD
-import SignInCode from "./components/signUp&signIn/signInCode";
+
 import { Divider } from "@material-ui/core";
-=======
+
 import Services from "./components/services";
 import Petfinder from "./components/petfinder";
 
->>>>>>> f045ec26902a5dfd118dd5f23b45baa01f2d5d57
 function App() {
   return (
     <Router>
