@@ -85,6 +85,7 @@ function SignIn() {
     firebase
       .auth()
       .signOut()
+      .then(() => alert("logout succsess"))
       .catch((e) => e.message);
   };
 
@@ -93,7 +94,7 @@ function SignIn() {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => alert("welcome back"))
-      .catch((err) => log(err));
+      .catch((err) => alert(err));
     log(user);
   };
 
@@ -110,25 +111,25 @@ function SignIn() {
             Sign in
           </Typography>
           <form className={classes.form} noValidate>
-            <input
-              variant="outlined"
-              margin="normal"
-              required
-              // fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={handleEmail}
-            />
-            <input
+            <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
+              id="email"
+              label="email"
+              name="em ail"
+              autoComplete="email"
+              autoFocus
+              onChange={handleEmail}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="pass word"
+              label="password"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -138,7 +139,16 @@ function SignIn() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Button onClick={handleSignIn}>Sign In</Button>
+
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={handleSignIn}
+            >
+              Sign In
+            </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">

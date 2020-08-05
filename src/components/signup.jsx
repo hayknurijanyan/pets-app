@@ -73,6 +73,7 @@ function SignUp() {
   const [user, setUser] = useState(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [pet, setPet] = useState("");
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -84,6 +85,7 @@ function SignUp() {
     firebase
       .auth()
       .signOut()
+      .then(() => alert("logout succsess"))
       .catch((e) => e.message);
   };
 
@@ -96,6 +98,10 @@ function SignUp() {
   const handleFirstName = (e) => {
     setFirstName(e.target.value);
   };
+  const handlePet = (e) => {
+    setPet(e.target.value);
+  };
+
   const handleLastName = (e) => {
     setLastName(e.target.value);
   };
@@ -110,6 +116,7 @@ function SignUp() {
           .set({
             email,
             info: { firstName, lastName },
+            pet: { pet },
           })
           .then(() => {
             db.collection("info")
@@ -148,54 +155,67 @@ function SignUp() {
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <input
+                <TextField
                   onChange={handleFirstName}
                   placeholder="firstName"
                   autoComplete="fname"
                   name="firstName"
                   variant="outlined"
                   required
-                  // fullWidth
+                  fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="firstName"
                   autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <input
-                  onChange={handleLastName}
+                <TextField
+                  onChange={handlePet}
                   variant="outlined"
                   required
-                  // fullWidth
+                  fullWidth
                   placeholder="lastName"
                   id="lastName"
-                  label="Last Name"
+                  label="lastname"
                   name="lastName"
                   autoComplete="lname"
                 />
               </Grid>
               <Grid item xs={12}>
-                <input
+                <TextField
+                  onChange={handleLastName}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  placeholder="pet"
+                  id="pet"
+                  label="pet"
+                  name="pet"
+                  autoComplete="pname"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
                   onChange={handleEmail}
                   variant="outlined"
                   required
-                  // fullWidth
+                  fullWidth
                   placeholder="email"
                   id="email"
-                  label="Email Address"
+                  label="email"
                   name="email"
                   autoComplete="email"
                 />
               </Grid>
               <Grid item xs={12}>
-                <input
+                <TextField
                   onChange={handlePassword}
                   variant="outlined"
                   required
-                  // fullWidth
+                  fullWidth
                   placeholder="password"
                   name="password"
-                  label="Password"
+                  label="password"
                   type="password"
                   id="password"
                   autoComplete="current-password"
@@ -211,35 +231,23 @@ function SignUp() {
               </Grid>
             </Grid>
             <Button
-              // type="submit"
-              // fullWidth
-              // variant="contained"
-              // color="primary"
-              // className={classes.submit}
-              onClick={handleSignUp}
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={() => handleSignUp()}
             >
               Sign Up
             </Button>
 
             <Button
-              // type="submit"
-              // fullWidth
-              // variant="contained"
-              // color="primary"
-              // className={classes.submit}
-              onClick={handleLogout}
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={() => handleLogout()}
             >
-              logout
-            </Button>
-            <Button
-              // type="submit"
-              // // fullWidth
-              // variant="contained"
-              // color="primary"
-              // className={classes.submit}
-              onClick={handleSignIn}
-            >
-              Sign in
+              Logout
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
