@@ -14,8 +14,3 @@ const Petfinder = () => {
 };
 
 export default Petfinder;
-
-// let pets = {
-//   pet: dog,
-//   breed:
-// };
