@@ -29,7 +29,8 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard() {
+
+export default function Searchbar() {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
@@ -41,8 +42,8 @@ export default function SimpleCard() {
           <OutlinedInput
             id="outlined-adornment-amount"
             value=""
-            // onChange={handleChange('amount')
             labelWidth={60}
+            // onChange={handleChange('amount')
           />
         </FormControl>
       </CardContent>

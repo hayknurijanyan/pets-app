@@ -67,7 +67,7 @@ function App() {
           <Route path="/petfinder" component={Petfinder} />
           <Route path="/notfound" component={NotFound} />
           <Route path="/logout" component={Logout} />
-          <Route path="/" exact component={Newsfeed} />
+          <Route path="/" component={Newsfeed} />
           {/* <Redirect to='notfound'/> */}
         </Switch>
       </div>
