@@ -126,7 +126,7 @@ function SignIn() {
           <form className={classes.form} noValidate>
             <TextField
               variant="outlined"
-              margin="normal"
+              margin="normal" /// value // Mosh form
               required
               fullWidth
               id="email"

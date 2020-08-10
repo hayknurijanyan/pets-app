@@ -18,7 +18,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Profile />
+        {/* <Profile /> */}
         <Switch>
           <Route path="/" exact component={SignIn} />
           {/* <Route path="/friends" component={Friends} /> */}
