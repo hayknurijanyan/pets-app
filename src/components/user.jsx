@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function Friend() {
+function User() {
   const classes = useStyles()
   
   return (
@@ -59,11 +59,11 @@ function Friend() {
           }
         />
       </ListItem>
-      <Button className={classes.button} variant='contained' color="secondary">Remove</Button>
+      <Button className={classes.button} variant='contained' color="primary">Add</Button>
       </List>
       </Card>
   </div>
   );
 }
 
-export default Friend;
+export default User;

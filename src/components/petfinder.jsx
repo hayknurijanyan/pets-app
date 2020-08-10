@@ -1,14 +1,14 @@
 import React from "react";
-import SidebarLeft from "./sidebarleft";
-import SidebarRight from "./sidebarright";
 import { Toolbar } from "@material-ui/core";
+import SearchBar from "./searchbar";
+import AllPets from "./allpets";
 
 const Petfinder = () => {
   return (
     <div>
-      <SidebarLeft />
-      <Toolbar />
-      <SidebarRight />
+      <Toolbar/>
+        <SearchBar/>
+        <AllPets/>
     </div>
   );
 };

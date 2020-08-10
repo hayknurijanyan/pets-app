@@ -20,9 +20,6 @@ import  image from "../images/dog.jpg"
 const useStyles = makeStyles((theme) => ({
     root: {
         marginTop: 20,
-        maxWidth: 630,
-        margin: 'auto'
-
     },
     media: {
         height: 0,
@@ -55,7 +52,7 @@ export default function Post() {
         <Card className={classes.root}>
             <CardHeader
                 avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
+           <Avatar aria-label="recipe" className={classes.avatar}>
                         H
           </Avatar>
                 }

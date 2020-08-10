@@ -7,45 +7,86 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { Toolbar, Grid, Divider } from '@material-ui/core';
+import ImageAvatar from './avatar';
+import Popup from './popup';
+import Message from './message';
+import image from '../images/dg1.jpg'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    width:'45rem',
+    marginTop:10,
+    borderRadius:20,
   },
   media: {
-    height: 140,
+    marginTop:-40,
+    height: 280,
+
   },
-});
+  buttons:{
+    marginTop:30,
+    display:'flex',
+    justifyContent:'space-between',
+
+
+  },
+  button:{
+    margin:2
+
+  },
+  avatar:{
+    display:'flex',
+    flexDirection:'row',
+    alignItems:'center',
+  }
+}));
 
 export default function MediaCard() {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <Toolbar/>
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
+          image={image}
           title="Contemplative Reptile"
-        />
+          />
         <CardContent>
+          <div className={classes.avatar}>
+            <ImageAvatar/>
           <Typography gutterBottom variant="h5" component="h2">
-            Lizard
-          </Typography>
+            Hayk Nurijanyan
           <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+            <Popup/>
           </Typography>
+          </Typography>
+         </div>
+      <Grid container className={classes.buttons}>
+          <div>
+         <Message/>
+         </div>
+         <div>
+        <Button className={classes.button} 
+        variant="contained" size="medium" color="primary">
+          About
+        </Button>
+        <Button className={classes.button} 
+        variant="contained" size="medium" color="primary">
+          Pets
+        </Button>
+        <Button className={classes.button} 
+        variant="contained" size="medium" color="primary">
+          Photos
+        </Button>
+        <Button className={classes.button} 
+        variant="contained" size="medium" color="primary">
+          Friends
+        </Button>
+        </div>
+      </Grid>
         </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
     </Card>
   );
 }

@@ -7,9 +7,9 @@ import Post from './post';
 
 const useStyles = makeStyles((theme) => ({
     content: {
-        flexGrow: 1,
         justifyContent: 'center',
         padding: theme.spacing(3),
+        width:'40rem'
 
     },
 }));
@@ -19,12 +19,12 @@ const useStyles = makeStyles((theme) => ({
 const Posts = () => {
     const classes = useStyles();
     return (
-        <main className={classes.content}>
-            <Toolbar />
+        <div className={classes.content}>
+            <Toolbar/>
             <Post />
             <Post />
             <Post />
-        </main>
+        </div>
     );
 }
 

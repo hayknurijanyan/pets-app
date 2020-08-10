@@ -3,6 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
 import { db, auth } from "../firebase";
 import * as firebase from "firebase";
+import PetsSelectFiled from "./petsSecelctFiled";
+import PetsSelectFiledClass from "./petsSecelctFiledClass";
+import { useDispatch, useSelector } from "react-redux";
+import { isUserAction } from "../actions";
 import {
   Avatar,
   Button,
@@ -74,12 +78,33 @@ function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [pet, setPet] = useState("");
+  const [petList, setPetList] = useState([]);
+  const isUser = useSelector((state) => state.isUser); // ստեղ արդեն ունես isUser փոփոխականը որը կարաս get անես app ի ցանկացած մասից useSelector ով
+  const dispatch = useDispatch();
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-      setUser(user);
+      if (user) {
+        dispatch(isUserAction());
+      } else {
+        log("redux state.isUser is false");
+      }
     });
-  });
+  }, []);
+
+  log("isUser ", isUser);
+  // useEffect(() => {
+  //   const ref = db.collection("petsList").doc("Ch0cCMIMbhWDgaOF4za6");
+  //   let collection = ref
+  //     .get()
+  //     .then((doc) => {
+  //       // const newItemArray = [...doc.data().pets];   // ստեղ ուզում եմ petsList ը դենդռ անեմ որ ընտրեն գրանցվելուց, դեռ չի ստացվում
+  //       // return newItemArray;
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error getting document:", error);
+  //     });
+  // });
 
   const handleLogout = () => {
     firebase
@@ -97,9 +122,6 @@ function SignUp() {
   };
   const handleFirstName = (e) => {
     setFirstName(e.target.value);
-  };
-  const handlePet = (e) => {
-    setPet(e.target.value);
   };
 
   const handleLastName = (e) => {
@@ -131,17 +153,9 @@ function SignUp() {
       .catch((err) => log(err));
   };
 
-  const handleSignIn = () => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => alert("welcome back"))
-      .catch((err) => alert(err));
-  };
-
   return (
     <Grid container component="main" className={classes.root}>
-      {log("user", user, "name", firstName, "sur", lastName, "email", email)}
+      {/* {log("user", user, "name", firstName, "sur", lastName, "email", email)} */}
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -170,7 +184,7 @@ function SignUp() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  onChange={handlePet}
+                  onChange={handleLastName}
                   variant="outlined"
                   required
                   fullWidth
@@ -182,6 +196,9 @@ function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
+                {/* <PetsSelectFiled onHandlePetSet={setPet} />    սրանք ետ ռենդռներն են petsList ի ընտրելու */}
+                {/* <PetsSelectFiledClass onHandlePetSet={setPet} /> */}
+
                 <TextField
                   onChange={handleLastName}
                   variant="outlined"

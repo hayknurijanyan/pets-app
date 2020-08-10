@@ -5,6 +5,8 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Post from './post';
+import {Link} from 'react-router-dom';
+import PetsOutlinedIcon from '@material-ui/icons/PetsOutlined';
 
 
 const drawerWidth = 260;
@@ -37,16 +39,17 @@ const useStyles = makeStyles((theme) => ({
 export default function SidebarLeft() {
     const classes = useStyles();
 
-    return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <AppBar item xs ={0} position="fixed" className={classes.appBar}>
-                <Toolbar>
-                    <Typography variant="h6" noWrap>
-                        Logo
-                        </Typography>
-                </Toolbar>
-            </AppBar>
+return (
+    <div className={classes.root}>
+        <CssBaseline />
+        <AppBar item xs ={0} position="fixed" className={classes.appBar}>
+            <Toolbar>
+                <Typography variant="h6" noWrap>
+                    Charo 
+                    </Typography>
+                <PetsOutlinedIcon/>
+            </Toolbar>
+       </AppBar>
             <Drawer
                 className={classes.drawer}
                 variant="permanent"
@@ -54,10 +57,10 @@ export default function SidebarLeft() {
                     paper: classes.drawerPaper,
                 }}
             >
-                <Toolbar />
-                <div className={classes.drawerContainer}>
-                    <List>
-                        <ListItem button component="a" href="profile">
+        <Toolbar />
+            <div className={classes.drawerContainer}>
+        <List>
+            <ListItem button component={Link} to="profile">
                             <ListItemIcon>
                                 <Avatar alt="Hayk" src="/static/images/avatar/1.jpg" />
                             </ListItemIcon>
@@ -67,8 +70,8 @@ export default function SidebarLeft() {
                     </List>
                     <Divider />
                     <List>
-                        {['Newsfeed', 'Friends', 'Petfinder', 'Services'].map((text, index) => (
-                            <ListItem button component="a" href={text.toLowerCase()} key={text}>
+                        {['Newsfeed','Friends', 'Petfinder','Users','Services','Logout'].map((text, index) => (
+                            <ListItem button component={Link} to={text.toLowerCase()} key={text}>
                                 <ListItemText primary={text} />
                             </ListItem>
                         ))}

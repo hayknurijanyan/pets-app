@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as firebase from "firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { isUserAction } from "../actions";
 import {
   Avatar,
   Button,
@@ -65,12 +67,23 @@ function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
-
+  const isUser = useSelector((state) => state.isUser); // ստեղ արդեն ունես isUser փոփոխականը որը կարաս get անես app ի ցանկացած մասից useSelector ով
+  const dispatch = useDispatch();
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-      setUser(user);
+      if (user) {
+        dispatch(isUserAction());
+      } else {
+        log("redux not done");
+      }
+
+      // setUser(user);
+      // log(user);
     });
-  });
+  }, []);
+
+  log("redux user", isUser);
+  // log("user", user);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -95,7 +108,7 @@ function SignIn() {
       .signInWithEmailAndPassword(email, password)
       .then(() => alert("welcome back"))
       .catch((err) => alert(err));
-    log(user);
+    // log(user);
   };
 
   return (
