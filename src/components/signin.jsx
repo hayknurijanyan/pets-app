@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     backgroundImage:
-      "url(https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg)",
+    "url(https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg)",
     backgroundRepeat: "no-repeat",
     backgroundColor: "white",
     backgroundSize: "contain",

@@ -15,11 +15,12 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import  image from "../images/dog.jpg"
 
 const useStyles = makeStyles((theme) => ({
     root: {
         marginTop: 20,
-        maxWidth: 700,
+        maxWidth: 630,
         margin: 'auto'
 
     },
@@ -74,7 +75,8 @@ export default function Post() {
             <CardMedia
                 className={classes.media}
                 image="https://santansun.com/wp-content/uploads/2018/11/5b7fdeab1900001d035028dc.jpeg"
-                title="Paella dish"
+                // image ={image}
+                title="Dog"
             />
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">

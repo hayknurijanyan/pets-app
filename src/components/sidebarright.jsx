@@ -7,7 +7,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 
 
-const drawerWidth = 280;
+const drawerWidth = 260;
 
 const useStyles = makeStyles((theme) => ({
     root: {

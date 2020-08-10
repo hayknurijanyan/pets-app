@@ -6,15 +6,14 @@ import Newsfeed from "./components/newsfeed";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Profile from "./components/profile";
 import Friends from "./components/friends";
-
-import { Divider } from "@material-ui/core";
-
+import Navbar from "./components/navbar";
 import Services from "./components/services";
 import Petfinder from "./components/petfinder";
 
 function App() {
   return (
     <Router>
+      <Navbar />
       <div>
         <Switch>
           <Route path="/" exact component={SignIn} />
