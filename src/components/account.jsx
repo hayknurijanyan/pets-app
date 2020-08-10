@@ -50,7 +50,7 @@ export default function MediaCard() {
       <Toolbar/>
         <CardMedia
           className={classes.media}
-          image={image}
+          image="https://coverfiles.alphacoders.com/927/92705.jpg"
           title="Contemplative Reptile"
           />
         <CardContent>

@@ -1,13 +1,6 @@
 import React, { useEffect } from "react";
-import { db } from "../firebase.js";
-import { useDispatch, useSelector } from "react-redux";
-import { isLoggedAction } from "../actions";
-import { store } from "../index";
-import SidebarLeft from "./sidebarleft.jsx";
-import SidebarRight from "./sidebarright.jsx";
 import { makeStyles } from '@material-ui/core/styles';
-import { Card,Toolbar, ListItem, List, Avatar,ListItemAvatar,ListItemText,Typography, Button } from '@material-ui/core';
-import Pet from "./pet.jsx";
+import { Card, ListItem, List, Avatar,ListItemAvatar,ListItemText,Typography, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   container:{

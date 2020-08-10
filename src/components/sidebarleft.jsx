@@ -7,6 +7,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Post from './post';
 import {Link} from 'react-router-dom';
 import PetsOutlinedIcon from '@material-ui/icons/PetsOutlined';
+import Logout from './logout';
 
 
 const drawerWidth = 260;
@@ -46,8 +47,8 @@ return (
             <Toolbar>
                 <Typography variant="h6" noWrap>
                     Charo 
+                    <PetsOutlinedIcon/>
                     </Typography>
-                <PetsOutlinedIcon/>
             </Toolbar>
        </AppBar>
             <Drawer
@@ -70,11 +71,14 @@ return (
                     </List>
                     <Divider />
                     <List>
-                        {['Newsfeed','Friends', 'Petfinder','Users','Services','Logout'].map((text, index) => (
+                        {['Newsfeed','Friends', 'Petfinder','Users','Services'].map((text, index) => (
                             <ListItem button component={Link} to={text.toLowerCase()} key={text}>
                                 <ListItemText primary={text} />
                             </ListItem>
                         ))}
+                        <ListItem>
+                                <Logout/>
+                            </ListItem>
                     </List>
                 </div>
             </Drawer>

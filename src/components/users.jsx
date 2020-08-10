@@ -6,7 +6,6 @@ import { store } from "../index";
 import SidebarLeft from "./sidebarleft.jsx";
 import SidebarRight from "./sidebarright.jsx";
 import { makeStyles } from '@material-ui/core/styles';
-import { Toolbar } from '@material-ui/core';
 import User from "./user.jsx";
 
 const useStyles = makeStyles((theme) => ({

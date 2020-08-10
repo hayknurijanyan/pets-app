@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import {Typography,InputLabel,FormControl,OutlinedInput} from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -36,9 +36,15 @@ export default function SimpleCard() {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Textfield to be added
-        </Typography>
+        <FormControl fullWidth className={classes.margin} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-amount">Search</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-amount"
+            value=""
+            // onChange={handleChange('amount')
+            labelWidth={60}
+          />
+        </FormControl>
       </CardContent>
       <CardActions className={classes.button}>
         <Button variant="contained" color="secondary" size="medium">Search</Button>

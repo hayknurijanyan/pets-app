@@ -36,19 +36,22 @@ function App() {
   const user = firebase.auth().currentUser;
   
   if (user) {
-    log("currnetuser", user);
+    log("currentuser", user);
   } else {
     log("user not loged");
   }
   
-  const isUser = useSelector((state) => state);
+  const isUser = useSelector((state) => state.isUser);
   log("user redux", isUser);
   log("state", isUser);
 
-  const classes = useStyles()
+  const userStatus = `User login status is ${isUser}`
+  const classes = useStyles();
 
-  return (
-    <Router>
+
+      return(
+        user? //checking if the user is Loged in
+      <Router>
       <Navbar />
       <div className = {classes.container}>
       <div>
@@ -56,8 +59,6 @@ function App() {
       </div>
       <div>
       <Switch>
-         <Route path="/signin" component={SignIn} />
-          <Route path="/signup" component={SignUp} />
           <Route path="/friends" component={Friends} />
           <Route path="/users" component={Users} />
           <Route path="/newsfeed" component={Newsfeed} />
@@ -67,7 +68,7 @@ function App() {
           <Route path="/notfound" component={NotFound} />
           <Route path="/logout" component={Logout} />
           <Route path="/" exact component={Newsfeed} />
-          <Redirect to='notfound'/>
+          {/* <Redirect to='notfound'/> */}
         </Switch>
       </div>
      <div>
@@ -75,7 +76,17 @@ function App() {
      </div>
   </div>
     </Router>
-  );
+      : //else
+    <Router>
+        <Navbar />
+        <Switch>
+           <Route path="/signin" component={SignIn} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/" component={SignIn} />
+            {/* <Redirect to='notfound'/> */}
+          </Switch>
+        </Router>
+        )   
 }
 
 export default App;
