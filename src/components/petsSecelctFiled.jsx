@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { db } from "../firebase";
+
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
@@ -21,17 +22,33 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PetsSelectFiled(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [list, setList] = useState([]);
+  const [userPet, setUserPet] = useState("");
+
+  useEffect(() => {
+    const ref = db.collection("petsList").doc("Ch0cCMIMbhWDgaOF4za6");
+    let collection = ref
+      .get()
+      .then((doc) => {
+        const newArray = [...doc.data().pets];
+        setList(newArray);
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
+      });
+  }, []);
 
   const handleChange = (event) => {
     props.onHandlePetSet(event.target.value);
   };
-  log(props.petList);
-  const handleClose = (event) => {
+
+  log("props", props);
+
+  const handleClose = () => {
     setOpen(false);
   };
-
-  const handleOpen = (event) => {
+  const handleOpen = () => {
     setOpen(true);
   };
 
@@ -43,38 +60,21 @@ export default function PetsSelectFiled(props) {
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
           open={open}
+          value={props.pet}
           onClose={handleClose}
           onOpen={handleOpen}
           onChange={handleChange}
         >
-          <MenuItem>
-            <em>None</em>
-          </MenuItem>
-          {/* {props.petList.pets.map((pet, index) => {
+          <MenuItem>None</MenuItem>
+          {list.map((pet, index) => {
             return (
-              <div key={(pet += 1)}>
-                <div value={index} primaryText={pet}></div>
-              </div>
+              <MenuItem key={(index += "asd")} value={pet}>
+                {pet}
+              </MenuItem>
             );
-          })} */}
-          {/* <MenuItem value={"cat"}>Cat</MenuItem>
-          <MenuItem value={"dog"}>Dog</MenuItem>
-          <MenuItem value={"fish"}>Fish</MenuItem> */}
+          })}
         </Select>
       </FormControl>
     </div>
   );
-}
-
-{
-  /* <div>
-  <DropDownMenu
-    value={this.state.selectedColorValue}
-    onChange={this.handleColorChange}
-  >
-    {colors.map((color, index) => (
-      <MenuItem key={index} value={index} primaryText={color} />
-    ))}
-  </DropDownMenu>
-</div>; */
 }

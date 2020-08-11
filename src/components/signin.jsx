@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     backgroundImage:
-    "url(https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg)",
+      "url(https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg)",
     backgroundRepeat: "no-repeat",
     backgroundColor: "white",
     backgroundSize: "contain",
@@ -76,22 +76,16 @@ function SignIn() {
       } else {
         log("redux not done");
       }
-
-      // setUser(user);
-      // log(user);
     });
   }, []);
 
   log("redux user", isUser);
-  // log("user", user);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
-    log(email);
   };
   const handlePassword = (e) => {
     setPassword(e.target.value);
-    log(password);
   };
 
   const handleLogout = () => {
@@ -108,7 +102,6 @@ function SignIn() {
       .signInWithEmailAndPassword(email, password)
       .then(() => alert("welcome back"))
       .catch((err) => alert(err));
-    // log(user);
   };
 
   return (
@@ -126,7 +119,7 @@ function SignIn() {
           <form className={classes.form} noValidate>
             <TextField
               variant="outlined"
-              margin="normal"
+              margin="normal" /// value // Mosh form
               required
               fullWidth
               id="email"

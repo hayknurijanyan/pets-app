@@ -2,23 +2,21 @@ import React, { useState, useEffect } from "react";
 import { db, auth } from "../firebase";
 import * as firebase from "firebase";
 import PetsSelectFiled from "./petsSecelctFiled";
-import PetsSelectFiledClass from "./petsSecelctFiledClass";
+
 import { useDispatch, useSelector } from "react-redux";
 import { isUserAction } from "../actions";
-import { Button} from "@material-ui/core";
-
+import { Button } from "@material-ui/core";
 
 const handleLogout = () => {
   firebase
-  .auth()
-  .signOut()
-  .then(() => alert("logout succsess"))
-  .catch((e) => e.message);
-  window.location.reload(false)
+    .auth()
+    .signOut()
+    .then(() => alert("logout succsess"))
+    .catch((e) => e.message);
+  window.location.reload(false);
 };
 
 const Logout = () => {
-
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -30,16 +28,16 @@ const Logout = () => {
   }, []);
 
   const dispatch = useDispatch();
-  return ( 
+  return (
     <Button
-    Link="/signin"
-    variant="contained"
-    color="secondary"
-    onClick={() => handleLogout()}
-  >
-    Logout
-  </Button>
-   );
-}
- 
+      Link="/signin"
+      variant="contained"
+      color="secondary"
+      onClick={() => handleLogout()}
+    >
+      Logout
+    </Button>
+  );
+};
+
 export default Logout;
