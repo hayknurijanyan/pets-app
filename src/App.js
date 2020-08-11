@@ -17,6 +17,7 @@ import Users from "./components/users";
 import { useSelector } from "react-redux";
 import firebase from "firebase";
 import Logout from "./components/logout";
+import ImageGridList from "./components/myImages"
 let log = console.log;
 
 
@@ -68,6 +69,7 @@ function App() {
           <Route path="/notfound" component={NotFound} />
           <Route path="/logout" component={Logout} />
           <Route path="/" component={Newsfeed} />
+          <Route path="/images" component={ImageGridList} />
           {/* <Redirect to='notfound'/> */}
         </Switch>
       </div>

@@ -11,7 +11,8 @@ import { Toolbar, Grid, Divider } from '@material-ui/core';
 import ImageAvatar from './avatar';
 import Popup from './popup';
 import Message from './message';
-import image from '../images/dg1.jpg'
+import image from '../images/dg1.jpg';
+import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,7 +70,7 @@ export default function MediaCard() {
          </div>
          <div>
         <Button className={classes.button} 
-        variant="contained" size="medium" color="primary">
+        variant="contained" size="medium" color="primary" component={Link} to='/profile/about'>
           About
         </Button>
         <Button className={classes.button} 
@@ -77,7 +78,7 @@ export default function MediaCard() {
           Pets
         </Button>
         <Button className={classes.button} 
-        variant="contained" size="medium" color="primary">
+        variant="contained" size="medium" color="primary" component={Link} to="/profile/photos">
           Photos
         </Button>
         <Button className={classes.button} 

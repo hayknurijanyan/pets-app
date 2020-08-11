@@ -4,6 +4,8 @@ import Account from "./account";
 import About from "./about";
 import { useSelector } from "react-redux";
 import firebase from "firebase";
+import ImageGridList from './myImages';
+import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 let log = console.log;
 
 const Profile = () => {
@@ -20,12 +22,16 @@ const Profile = () => {
   log("state", isUser);
 
   return (
-    <div>
+    <Router>
+      <div>
       <Toolbar />
       <Account/>
-      <About/>
+<Switch>
+<Route path='/profile/photos' component={ImageGridList}/>
+<Route path='/profile/about' component={About}/>
+</Switch>
     </div>
-
+    </Router>
   );
 };
 
