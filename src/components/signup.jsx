@@ -4,9 +4,9 @@ import React, { useState, useEffect } from "react";
 import { db, auth } from "../firebase";
 import * as firebase from "firebase";
 import PetsSelectFiled from "./petsSecelctFiled";
-import PetsSelectFiledClass from "./petsSecelctFiledClass";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserAction } from "../actions";
+
 import {
   Avatar,
   Button,
@@ -78,7 +78,6 @@ function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [pet, setPet] = useState("");
-  const [petList, setPetList] = useState([]);
   const isUser = useSelector((state) => state.isUser); // ստեղ արդեն ունես isUser փոփոխականը որը կարաս get անես app ի ցանկացած մասից useSelector ով
   const dispatch = useDispatch();
 
@@ -91,20 +90,6 @@ function SignUp() {
       }
     });
   }, []);
-
-  log("isUser ", isUser);
-  // useEffect(() => {
-  //   const ref = db.collection("petsList").doc("Ch0cCMIMbhWDgaOF4za6");
-  //   let collection = ref
-  //     .get()
-  //     .then((doc) => {
-  //       // const newItemArray = [...doc.data().pets];   // ստեղ ուզում եմ petsList ը դենդռ անեմ որ ընտրեն գրանցվելուց, դեռ չի ստացվում
-  //       // return newItemArray;
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error getting document:", error);
-  //     });
-  // });
 
   const handleLogout = () => {
     firebase
@@ -196,20 +181,7 @@ function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                {/* <PetsSelectFiled onHandlePetSet={setPet} />    սրանք ետ ռենդռներն են petsList ի ընտրելու */}
-                {/* <PetsSelectFiledClass onHandlePetSet={setPet} /> */}
-
-                <TextField
-                  onChange={handleLastName}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  placeholder="pet"
-                  id="pet"
-                  label="pet"
-                  name="pet"
-                  autoComplete="pname"
-                />
+                <PetsSelectFiled onHandlePetSet={setPet} pet={pet} />
               </Grid>
               <Grid item xs={12}>
                 <TextField

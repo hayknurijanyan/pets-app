@@ -74,7 +74,7 @@ export default function MediaCard() {
           About
         </Button>
         <Button className={classes.button} 
-        variant="contained" size="medium" color="primary">
+        variant="contained" size="medium" color="primary" component={Link} to='/profile/pets'>
           Pets
         </Button>
         <Button className={classes.button} 
@@ -82,7 +82,7 @@ export default function MediaCard() {
           Photos
         </Button>
         <Button className={classes.button} 
-        variant="contained" size="medium" color="primary">
+        variant="contained" size="medium" color="primary" component={Link} to='/profile/friends'>
           Friends
         </Button>
         </div>

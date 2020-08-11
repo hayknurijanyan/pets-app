@@ -6,6 +6,9 @@ import { useSelector } from "react-redux";
 import firebase from "firebase";
 import ImageGridList from './myImages';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import Friends from "./friends";
+import Petlist from "./petlist";
+
 let log = console.log;
 
 const Profile = () => {
@@ -29,6 +32,8 @@ const Profile = () => {
 <Switch>
 <Route path='/profile/photos' component={ImageGridList}/>
 <Route path='/profile/about' component={About}/>
+<Route path='/profile/friends' component={Friends}/>
+<Route path='/profile/pets' component={Petlist}/>
 </Switch>
     </div>
     </Router>
