@@ -76,22 +76,16 @@ function SignIn() {
       } else {
         log("redux not done");
       }
-
-      // setUser(user);
-      // log(user);
     });
   }, []);
 
   log("redux user", isUser);
-  // log("user", user);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
-    log(email);
   };
   const handlePassword = (e) => {
     setPassword(e.target.value);
-    log(password);
   };
 
   const handleLogout = () => {
@@ -108,7 +102,6 @@ function SignIn() {
       .signInWithEmailAndPassword(email, password)
       .then(() => alert("welcome back"))
       .catch((err) => alert(err));
-    // log(user);
   };
 
   return (

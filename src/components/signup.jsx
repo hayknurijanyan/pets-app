@@ -4,9 +4,9 @@ import React, { useState, useEffect } from "react";
 import { db, auth } from "../firebase";
 import * as firebase from "firebase";
 import PetsSelectFiled from "./petsSecelctFiled";
-import PetsSelectFiledClass from "./petsSecelctFiledClass";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserAction } from "../actions";
+
 import {
   Avatar,
   Button,
@@ -181,20 +181,7 @@ function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <PetsSelectFiled onHandlePetSet={setPet} />
-                {/* <PetsSelectFiledClass onHandlePetSet={setPet} /> */}
-
-                {/* <TextField
-                  onChange={handleLastName}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  placeholder="pet"
-                  id="pet"
-                  label="pet"
-                  name="pet"
-                  autoComplete="pname"
-                /> */}
+                <PetsSelectFiled onHandlePetSet={setPet} pet={pet} />
               </Grid>
               <Grid item xs={12}>
                 <TextField

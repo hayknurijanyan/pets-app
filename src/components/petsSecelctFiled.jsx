@@ -24,7 +24,7 @@ export default function PetsSelectFiled(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([]);
-  const [userPet, setUserPet] = useState([]);
+  const [userPet, setUserPet] = useState("");
 
   useEffect(() => {
     const ref = db.collection("petsList").doc("Ch0cCMIMbhWDgaOF4za6");
@@ -40,12 +40,11 @@ export default function PetsSelectFiled(props) {
   }, []);
 
   const handleChange = (event) => {
-    setUserPet(event.target.value);
+    props.onHandlePetSet(event.target.value);
   };
 
-  // const handleChange = (event) => {
-  //   props.onHandlePetSet(event.target.value);
-  // };
+  log("props", props);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -61,7 +60,7 @@ export default function PetsSelectFiled(props) {
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"
           open={open}
-          value={userPet}
+          value={props.pet}
           onClose={handleClose}
           onOpen={handleOpen}
           onChange={handleChange}
@@ -69,9 +68,9 @@ export default function PetsSelectFiled(props) {
           <MenuItem>None</MenuItem>
           {list.map((pet, index) => {
             return (
-              <div key={(index += "asd")}>
-                <MenuItem>{pet}</MenuItem>
-              </div>
+              <MenuItem key={(index += "asd")} value={pet}>
+                {pet}
+              </MenuItem>
             );
           })}
         </Select>

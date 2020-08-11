@@ -1,13 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Drawer, Toolbar, List, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Button,CssBaseline,AppBar, Typography,Drawer, Toolbar, List, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 
 
-const drawerWidth = 280;
+const drawerWidth = 260;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,6 +39,14 @@ export default function SidebarRight() {
 
     return (
         <div>
+                    <CssBaseline />
+        <AppBar item xs ={0} position="fixed" className={classes.appBar}>
+            <Toolbar>
+                <Typography variant="h6" noWrap>
+                    Charo 
+                    </Typography>
+            </Toolbar>
+       </AppBar>
             <Drawer
                 className={classes.drawer}
                 variant="permanent"
