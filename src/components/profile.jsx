@@ -7,7 +7,7 @@ import firebase from "firebase";
 import ImageGridList from './myImages';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Friends from "./friends";
-import Petlist from "./petlist";
+import AllPets from "./allpets";
 
 let log = console.log;
 
@@ -33,7 +33,7 @@ const Profile = () => {
 <Route path='/profile/photos' component={ImageGridList}/>
 <Route path='/profile/about' component={About}/>
 <Route path='/profile/friends' component={Friends}/>
-<Route path='/profile/pets' component={Petlist}/>
+<Route path='/profile/pets' component={AllPets}/>
 </Switch>
     </div>
     </Router>
