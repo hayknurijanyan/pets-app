@@ -6,7 +6,6 @@ import MailIcon from '@material-ui/icons/Mail';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Post from './post';
 import {Link} from 'react-router-dom';
-import PetsOutlinedIcon from '@material-ui/icons/PetsOutlined';
 import Logout from './logout';
 
 
@@ -47,7 +46,6 @@ return (
             <Toolbar>
                 <Typography variant="h6" noWrap>
                     Charo 
-                    <PetsOutlinedIcon/>
                     </Typography>
             </Toolbar>
        </AppBar>

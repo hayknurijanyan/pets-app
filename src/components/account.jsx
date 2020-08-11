@@ -28,12 +28,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop:30,
     display:'flex',
     justifyContent:'space-between',
-
-
   },
   button:{
     margin:2
-
+  },
+  popups:{
+    display:'flex',
+    flexDirection:'row',
   },
   avatar:{
     display:'flex',
@@ -59,7 +60,10 @@ export default function MediaCard() {
           <Typography gutterBottom variant="h5" component="h2">
             Hayk Nurijanyan
           <Typography variant="body2" color="textSecondary" component="p">
+            <div className={classes.popups}>
             <Popup/>
+            <Button variant="outlined" size="small">+</Button>
+            </div>
           </Typography>
           </Typography>
          </div>
