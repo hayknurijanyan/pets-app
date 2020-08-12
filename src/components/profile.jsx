@@ -29,12 +29,12 @@ const Profile = () => {
       <div>
       <Toolbar />
       <Account/>
-<Switch>
-<Route path='/profile/photos' component={ImageGridList}/>
-<Route path='/profile/about' component={About}/>
-<Route path='/profile/friends' component={Friends}/>
-<Route path='/profile/pets' component={Petlist}/>
-</Switch>
+        <Switch>
+          <Route path='/profile/photos' component={ImageGridList}/>
+          <Route path='/profile/about' component={About}/>
+          <Route path='/profile/friends' component={Friends}/>
+          <Route path='/profile/pets' component={Petlist}/>
+        </Switch>
     </div>
     </Router>
   );
