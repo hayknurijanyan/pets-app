@@ -96,13 +96,12 @@ function SignUp() {
   // create in user  collection an array
 
   const [petInfo, setPetInfo] = useState({
-    pet,
     petType: "",
     breed: "",
     photo: "",
     age: 0,
     behavior: "",
-    petLocation: location,
+    petLocation: "",
     owner: "",
   });
 
@@ -148,49 +147,56 @@ function SignUp() {
         db.collection("users")
           .doc(data.user.uid)
           .set({
-            email,
+            userId: db.doc(`users/${data.user.uid}`),
+            currentUserInfo: {
+              email,
+              avatar,
+              photos,
+              coverPhoto,
+              email,
+              firstName,
+              lastName,
+              age,
+              bio,
+              location,
+              maleFemale,
+              profession,
+              contactNumber,
+              pet,
+              userPetInfo: petInfo,
+            },
           })
+          // .then(() => {
+          //   db.collection("usersPet")
+          //     .doc(data.user.uid)
+          //     .set({
+          //       userId: db.doc(`users/${data.user.uid}`),
+          //       userPetInfo: petInfo,
+          //     })
+          //     .catch((err) => log(err));
+          // });
           .then(() => {
-            db.collection("referanceInfo")
-              .doc(data.user.uid)
-              .set({
-                userId: db.doc(`users/${data.user.uid}`),
-                currentUserInfo: {
-                  avatar,
-                  photos,
-                  coverPhoto,
-                  email,
-                  firstName,
-                  lastName,
-                  age,
-                  bio,
-                  location,
-                  maleFemale,
-                  profession,
-                  contactNumber,
+            db.collection("petsFinder")
+              .doc("9EjERLCKRVowoWKnC1j5")
+              .update({
+                allPetsSearch: firebase.firestore.FieldValue.arrayUnion({
                   pet,
-                },
-              });
-            alert("welcome user");
-          })
-          .then(() => {
-            db.collection("referanceUserPetInfo")
-              .doc(data.user.uid)
-              .set({
-                userId: db.doc(`users/${data.user.uid}`),
-                currentUserPetInfo: petInfo,
+                  petInfo,
+                  userId: data.user.uid,
+                }),
               })
               .catch((err) => log(err));
           });
+        alert("welcome user");
       })
       .catch((err) => log(err));
   };
 
   // for updating referance data
-  // db.collection("user")
+  // db.collection("toDoes")
   // .doc(auth.currentUser.uid)
   // .update({
-  //   age: firebase.firestore.FieldValue.arrayUnion(newData),
+  //   toDoItems: firebase.firestore.FieldValue.arrayUnion(newData),
   // })
 
   return (
