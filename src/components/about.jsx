@@ -77,7 +77,7 @@ export default function About() {
               Bio
             </Typography>
             <Typography variant="h6">
-              I am the best Physic in the world
+              I am the best Physicist in the world
             </Typography>
           </div>
           <Divider />
@@ -99,7 +99,7 @@ export default function About() {
             >
               Profession
             </Typography>
-            <Typography variant="h6">Theoretical Physic</Typography>
+            <Typography variant="h6">Theoretical Physicist</Typography>
           </div>
           <div className={classes.content}>
             <Typography
