@@ -15,13 +15,14 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     marginTop: 20,
-    height: 600,
+    marginBottom: 30,
   },
   content: {
     display: "flex",
     flexDirection: "row",
     marginLeft: 30,
     marginTop: 5,
+    marginBottom: 30,
   },
   bullet: {
     display: "inline-block",
