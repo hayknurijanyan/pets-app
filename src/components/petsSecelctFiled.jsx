@@ -43,8 +43,6 @@ export default function PetsSelectFiled(props) {
     props.onHandlePetSet(event.target.value);
   };
 
-  log("props", props);
-
   const handleClose = () => {
     setOpen(false);
   };

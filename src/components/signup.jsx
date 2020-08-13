@@ -78,6 +78,30 @@ function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [pet, setPet] = useState("");
+  const [age, setAge] = useState(0);
+  const [bio, setBio] = useState("");
+  const [location, setLocation] = useState({
+    country: "",
+    city: "",
+  });
+  const [contactNumber, setContactNumber] = useState("");
+  const [maleFemale, setMaleFemale] = useState("");
+  const [profession, setProfession] = useState("");
+  const [avatar, setAvata] = useState("");
+  const [photos, setPhotos] = useState("");
+  const [coverPhoto, setCoverPhoto] = useState("");
+
+  const [petInfo, setPetInfo] = useState({
+    pet,
+    petType: "",
+    breed: "",
+    photo: "",
+    age: 0,
+    behavior: "",
+    petLocation: location,
+    owner: "",
+  });
+
   const isUser = useSelector((state) => state.isUser); // ստեղ արդեն ունես isUser փոփոխականը որը կարաս get անես app ի ցանկացած մասից useSelector ով
   const dispatch = useDispatch();
 
@@ -108,7 +132,6 @@ function SignUp() {
   const handleFirstName = (e) => {
     setFirstName(e.target.value);
   };
-
   const handleLastName = (e) => {
     setLastName(e.target.value);
   };
@@ -122,21 +145,49 @@ function SignUp() {
           .doc(data.user.uid)
           .set({
             email,
-            info: { firstName, lastName },
-            pet: { pet },
           })
           .then(() => {
-            db.collection("info")
+            db.collection("referanceInfo")
               .doc(data.user.uid)
               .set({
                 userId: db.doc(`users/${data.user.uid}`),
-                info: [{ firstName, lastName }], // here we can add coleections
+                currentUserInfo: {
+                  avatar,
+                  photos,
+                  coverPhoto,
+                  email,
+                  firstName,
+                  lastName,
+                  age,
+                  bio,
+                  location,
+                  maleFemale,
+                  profession,
+                  contactNumber,
+                  pet,
+                },
               });
             alert("welcome user");
+          })
+          .then(() => {
+            db.collection("referanceUserPetInfo")
+              .doc(data.user.uid)
+              .set({
+                userId: db.doc(`users/${data.user.uid}`),
+                currentUserPetInfo: petInfo,
+              })
+              .catch((err) => log(err));
           });
       })
       .catch((err) => log(err));
   };
+
+  // for updating referance data
+  // db.collection("toDoes")
+  // .doc(auth.currentUser.uid)
+  // .update({
+  //   toDoItems: firebase.firestore.FieldValue.arrayUnion(newData),
+  // })
 
   return (
     <Grid container component="main" className={classes.root}>
