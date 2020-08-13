@@ -3,12 +3,7 @@ import "./App.css";
 import SignIn from "./components/signin";
 import SignUp from "./components/signup";
 import Newsfeed from "./components/newsfeed";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import Profile from "./components/profile";
 import Friends from "./components/friends";
 import Navbar from "./components/navbar";
