@@ -91,6 +91,10 @@ function SignUp() {
   const [photos, setPhotos] = useState("");
   const [coverPhoto, setCoverPhoto] = useState("");
 
+  // log("------------", db);
+
+  // create in user  collection an array
+
   const [petInfo, setPetInfo] = useState({
     pet,
     petType: "",
@@ -183,10 +187,10 @@ function SignUp() {
   };
 
   // for updating referance data
-  // db.collection("toDoes")
+  // db.collection("user")
   // .doc(auth.currentUser.uid)
   // .update({
-  //   toDoItems: firebase.firestore.FieldValue.arrayUnion(newData),
+  //   age: firebase.firestore.FieldValue.arrayUnion(newData),
   // })
 
   return (

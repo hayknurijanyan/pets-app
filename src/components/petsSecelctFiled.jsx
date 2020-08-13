@@ -64,10 +64,10 @@ export default function PetsSelectFiled(props) {
           onChange={handleChange}
         >
           <MenuItem>None</MenuItem>
-          {list.map((pet, index) => {
+          {list.map((animal, index) => {
             return (
-              <MenuItem key={(index += "asd")} value={pet}>
-                {pet}
+              <MenuItem key={(index += "asd")} value={animal}>
+                {animal}
               </MenuItem>
             );
           })}
