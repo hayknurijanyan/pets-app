@@ -1,13 +1,12 @@
-import React from 'react';
-import Posts from './posts';
+import React from "react";
+import Posts from "./posts";
 
-  function Newsfeed() {
-      
-    return (
-        <div >
-            <Posts />
-        </div>
-    );
+function Newsfeed() {
+  return (
+    <div>
+      <Posts />
+    </div>
+  );
 }
 
 export default Newsfeed;

@@ -7,8 +7,6 @@ import {
   CardMedia,
   CardContent,
   CardActions,
-  TextField,
-  Button,
 } from "@material-ui/core";
 import { Avatar, IconButton, Typography, Collapse } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -17,7 +15,6 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { red } from "@material-ui/core/colors";
 import image from "../images/dog.jpg";
-import EditPopover from "./editpopup";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,30 +37,9 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
-  comment: {
-    margin: 20,
-  },
-  commentText: {
-    marginLeft: 10,
-  },
-  commentInput: {
-    display: "flex",
-    flexDirection: "row",
-    margin: 15,
-    alignItems: "center",
-  },
-  addButton: {
-    width: 70,
-    height: 54,
-    marginBottom: 3,
-  },
-  commentLine: {
-    backgroundColor: "#fafafa",
-    // borderRadius: 5,
-  },
 }));
 
-export default function Post() {
+export default function CreatePost() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -79,7 +55,11 @@ export default function Post() {
             H
           </Avatar>
         }
-        action={<EditPopover />}
+        action={
+          <IconButton aria-label="settings">
+            <MoreVertIcon />
+          </IconButton>
+        }
         title="Hayk Nurijanyan"
         subheader="August 03, 2020"
       />
@@ -99,7 +79,6 @@ export default function Post() {
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <Typography>13</Typography>
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
@@ -113,46 +92,15 @@ export default function Post() {
         >
           <ExpandMoreIcon />
         </IconButton>
-        <Typography style={{ marginRight: 10 }}>Comments</Typography>
+        <Typography paragraph>Comments</Typography>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <div className={classes.commentInput}>
-          <TextField
-            id="outlined-full-width"
-            style={{ margin: 6 }}
-            placeholder="Write a comment"
-            margin="normal"
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="outlined"
-          />
-          <Button
-            className={classes.addButton}
-            variant="contained"
-            color="primary"
-          >
-            Add
-          </Button>
-        </div>
-        <Card className={classes.comment}>
-          <CardHeader
-            avatar={
-              <Avatar aria-label="recipe" className={classes.avatar}>
-                H
-              </Avatar>
-            }
-            action={<EditPopover />}
-            title="Hayk Nurijanyan"
-            subheader="August 03, 2020"
-          />
-          <CardContent className={classes.commentLine}>
-            <Typography className={classes.commentText}>
-              this is comments
-            </Typography>
-          </CardContent>
-        </Card>
+        <CardContent>
+          <Typography>this is comments</Typography>
+        </CardContent>
+        <CardContent>
+          <Typography>this is comments</Typography>
+        </CardContent>
       </Collapse>
     </Card>
   );

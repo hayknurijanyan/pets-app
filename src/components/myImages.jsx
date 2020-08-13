@@ -1,112 +1,107 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import {
-    catdog
-} from '../images/catdog.png';
-const tileData = [{
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import { catdog } from "../images/catdog.png";
+const tileData = [
+  {
     img: "https://coverfiles.alphacoders.com/927/92705.jpg",
     cols: 2,
-    title: "Image"
-
-},
-{
-    img: "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
+    title: "Image",
+  },
+  {
+    img:
+      "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
     cols: 1,
-    title: "Image"
-
-},
-{
-    img: "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
+    title: "Image",
+  },
+  {
+    img:
+      "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
     cols: 1,
-    title: "Image"
-
-},
-{
+    title: "Image",
+  },
+  {
     img: "https://coverfiles.alphacoders.com/927/92705.jpg",
     cols: 1,
-    title: "Image"
-
-},
-{
-    img: "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
+    title: "Image",
+  },
+  {
+    img:
+      "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
     cols: 1,
-    title: "Image"
-
-},
-{
-    img: "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
+    title: "Image",
+  },
+  {
+    img:
+      "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
     cols: 1,
-    title: "Image"
-
-},
-{
+    title: "Image",
+  },
+  {
     img: "https://coverfiles.alphacoders.com/927/92705.jpg",
     cols: 2,
-    title: "Image"
-
-},
-{
-    img: "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
+    title: "Image",
+  },
+  {
+    img:
+      "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
     cols: 1,
-    title: "Image"
-
-},
-{
-    img: "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
+    title: "Image",
+  },
+  {
+    img:
+      "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
     cols: 1,
-    title: "Image"
-
-},
-{
+    title: "Image",
+  },
+  {
     img: "https://coverfiles.alphacoders.com/927/92705.jpg",
     cols: 1,
-    title: "Image"
-
-},
-{
-    img: "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
+    title: "Image",
+  },
+  {
+    img:
+      "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
     cols: 1,
-    title: "Image"
-
-},
-{
-    img: "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
+    title: "Image",
+  },
+  {
+    img:
+      "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
     cols: 2,
-    title: "Image"
-
-},
-{
+    title: "Image",
+  },
+  {
     img: "https://coverfiles.alphacoders.com/927/92705.jpg",
     cols: 1,
-    title: "Image"
-
-},
-{
-    img: "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
+    title: "Image",
+  },
+  {
+    img:
+      "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
     cols: 1,
-    title: "Image"
-
-},
-{
-    img: "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
+    title: "Image",
+  },
+  {
+    img:
+      "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
     cols: 1,
-    title: "Image"
-
-}]
+    title: "Image",
+  },
+];
 const useStyles = makeStyles((theme) => ({
   root: {
-      margin: 10,
-      width: '45 rem',
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
+    margin: 10,
+    width: "45 rem",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
     backgroundColor: theme.palette.background.paper,
   },
   gridList: {
-    width: '80%',
+    width: "80%",
   },
 }));
 
