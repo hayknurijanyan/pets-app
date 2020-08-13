@@ -105,7 +105,6 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     marginTop: 20,
-    height: 1200,
     maxWidth: 720,
     marginBottom: 30,
   },
@@ -125,16 +124,6 @@ const useStyles = makeStyles({
   },
   title: {
     marginLeft: 30,
-  },
-  bio: {
-    display: "flex",
-    flexDirection: "column",
-    marginLeft: 30,
-    marginTop: 20,
-    marginBottom: 30,
-  },
-  pos: {
-    marginBottom: 12,
   },
 });
 
