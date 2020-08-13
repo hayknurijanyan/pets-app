@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
@@ -98,16 +99,16 @@ const tileData = [{
 }]
 const useStyles = makeStyles((theme) => ({
   root: {
-      margin: 10,
-      width: '45 rem',
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
+    margin: 10,
+    width: "45 rem",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
     backgroundColor: theme.palette.background.paper,
   },
   gridList: {
-    width: '80%',
+    width: "80%",
   },
   title: {
     color: theme.palette.primary.light,

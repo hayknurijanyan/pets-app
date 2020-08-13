@@ -1,24 +1,45 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  CardContent,
+  CardActions,
+  CardHeader,
+  Card,
+  Divider,
+} from "@material-ui/core";
+import { Typography, Button } from "@material-ui/core";
+import ImageAvatar from "./avatar";
+import EditPopover from "./editpopup";
 
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-    marginTop:20,
-    height:300
+    marginTop: 20,
+    height: 600,
+  },
+  content: {
+    display: "flex",
+    flexDirection: "row",
+    marginLeft: 30,
+    marginTop: 5,
   },
   bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)",
+  },
+  text: {
+    marginRight: 20,
   },
   title: {
-    fontSize: 14,
+    marginLeft: 30,
+  },
+  bio: {
+    display: "flex",
+    flexDirection: "column",
+    marginLeft: 30,
+    marginTop: 20,
+    marginBottom: 30,
   },
   pos: {
     marginBottom: 12,
@@ -31,49 +52,117 @@ export default function About() {
 
   return (
     <div>
-    <Card className={classes.root}>
-      <CardContent>
-        <Typography className={classes.title} color="primary" gutterBottom>
-          About Me
-        </Typography>
-        <Typography variant="h5" component="h2">
-          Name Surname
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          Yerevan
-        </Typography>
-        <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
-
-        <Card className={classes.root}>
+      <Card className={classes.root}>
+        <CardHeader
+          action={
+            <CardActions>
+              <Button size="small" variant="outlined" color="primary">
+                Edit
+              </Button>
+            </CardActions>
+          }
+          title={
+            <Typography className={classes.title} color="primary" variant="h5">
+              About Me
+            </Typography>
+          }
+        />
         <CardContent>
-          <Typography className={classes.title} color="primary" gutterBottom>
-            Pets
-          </Typography>
-          <Typography variant="h5" component="h2">
-            Dog
-          </Typography>
-          <Typography className={classes.pos} color="textSecondary">
-            adjective
-          </Typography>
-          <Typography variant="body2" component="p">
-            well meaning and kindly.
-            <br />
-            {'"a benevolent smile"'}
-          </Typography>
+          <div className={classes.bio}>
+            <Typography
+              className={classes.text}
+              variant="h6"
+              color="textSecondary"
+            >
+              Bio
+            </Typography>
+            <Typography variant="h6">
+              I am the best Physic in the world
+            </Typography>
+          </div>
+          <Divider />
+          <div className={classes.content}>
+            <Typography
+              className={classes.text}
+              variant="h6"
+              color="textSecondary"
+            >
+              Full Name
+            </Typography>
+            <Typography variant="h6">Albert Einstein</Typography>
+          </div>
+          <div className={classes.content}>
+            <Typography
+              className={classes.text}
+              variant="h6"
+              color="textSecondary"
+            >
+              Profession
+            </Typography>
+            <Typography variant="h6">Theoretical Physic</Typography>
+          </div>
+          <div className={classes.content}>
+            <Typography
+              className={classes.text}
+              variant="h6"
+              color="textSecondary"
+            >
+              City
+            </Typography>
+            <Typography variant="h6">Wurttemberg</Typography>
+          </div>
+          <div className={classes.content}>
+            <Typography
+              className={classes.text}
+              variant="h6"
+              color="textSecondary"
+            >
+              Country
+            </Typography>
+            <Typography variant="h6">German Empire</Typography>
+          </div>
+          <div className={classes.content}>
+            <Typography
+              className={classes.text}
+              variant="h6"
+              color="textSecondary"
+            >
+              Gender
+            </Typography>
+            <Typography variant="h6">Male</Typography>
+          </div>
+          <div className={classes.content}>
+            <Typography
+              className={classes.text}
+              variant="h6"
+              color="textSecondary"
+            >
+              Birthday
+            </Typography>
+            <Typography variant="h6">March 14, 1879</Typography>
+          </div>
+          <div className={classes.content}>
+            <Typography
+              className={classes.text}
+              variant="h6"
+              color="textSecondary"
+            >
+              E-mail
+            </Typography>
+            <Typography variant="h6">einstein@gmail.com</Typography>
+          </div>
+          <div className={classes.content}>
+            <Typography
+              className={classes.text}
+              variant="h6"
+              color="textSecondary"
+            >
+              Phone Number
+            </Typography>
+            <Typography variant="h6">+188 900 999 88</Typography>
+          </div>
         </CardContent>
-        <CardActions>
-          <Button size="small">Learn More</Button>
-        </CardActions>
       </Card>
-      </div>
+    </div>
   );
 }
