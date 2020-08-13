@@ -16,8 +16,10 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { red } from "@material-ui/core/colors";
-import image from "../images/dog.jpg";
 import EditPopover from "./editpopup";
+import { Link } from "react-router-dom";
+import image from "../images/dog.jpg";
+import ImageAvatar from "./avatar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,8 +39,13 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: "rotate(180deg)",
   },
+  name: {
+    textDecoration: "none",
+    color: "black",
+  },
   avatar: {
     backgroundColor: red[500],
+    textDecoration: "none",
   },
   comment: {
     margin: 20,
@@ -75,16 +82,30 @@ export default function Post() {
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
+          <ImageAvatar
+            component={Link}
+            to="/profile/"
+            aria-label="recipe"
+            className={classes.avatar}
+          >
             H
-          </Avatar>
+          </ImageAvatar>
         }
         action={<EditPopover />}
-        title="Hayk Nurijanyan"
+        title={
+          <Typography
+            className={classes.name}
+            component={Link}
+            to="/profile"
+            variant="h6"
+          >
+            Albert Einstein
+          </Typography>
+        }
         subheader="August 03, 2020"
       />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body1" color="black" component="p">
           Every dog owner has their own fascinating stories about their lovable
           pets.
         </Typography>
@@ -97,7 +118,7 @@ export default function Post() {
       />
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+          <FavoriteIcon color="secondary" />
         </IconButton>
         <Typography>13</Typography>
         <IconButton aria-label="share">
@@ -113,7 +134,9 @@ export default function Post() {
         >
           <ExpandMoreIcon />
         </IconButton>
-        <Typography style={{ marginRight: 10 }}>Comments</Typography>
+        <Typography style={{ marginRight: 10 }} color="textSecondary">
+          Comments 3
+        </Typography>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <div className={classes.commentInput}>

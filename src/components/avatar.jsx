@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,14 +20,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ImageAvatar() {
+export function ImageAvatarSmall() {
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
       <Avatar
-        alt="Hayk Nurijanyan"
-        src="https://media-exp1.licdn.com/dms/image/C5603AQFznXFf91-MGw/profile-displayphoto-shrink_200_200/0?e=1597276800&v=beta&t=JKeCnPy_jbnb02_JQ75Be9Aodr5D4FLaIVDBte1qr7w"
+        component={Link}
+        to="/profile"
+        alt="Albert Einstein"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRp2JhPKPKlf3S80BQXaCDuK0bsOgVgK8mc5g&usqp=CAU"
+        className={classes.small}
+      />
+    </div>
+  );
+}
+export default function ImageAvatar() {
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      <Avatar
+        component={Link}
+        to="/profile"
+        alt="Albert Einstein"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRp2JhPKPKlf3S80BQXaCDuK0bsOgVgK8mc5g&usqp=CAU"
         className={classes.large}
       />
     </div>

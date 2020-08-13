@@ -58,7 +58,7 @@ export default function MediaCard() {
         <div className={classes.avatar}>
           <ImageAvatar />
           <Typography gutterBottom variant="h5" component="h2">
-            Hayk Nurijanyan
+            Albert Einstein
             <Typography variant="body2" color="textSecondary" component="p">
               <div className={classes.popups}>
                 <Popup />
