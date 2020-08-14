@@ -62,7 +62,6 @@ const Petfinder = () => {
   const handleChange = (e) => {
     setSearchVal(e.target.value);
   };
-
   const handleClick = () => {
     if (searchVal) {
       const sVal = searchVal.toLowerCase();

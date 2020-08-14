@@ -1,7 +1,7 @@
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
-import { db, auth } from "../../firebase";
+import { db, auth, storage } from "../../firebase";
 import * as firebase from "firebase";
 import PetsSelectFiled from "./petsSecelctFiled";
 import { useDispatch, useSelector } from "react-redux";
@@ -90,7 +90,7 @@ function SignUp() {
   const [avatar, setAvata] = useState("");
   const [photos, setPhotos] = useState("");
   const [coverPhoto, setCoverPhoto] = useState("");
-
+  log("storage", storage);
   // log("------------", db);
 
   // create in user  collection an array
@@ -99,7 +99,7 @@ function SignUp() {
     name: "",
     petsGender: "",
     breed: "",
-    photo: "",
+    url: "",
     age: 0,
     behavior: "",
   });

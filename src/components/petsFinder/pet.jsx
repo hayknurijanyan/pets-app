@@ -63,6 +63,9 @@ export default function Pet(props) {
                       <Grid item xs container direction="column" spacing={2}>
                         <Grid item xs>
                           <Typography gutterBottom variant="h6">
+                            {"pet Name"}
+                          </Typography>
+                          <Typography gutterBottom variant="h6">
                             {obj.pet}
                           </Typography>
                           <Typography className={classes.row}>
