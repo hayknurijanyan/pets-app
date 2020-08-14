@@ -21,7 +21,7 @@ import image from "../../images/dog.jpg";
 import ImageAvatar from "../avatar";
 import PostImage from "./postimage";
 import Comments from "./comments";
-import EditPopover from "./editpopup";
+import EditPopup from "./editpopup";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -95,7 +95,7 @@ export default function Post(props) {
             H
           </ImageAvatar>
         }
-        action={<EditPopover />}
+        action={<EditPopup onDelete={props.onDelete} />}
         title={
           <Typography
             className={classes.name}
