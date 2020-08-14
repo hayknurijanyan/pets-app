@@ -16,7 +16,7 @@ import {
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import Post from "./post";
+import Post from "./newsfeed/post";
 import { Link } from "react-router-dom";
 import Logout from "./logout";
 import ImageAvatar from "./avatar";

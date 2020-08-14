@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import SignIn from "./components/signin";
 import SignUp from "./components/signup";
-import Newsfeed from "./components/newsfeed";
+import Newsfeed from "./components/newsfeed/newsfeed";
 import {
   BrowserRouter as Router,
   Switch,
