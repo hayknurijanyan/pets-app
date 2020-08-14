@@ -5,7 +5,7 @@ import { Avatar, IconButton, Typography, Collapse } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 import EditPopover from "./editpopup";
 import image from "../../images/dog.jpg";
-import ImageAvatar from "../avatar";
+import ImageAvatar from "../profile/avatar";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {

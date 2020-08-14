@@ -9,9 +9,9 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Toolbar, Grid, Divider } from "@material-ui/core";
 import ImageAvatar from "./avatar";
-import Popup from "./popup";
-import Message from "./message";
-import image from "../images/dg1.jpg";
+import Popup from "../popup";
+import Message from "../message";
+import image from "../../images/dg1.jpg";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({

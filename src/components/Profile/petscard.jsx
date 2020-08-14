@@ -9,8 +9,8 @@ import {
 } from "@material-ui/core";
 import { Typography, Button } from "@material-ui/core";
 import ImageAvatar from "./avatar";
-import EditPopover from "./newsfeed/editpopup";
-import Pet from "./pet";
+import EditPopover from "../newsfeed/editpopup";
+import Pet from "../pet";
 
 const useStyles = makeStyles({
   root: {

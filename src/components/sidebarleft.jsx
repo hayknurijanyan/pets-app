@@ -19,7 +19,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Post from "./newsfeed/post";
 import { Link } from "react-router-dom";
 import Logout from "./logout";
-import ImageAvatar from "./avatar";
+import ImageAvatar from "./profile/avatar";
 
 const drawerWidth = 260;
 

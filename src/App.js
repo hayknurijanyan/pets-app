@@ -9,7 +9,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import Profile from "./components/profile";
+import Profile from "./components/profile/profile";
 import Friends from "./components/friends";
 import Navbar from "./components/navbar";
 import Services from "./components/services";

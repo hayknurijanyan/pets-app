@@ -5,7 +5,7 @@ import { Card, CardContent, TextField, Button } from "@material-ui/core";
 import { Avatar, IconButton, Typography, Collapse } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { red } from "@material-ui/core/colors";
-import ImageAvatar from "../avatar";
+import ImageAvatar from "../profile/avatar";
 import ImageIcon from "@material-ui/icons/Image";
 
 const useStyles = makeStyles((theme) => ({

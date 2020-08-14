@@ -23,6 +23,7 @@ const Posts = (props) => {
         name={props.name}
         isliked={props.isliked}
         color={props.color}
+        onDelete={props.onDelete}
       />
     </div>
   );

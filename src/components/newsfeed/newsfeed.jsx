@@ -6,7 +6,7 @@ class Newsfeed extends Component {
   state = {
     posts: [
       {
-        id: 1,
+        id: 33,
         date: "August 20 2020",
         name: "Johan Sebastian Bach",
         content: "Something I want to learn about dog",

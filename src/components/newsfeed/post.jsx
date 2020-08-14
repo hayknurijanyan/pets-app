@@ -18,10 +18,10 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { red } from "@material-ui/core/colors";
 import { Link } from "react-router-dom";
 import image from "../../images/dog.jpg";
-import ImageAvatar from "../avatar";
+import ImageAvatar from "../profile/avatar";
 import PostImage from "./postimage";
 import Comments from "./comments";
-import EditPopover from "./editpopup";
+import EditPopup from "./editpopup";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -95,7 +95,7 @@ export default function Post(props) {
             H
           </ImageAvatar>
         }
-        action={<EditPopover />}
+        action={<EditPopup onDelete={props.onDelete} />}
         title={
           <Typography
             className={classes.name}

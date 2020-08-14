@@ -7,9 +7,8 @@ import "logo.svg";
 import { createStore } from "redux";
 import allReducers from "./reducers";
 import { Provider } from "react-redux";
-import { ThemeProvider } from '@material-ui/core/styles';
-import theme from './theme'
-
+import { ThemeProvider } from "@material-ui/core/styles";
+import theme from "./theme";
 
 export const store = createStore(
   allReducers,
