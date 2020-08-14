@@ -19,7 +19,7 @@ import { red } from "@material-ui/core/colors";
 import EditPopover from "./editpopup";
 import { Link } from "react-router-dom";
 import image from "../images/dog.jpg";
-import ImageAvatar from "./avatar";
+import ImageAvatar from "./Profile/avatar";
 
 const useStyles = makeStyles((theme) => ({
   root: {

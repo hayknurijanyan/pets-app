@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import { Card } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
@@ -53,11 +54,7 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>Bio</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <TextField defaultValue="Bio"></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -69,11 +66,7 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>Full name</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <TextField defaultValue="Full Name"></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -85,11 +78,7 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>Profession</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <TextField defaultValue="Profession"></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -101,11 +90,7 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>City</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <TextField defaultValue="City"></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -117,11 +102,7 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>Country</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <TextField defaultValue="Country"></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -133,11 +114,7 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>Gender</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <TextField defaultValue="Gender"></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -149,11 +126,7 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>Birthday</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <TextField defaultValue="Birthday"></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -165,11 +138,7 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>E-mail</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <TextField defaultValue="E-mail"></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -181,11 +150,7 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>Phone number</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </Typography>
+            <TextField defaultValue="Phone number"></TextField>
           </AccordionDetails>
         </Accordion>
       </div>

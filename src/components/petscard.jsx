@@ -8,7 +8,7 @@ import {
   Divider,
 } from "@material-ui/core";
 import { Typography, Button } from "@material-ui/core";
-import ImageAvatar from "./avatar";
+import ImageAvatar from "./Profile/avatar";
 import EditPopover from "./editpopup";
 import Pet from "./pet";
 
