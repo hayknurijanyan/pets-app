@@ -58,6 +58,7 @@ function CreatePost(props) {
           <div className={classes.main}>
             <ImageAvatar>H</ImageAvatar>
             <TextField
+              value={props.value}
               onChange={props.onChange}
               id="outlined-full-width"
               style={{ margin: 6 }}
