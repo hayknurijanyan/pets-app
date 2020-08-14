@@ -1,11 +1,11 @@
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
-import { db, auth } from "../firebase";
+import { db, auth } from "../../firebase";
 import * as firebase from "firebase";
 import PetsSelectFiled from "./petsSecelctFiled";
 import { useDispatch, useSelector } from "react-redux";
-import { isUserAction } from "../actions";
+import { isUserAction } from "../../actions";
 
 import {
   Avatar,
@@ -96,13 +96,12 @@ function SignUp() {
   // create in user  collection an array
 
   const [petInfo, setPetInfo] = useState({
-    petType: "",
+    name: "",
+    petsGender: "",
     breed: "",
     photo: "",
     age: 0,
     behavior: "",
-    petLocation: "",
-    owner: "",
   });
 
   const isUser = useSelector((state) => state.isUser); // ստեղ արդեն ունես isUser փոփոխականը որը կարաս get անես app ի ցանկացած մասից useSelector ով
@@ -122,7 +121,7 @@ function SignUp() {
     firebase
       .auth()
       .signOut()
-      .then(() => alert("logout succsess"))
+      // .then(() => alert("logout succsess"))
       .catch((e) => e.message);
   };
 
@@ -180,6 +179,7 @@ function SignUp() {
               .doc("9EjERLCKRVowoWKnC1j5")
               .update({
                 allPetsSearch: firebase.firestore.FieldValue.arrayUnion({
+                  owner: { firstName, lastName },
                   pet,
                   petInfo,
                   userId: data.user.uid,
@@ -191,13 +191,6 @@ function SignUp() {
       })
       .catch((err) => log(err));
   };
-
-  // for updating referance data
-  // db.collection("toDoes")
-  // .doc(auth.currentUser.uid)
-  // .update({
-  //   toDoItems: firebase.firestore.FieldValue.arrayUnion(newData),
-  // })
 
   return (
     <Grid container component="main" className={classes.root}>
