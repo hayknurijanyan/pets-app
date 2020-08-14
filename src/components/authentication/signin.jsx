@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { isUserAction } from "../actions";
+import { isUserAction } from "../../actions";
 import {
   Avatar,
   Button,

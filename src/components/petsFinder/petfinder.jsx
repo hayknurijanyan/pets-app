@@ -7,6 +7,7 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
+import Pet from "./pet";
 import {
   Typography,
   InputLabel,
@@ -43,6 +44,7 @@ const Petfinder = () => {
   const bull = <span className={classes.bullet}>•</span>;
   const [searchVal, setSearchVal] = useState("");
   const [searchArr, setSearchArr] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
 
   useEffect(() => {
     const ref = db.collection("petsFinder").doc("9EjERLCKRVowoWKnC1j5");
@@ -61,36 +63,51 @@ const Petfinder = () => {
     setSearchVal(e.target.value);
   };
 
-  const handleClick = () => {};
+  const handleClick = () => {
+    if (searchVal) {
+      const sVal = searchVal.toLowerCase();
+      const newArr = [...searchArr];
+      const myArr = newArr.filter((animal) => animal.pet.includes(sVal));
+      setSearchResult(myArr);
+    } else alert("write something");
+  };
 
   return (
-    <div>
-      <Toolbar />
-      <Card className={classes.root}>
-        <CardContent>
-          <FormControl fullWidth className={classes.margin} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-amount">Search</InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-amount"
-              value={searchVal}
-              labelWidth={60}
-              onChange={handleChange}
-            />
-          </FormControl>
-        </CardContent>
-        <CardActions className={classes.button}>
-          <Button
-            onClick={handleClick}
-            variant="contained"
-            color="secondary"
-            size="medium"
-          >
-            Search
-          </Button>
-        </CardActions>
-      </Card>
-      <AllPets />
-    </div>
+    <>
+      <div>
+        <Toolbar />
+        <Card className={classes.root}>
+          <CardContent>
+            <FormControl
+              fullWidth
+              className={classes.margin}
+              variant="outlined"
+            >
+              <InputLabel htmlFor="outlined-adornment-amount">
+                Search
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-amount"
+                value={searchVal}
+                labelWidth={60}
+                onChange={handleChange}
+              />
+            </FormControl>
+          </CardContent>
+          <CardActions className={classes.button}>
+            <Button
+              onClick={handleClick}
+              variant="contained"
+              color="secondary"
+              size="medium"
+            >
+              Search
+            </Button>
+          </CardActions>
+        </Card>
+        <Pet result={searchResult} />
+      </div>
+    </>
   );
 };
 
