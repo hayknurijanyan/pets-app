@@ -9,8 +9,8 @@ import ImageGridList from "./myImages";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Friends from "../friends";
 import AllPets from "../allpets";
-import FriendsCard from "../friendscard";
-import PetsCard from "../petscard";
+import FriendsCard from "./friendscard";
+import PetsCard from "./petscard";
 let log = console.log;
 const useStyles = makeStyles((theme) => ({
   card: {

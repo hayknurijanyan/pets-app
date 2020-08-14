@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Toolbar } from "@material-ui/core";
 import Post from "./post";
 
 const useStyles = makeStyles((theme) => ({
@@ -11,14 +10,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Posts = () => {
+const Posts = (props) => {
   const classes = useStyles();
   return (
     <div className={classes.content}>
-      <Toolbar />
-      <Post />
-      <Post />
-      <Post />
+      <Post
+        id={props.id}
+        onDelete={props.onDelete}
+        likeCount={props.likeCount}
+        text={props.value}
+        commentCount={props.commentCount}
+        name={props.name}
+        isliked={props.isliked}
+        color={props.color}
+        onDelete={props.onDelete}
+      />
     </div>
   );
 };

@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { Typography, Button } from "@material-ui/core";
 import ImageAvatar from "./avatar";
-import EditPopover from "../editpopup";
+import EditPopover from "../newsfeed/editpopup";
 import AboutEdit from "./AboutEdit";
 
 const useStyles = makeStyles({

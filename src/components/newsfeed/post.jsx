@@ -16,10 +16,12 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { red } from "@material-ui/core/colors";
-import EditPopover from "./editpopup";
 import { Link } from "react-router-dom";
-import image from "../images/dog.jpg";
-import ImageAvatar from "./Profile/avatar";
+import image from "../../images/dog.jpg";
+import ImageAvatar from "../profile/avatar";
+import PostImage from "./postimage";
+import Comments from "./comments";
+import EditPopup from "./editpopup";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,9 +72,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Post() {
+export default function Post(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  let color = "";
+  color = props.color === true ? "secondary" : "none";
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -91,7 +95,7 @@ export default function Post() {
             H
           </ImageAvatar>
         }
-        action={<EditPopover />}
+        action={<EditPopup onDelete={props.onDelete} />}
         title={
           <Typography
             className={classes.name}
@@ -99,28 +103,22 @@ export default function Post() {
             to="/profile"
             variant="h6"
           >
-            Albert Einstein
+            {props.name}
           </Typography>
         }
         subheader="August 03, 2020"
       />
       <CardContent>
         <Typography variant="body1" color="black" component="p">
-          Every dog owner has their own fascinating stories about their lovable
-          pets.
+          {props.text}
         </Typography>
       </CardContent>
-      <CardMedia
-        className={classes.media}
-        image="https://santansun.com/wp-content/uploads/2018/11/5b7fdeab1900001d035028dc.jpeg"
-        // image ={image}
-        title="Dog"
-      />
+      <PostImage />
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon color="secondary" />
+          <FavoriteIcon color={color} onClick={props.isliked} />
         </IconButton>
-        <Typography>13</Typography>
+        <Typography>{props.likeCount}</Typography>
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
@@ -135,7 +133,7 @@ export default function Post() {
           <ExpandMoreIcon />
         </IconButton>
         <Typography style={{ marginRight: 10 }} color="textSecondary">
-          Comments 3
+          Comments {props.commentCount}
         </Typography>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
@@ -159,23 +157,7 @@ export default function Post() {
             Add
           </Button>
         </div>
-        <Card className={classes.comment}>
-          <CardHeader
-            avatar={
-              <Avatar aria-label="recipe" className={classes.avatar}>
-                H
-              </Avatar>
-            }
-            action={<EditPopover />}
-            title="Hayk Nurijanyan"
-            subheader="August 03, 2020"
-          />
-          <CardContent className={classes.commentLine}>
-            <Typography className={classes.commentText}>
-              this is comments
-            </Typography>
-          </CardContent>
-        </Card>
+        <Comments />
       </Collapse>
     </Card>
   );

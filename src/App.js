@@ -2,14 +2,14 @@ import React from "react";
 import "./App.css";
 import SignIn from "./components/authentication/signin";
 import SignUp from "./components/authentication/signup";
-import Newsfeed from "./components/newsfeed";
+import Newsfeed from "./components/newsfeed/newsfeed";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
-import Profile from "./components/Profile/profile";
+import Profile from "./components/profile/profile";
 import Friends from "./components/friends";
 import Navbar from "./components/navbar";
 import Services from "./components/services";

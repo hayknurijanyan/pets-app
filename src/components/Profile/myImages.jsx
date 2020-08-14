@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { Typography, Button } from "@material-ui/core";
 import ImageAvatar from "./avatar";
-import EditPopover from "../editpopup";
+import EditPopover from "../newsfeed/editpopup";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import { catdog } from "../../images/catdog.png";
