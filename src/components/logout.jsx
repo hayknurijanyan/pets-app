@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db, auth } from "../firebase";
 import * as firebase from "firebase";
-import PetsSelectFiled from "./petsSecelctFiled";
+import PetsSelectFiled from "./authentication/petsSecelctFiled";
 
 import { useDispatch, useSelector } from "react-redux";
 import { isUserAction } from "../actions";
@@ -11,7 +11,7 @@ const handleLogout = () => {
   firebase
     .auth()
     .signOut()
-    .then(() => alert("logout succsess"))
+    // .then(() => alert("logout succsess"))
     .catch((e) => e.message);
   window.location.reload(false);
 };
