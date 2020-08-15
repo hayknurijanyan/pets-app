@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const dispatch = useDispatch();
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -52,13 +52,14 @@ function App() {
   // } else {
   //   log("user not loged");
   // }
-
   const isUser = useSelector((state) => state.isUser);
   log("user redux isUser", isUser);
 
-  if (isUser === undefined) {
-    log("asdasd");
-  }
+  // if (isUser.user === null) {
+  //   log("null");
+  // } else if (isUser.user === undefined) {
+  //   log("undefined");
+  // } else log(isUser.user);
 
   const classes = useStyles();
 
