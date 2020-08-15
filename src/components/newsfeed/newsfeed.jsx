@@ -1,22 +1,30 @@
 import React, { Component } from "react";
 import Posts from "./posts";
 import CreatePost from "./createpost";
+import { db } from "../../firebase";
+import { v4 as uuidv4 } from "uuid";
 
 class Newsfeed extends Component {
   state = {
-    posts: [
-      {
-        id: 33,
-        date: "August 20 2020",
-        name: "Johan Sebastian Bach",
-        content: "Something I want to learn about dog",
-        likes: 123,
-        liked: false,
-        comments: 3,
-      },
-    ],
+    posts: [],
     value: "",
   };
+
+  componentDidMount() {
+    db.collection("posts")
+      .where("likes", ">=", 0)
+      .orderBy("likes", "desc")
+      .get()
+      .then((snap) => {
+        let posts = [];
+        snap.forEach((doc) => {
+          const dbData = { ...doc.data() };
+          posts.push(dbData);
+          console.log("posts", posts);
+          this.setState({ posts });
+        });
+      });
+  }
 
   handleChange = (e) => {
     const value = e.target.value;
@@ -24,8 +32,14 @@ class Newsfeed extends Component {
   };
 
   handleSubmit = () => {
+    let today = new Date();
+    let hours = today.getHours();
+    String(today).slice(4, 21);
+    let ampm = hours >= 12 ? "PM" : "AM";
+    let dateTime = String(today).slice(4, 21) + " " + ampm;
+
     let posts = [...this.state.posts];
-    let newId = 0;
+    let newId = uuidv4();
     const newPost = this.state.value;
 
     if (!this.state.value) {
@@ -33,8 +47,8 @@ class Newsfeed extends Component {
     } else {
       if (posts.length === 0) {
         posts.push({
-          id: 1,
-          date: "August 20 2020",
+          id: newId,
+          date: dateTime,
           name: "Johan Sebastian Bach",
           content: newPost,
           likes: 0,
@@ -43,12 +57,9 @@ class Newsfeed extends Component {
         });
         this.setState({ posts, value: "" });
       } else {
-        this.state.posts[0].id
-          ? (newId = this.state.posts[0].id + 1)
-          : (posts = 1);
         posts.unshift({
-          id: 1,
-          date: "August 20 2020",
+          id: newId,
+          date: dateTime,
           name: "Johan Sebastian Bach",
           content: newPost,
           likes: 0,
@@ -62,6 +73,7 @@ class Newsfeed extends Component {
   };
 
   handleDelete = (id) => {
+    console.log(id);
     let posts = this.state.posts.filter((el) => el.id !== id);
     this.setState({ posts });
   };
@@ -90,6 +102,7 @@ class Newsfeed extends Component {
             key={el.id}
             id={el.id}
             onDelete={() => this.handleDelete(el.id)}
+            date={el.date}
             value={el.content}
             likeCount={el.likes}
             commentCount={el.comments}
