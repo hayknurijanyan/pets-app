@@ -12,6 +12,8 @@ import ImageAvatar from "./avatar";
 import EditPopover from "../newsfeed/editpopup";
 import AboutEdit from "./AboutEdit";
 
+//some comments to see
+
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
