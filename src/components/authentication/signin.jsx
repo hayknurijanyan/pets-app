@@ -79,8 +79,6 @@ function SignIn() {
     });
   }, []);
 
-  log("redux user", isUser);
-
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };

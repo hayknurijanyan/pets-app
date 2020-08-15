@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import SignIn from "./components/authentication/signin";
 import SignUp from "./components/authentication/signup";
@@ -19,9 +19,11 @@ import SidebarLeft from "./components/sidebarleft";
 import SidebarRight from "./components/sidebarright";
 import NotFound from "./components/notfound";
 import Users from "./components/users";
-import { useSelector } from "react-redux";
 import firebase from "firebase";
 import Logout from "./components/logout";
+
+import { useDispatch, useSelector } from "react-redux";
+import { isUserAction } from "./actions";
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
@@ -33,22 +35,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
-  const user = firebase.auth().currentUser;
+  const dispatch = useDispatch();
+  const [user, setUser] = useState(null);
 
-  if (user) {
-    log("currentuser", user);
-  } else {
-    log("user not loged");
-  }
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(isUserAction(user));
+      } else log("redux not done");
+    });
+  }, []);
+
+  // const user = firebase.auth().currentUser;
+  // if (user) {
+  //   log("currentuser", user);
+  // } else {
+  //   log("user not loged");
+  // }
 
   const isUser = useSelector((state) => state.isUser);
-  log("user redux", isUser);
-  log("state", isUser);
+  log("user redux isUser", isUser);
 
-  const userStatus = `User login status is ${isUser}`;
+  if (isUser === undefined) {
+    log("asdasd");
+  }
+
   const classes = useStyles();
 
-  return user ? ( //checking if the user is Loged in
+  return isUser ? ( //checking if the user is Loged in
     <Router>
       <Navbar />
       <div className={classes.container}>

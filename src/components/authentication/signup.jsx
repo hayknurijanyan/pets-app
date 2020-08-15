@@ -91,8 +91,6 @@ function SignUp() {
   const [photos, setPhotos] = useState("");
   const [coverPhoto, setCoverPhoto] = useState("");
 
-  log("storage", storage);
-
   // create in user  collection an array
   // setMyState({
   //   ...myState,
