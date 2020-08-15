@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../firebase";
-import { Toolbar } from "@material-ui/core";
+import { Toolbar, Switch } from "@material-ui/core";
 import AllPets from "../allpets";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -8,6 +8,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Pet from "./pet";
+import { Router, Switch as Switched, Route, Redirect } from "react-router-dom";
 import {
   Typography,
   InputLabel,
@@ -92,6 +93,10 @@ const Petfinder = () => {
                 onChange={handleChange}
               />
             </FormControl>
+            <Switched>
+              <Route path="pathName/:searchValue" component={Pet} />
+            </Switched>
+            {/* <Pet result={searchResult} /> */}
           </CardContent>
           <CardActions className={classes.button}>
             <Button

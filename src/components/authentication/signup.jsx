@@ -90,16 +90,21 @@ function SignUp() {
   const [avatar, setAvata] = useState("");
   const [photos, setPhotos] = useState("");
   const [coverPhoto, setCoverPhoto] = useState("");
+
   log("storage", storage);
-  // log("------------", db);
 
   // create in user  collection an array
+  // setMyState({
+  //   ...myState,
+  //   propB: false
+  // });
 
   const [petInfo, setPetInfo] = useState({
     name: "",
     petsGender: "",
     breed: "",
-    url: "",
+    url:
+      "https://images.photowall.com/products/57205/golden-retriever.jpg?h=699&q=85",
     age: 0,
     behavior: "",
   });
