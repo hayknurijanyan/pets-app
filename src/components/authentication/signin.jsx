@@ -69,10 +69,11 @@ function SignIn() {
   const [user, setUser] = useState(null);
   const isUser = useSelector((state) => state.isUser); // ստեղ արդեն ունես isUser փոփոխականը որը կարաս get անես app ի ցանկացած մասից useSelector ով
   const dispatch = useDispatch();
+
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        dispatch(isUserAction());
+        dispatch(isUserAction(user));
       } else {
         log("redux not done");
       }

@@ -4,7 +4,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
 
 let log = console.log;
 
@@ -39,7 +39,15 @@ export default function PetsSelectFiled(props) {
       });
   }, []);
 
-  const handleChange = (event) => {
+  // const onFileChange = async (e) => {
+  //   const file = e.target.files[0];
+  //   const storageRef = storage.ref();
+  //   const fileRef = storageRef.child(file.name);
+  //   await fileRef.put(file);
+  //   setFileUrl(await fileRef.getDownloadURL());
+  // };
+
+  const handleChange = async (event) => {
     props.onHandlePetSet(event.target.value);
   };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../firebase";
 import { Toolbar, Switch } from "@material-ui/core";
-import AllPets from "../allpets";
+import EveryPet from "./everyPet";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -48,7 +48,7 @@ const Petfinder = () => {
   const [searchResult, setSearchResult] = useState([]);
 
   useEffect(() => {
-    const ref = db.collection("petsFinder").doc("9EjERLCKRVowoWKnC1j5");
+    const ref = db.collection("petsFinder").doc("eO9YaFFJToyZ4Me5uTe7");
     let collection = ref
       .get()
       .then((doc) => {
@@ -72,6 +72,12 @@ const Petfinder = () => {
     } else alert("write something");
   };
 
+  const handleDeleteClick = (index) => {
+    const newSearchResult = [...searchResult];
+    newSearchResult.splice(index, 1);
+    setSearchResult(newSearchResult);
+  };
+
   return (
     <>
       <div>
@@ -93,9 +99,9 @@ const Petfinder = () => {
                 onChange={handleChange}
               />
             </FormControl>
-            <Switched>
+            {/* <Switched>
               <Route path="pathName/:searchValue" component={Pet} />
-            </Switched>
+            </Switched> */}
             {/* <Pet result={searchResult} /> */}
           </CardContent>
           <CardActions className={classes.button}>
@@ -109,7 +115,8 @@ const Petfinder = () => {
             </Button>
           </CardActions>
         </Card>
-        <Pet result={searchResult} />
+        <Pet handleDeleteClick={handleDeleteClick} result={searchResult} />
+        {/* <EveryPet result={searchResult} /> */}
       </div>
     </>
   );

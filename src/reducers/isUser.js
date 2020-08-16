@@ -1,6 +1,6 @@
 const SIGN_IN = "SIGN_IN";
 
-const userReduser = (state = null, action) => {
+const userReducer = (state = { user: null }, action) => {
   switch (action.type) {
     case SIGN_IN:
       return {
@@ -11,4 +11,4 @@ const userReduser = (state = null, action) => {
   }
 };
 
-export default userReduser;
+export default userReducer;

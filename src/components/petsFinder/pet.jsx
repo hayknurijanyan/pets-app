@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import DeleteIcon from "@material-ui/icons/Delete";
 import {
   Box,
   ButtonBase,
@@ -35,19 +36,19 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "100%",
     maxHeight: "100%",
   },
+  button: {
+    marginLeft: "10px",
+  },
 }));
 
 export default function Pet(props) {
   const classes = useStyles();
   const { searchValue } = useParams();
 
-  log("props.result pet", props.result.pet);
-  log("props", props);
-
   return (
     <div>
       {props.result.length
-        ? props.result.map((obj) => {
+        ? props.result.map((obj, index) => {
             return (
               <div key={"asd" + 1} className={classes.root}>
                 <Paper className={classes.paper}>
@@ -57,7 +58,7 @@ export default function Pet(props) {
                         <img
                           className={classes.img}
                           alt="complex"
-                          src={obj.petInfo.url}
+                          src={obj.defaultPetUrl}
                         />
                       </ButtonBase>
                     </Grid>
@@ -94,6 +95,15 @@ export default function Pet(props) {
                           m={1}
                           bgcolor="background.paper"
                         >
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            className={classes.button}
+                            startIcon={<DeleteIcon />}
+                            onClick={() => props.handleDeleteClick(index)}
+                          >
+                            Delete
+                          </Button>
                           <Button variant="contained" color="primary">
                             Contact
                           </Button>
