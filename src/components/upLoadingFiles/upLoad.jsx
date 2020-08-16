@@ -63,7 +63,7 @@ function UpLoad() {
   //   };
   const a = "asd";
   useEffect(() => {
-    // log("fileU", fileU);
+    log("fileU", fileU);
     // const fetchUsers = async () => {
     //   const usersCollection = await db.collection("img").get();
     //   setUsers(
