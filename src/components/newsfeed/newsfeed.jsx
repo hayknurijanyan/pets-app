@@ -14,13 +14,13 @@ class Newsfeed extends Component {
     db.collection("posts")
       .where("id", ">=", 0)
       .orderBy("id", "desc")
+      .limit(20)
       .get()
       .then((snap) => {
         let posts = [];
         snap.forEach((doc) => {
           const dbData = { ...doc.data() };
           posts.push(dbData);
-          console.log("posts", posts);
           this.setState({ posts });
         });
       });
@@ -105,16 +105,26 @@ class Newsfeed extends Component {
   };
 
   handleDelete = (id) => {
-    console.log(id);
     let posts = this.state.posts.filter((el) => el.id !== id);
     this.setState({ posts });
     let postsDB = db.collection("posts").where("id", "==", id);
-    postsDB.get().then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
-        doc.ref.delete();
+    postsDB
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          doc.ref.delete();
+        });
+      })
+      .catch(function (error) {
+        // The document probably doesn't exist.
+        console.error("Error deleting document: ", error);
       });
-    });
   };
+
+  handleEdit = (id) => {
+    console.log("edit-id", id);
+  };
+
   handleLike = (el) => {
     if (el.liked) {
       el.liked = false;
@@ -139,6 +149,7 @@ class Newsfeed extends Component {
             key={el.id}
             id={el.id}
             onDelete={() => this.handleDelete(el.id)}
+            onEdit={() => this.handleEdit(el.id)}
             date={el.date}
             value={el.content}
             likeCount={el.likes}
