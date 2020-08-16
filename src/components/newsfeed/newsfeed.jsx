@@ -12,8 +12,8 @@ class Newsfeed extends Component {
 
   componentDidMount() {
     db.collection("posts")
-      .where("likes", ">=", 0)
-      .orderBy("likes", "desc")
+      .where("id", ">=", 0)
+      .orderBy("id", "desc")
       .get()
       .then((snap) => {
         let posts = [];
@@ -39,7 +39,7 @@ class Newsfeed extends Component {
     let dateTime = String(today).slice(4, 21) + " " + ampm;
 
     let posts = [...this.state.posts];
-    let newId = uuidv4();
+    let newId = Number(new Date());
     const newPost = this.state.value;
 
     if (!this.state.value) {
@@ -56,6 +56,22 @@ class Newsfeed extends Component {
           comments: 0,
         });
         this.setState({ posts, value: "" });
+        db.collection("posts")
+          .add({
+            id: newId,
+            date: dateTime,
+            name: "Johan Sebastian Bach",
+            content: newPost,
+            likes: 0,
+            liked: false,
+            comments: 0,
+          })
+          .then(function (docRef) {
+            console.log("Document written with ID: ", docRef.id);
+          })
+          .catch(function (error) {
+            console.error("Error adding document: ", error);
+          });
       } else {
         posts.unshift({
           id: newId,
@@ -67,7 +83,22 @@ class Newsfeed extends Component {
           comments: 0,
         });
         this.setState({ posts, value: "" });
-        console.log(posts);
+        db.collection("posts")
+          .add({
+            id: newId,
+            date: dateTime,
+            name: "Johan Sebastian Bach",
+            content: newPost,
+            likes: 0,
+            liked: false,
+            comments: 0,
+          })
+          .then(function (docRef) {
+            console.log("Document written with ID: ", docRef.id);
+          })
+          .catch(function (error) {
+            console.error("Error adding document: ", error);
+          });
       }
     }
   };
@@ -78,7 +109,6 @@ class Newsfeed extends Component {
     this.setState({ posts });
   };
   handleLike = (el) => {
-    console.log(`Like button clicked ${el.id}`);
     if (el.liked) {
       el.liked = false;
       el.likes -= 1;
