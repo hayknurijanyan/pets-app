@@ -131,10 +131,16 @@ const useStyles = makeStyles({
 
 export default function About() {
   const [isSlider, setIsSlider] = useState("false");
+  const [imgIndex, setImgIndex] = useState(0);
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
   let toRender = null;
-  function toSlide() {
+  function toSlide(index) {
+    setImgIndex(index);
+    console.log(index);
+    setIsSlider(!isSlider);
+  }
+  function backToList() {
     setIsSlider(!isSlider);
   }
   if (isSlider) {
@@ -162,9 +168,13 @@ export default function About() {
           <CardContent className={classes.content}>
             <div className={classes.root}>
               <GridList cellHeight={160} className={classes.gridList} cols={3}>
-                {tileData.map((tile) => (
+                {tileData.map((tile, index) => (
                   <GridListTile key={tile.img} cols={tile.cols}>
-                    <img src={tile.img} alt={tile.title} onClick={toSlide} />
+                    <img
+                      src={tile.img}
+                      alt={tile.title}
+                      onClick={() => toSlide(index)}
+                    />
                   </GridListTile>
                 ))}
               </GridList>
@@ -174,7 +184,14 @@ export default function About() {
       </div>
     );
   } else {
-    toRender = <PhotoSlider clickHandler={toSlide} images={tileData} />;
+    toRender = (
+      <PhotoSlider
+        clickHandler={toSlide}
+        images={tileData}
+        backClickHandler={backToList}
+        index={imgIndex}
+      />
+    );
   }
 
   return toRender;
