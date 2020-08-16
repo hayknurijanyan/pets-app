@@ -32,6 +32,7 @@ class Newsfeed extends Component {
   };
 
   handleSubmit = () => {
+    const fullname = "Hayk Nurijanyan";
     let today = new Date();
     let hours = today.getHours();
     String(today).slice(4, 21);
@@ -49,7 +50,7 @@ class Newsfeed extends Component {
         posts.push({
           id: newId,
           date: dateTime,
-          name: "Johan Sebastian Bach",
+          name: fullname,
           content: newPost,
           likes: 0,
           liked: false,
@@ -60,7 +61,7 @@ class Newsfeed extends Component {
           .add({
             id: newId,
             date: dateTime,
-            name: "Johan Sebastian Bach",
+            name: fullname,
             content: newPost,
             likes: 0,
             liked: false,
@@ -76,7 +77,7 @@ class Newsfeed extends Component {
         posts.unshift({
           id: newId,
           date: dateTime,
-          name: "Johan Sebastian Bach",
+          name: fullname,
           content: newPost,
           likes: 0,
           liked: false,
@@ -87,7 +88,7 @@ class Newsfeed extends Component {
           .add({
             id: newId,
             date: dateTime,
-            name: "Johan Sebastian Bach",
+            name: fullname,
             content: newPost,
             likes: 0,
             liked: false,
@@ -107,6 +108,12 @@ class Newsfeed extends Component {
     console.log(id);
     let posts = this.state.posts.filter((el) => el.id !== id);
     this.setState({ posts });
+    let postsDB = db.collection("posts").where("id", "==", id);
+    postsDB.get().then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        doc.ref.delete();
+      });
+    });
   };
   handleLike = (el) => {
     if (el.liked) {

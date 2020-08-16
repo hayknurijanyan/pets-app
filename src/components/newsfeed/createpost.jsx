@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card, CardContent, TextField, Button } from "@material-ui/core";
@@ -7,12 +7,20 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { red } from "@material-ui/core/colors";
 import ImageAvatar from "../profile/avatar";
 import ImageIcon from "@material-ui/icons/Image";
+import Picker from "emoji-picker-react";
+import Emoji from "./emoji";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     justifyContent: "center",
     marginTop: 90,
+  },
+  iconbuttons: {
+    display: "flex",
+    flexDirection: "row",
+    marginRight: 2,
+    alignItems: "center",
   },
   buttons: {
     marginLeft: 80,
@@ -72,10 +80,15 @@ function CreatePost(props) {
             />
           </div>
           <div className={classes.buttons}>
-            <Button variant="outlined" onClick={props.addPost}>
-              <ImageIcon />
-              <Typography className={classes.photobutton}>Add Photo</Typography>
-            </Button>
+            <div className={classes.iconbuttons}>
+              <Button variant="outlined" onClick={props.addPost}>
+                <ImageIcon />
+                <Typography className={classes.photobutton}>
+                  Add Photo
+                </Typography>
+              </Button>
+              <Emoji />
+            </div>
             <Button variant="contained" color="primary" onClick={props.addPost}>
               Post
             </Button>
