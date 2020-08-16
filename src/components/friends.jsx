@@ -28,7 +28,7 @@ function Friends() {
     const ref = db.collection("users").doc("asd");
     const collection = ref.get();
     const a = collection.then((asd) => asd);
-    log("db result", a);
+    // log("db result", a);
   });
 
   const isLogged = useSelector((state) => state.isLogged);

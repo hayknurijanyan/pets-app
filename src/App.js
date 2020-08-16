@@ -24,6 +24,7 @@ import Logout from "./components/logout";
 
 import { useDispatch, useSelector } from "react-redux";
 import { isUserAction } from "./actions";
+import Loader from "./components/loader";
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
@@ -35,16 +36,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
-  const dispatch = useDispatch();
-  // const [user, setUser] = useState(null);
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        dispatch(isUserAction(user));
-      } else log("redux not done");
-    });
-  }, []);
+  // useEffect(() => {
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       dispatch(isUserAction(user));
+  //     } else {
+  //       log("not found");
+  //     }
+  //   });
+  // }, []);
 
   // const user = firebase.auth().currentUser;
   // if (user) {
@@ -52,18 +54,22 @@ function App() {
   // } else {
   //   log("user not loged");
   // }
-  const isUser = useSelector((state) => state.isUser);
-  log("user redux isUser", isUser);
-
-  // if (isUser.user === null) {
-  //   log("null");
-  // } else if (isUser.user === undefined) {
-  //   log("undefined");
-  // } else log(isUser.user);
+  const isUser = useSelector((state) => state.isUser.user);
+  log("user isUser state", isUser);
 
   const classes = useStyles();
 
-  return isUser ? ( //checking if the user is Loged in
+  return isUser === null ? ( //checking if the user is Loged in
+    <Router>
+      <Navbar />
+      <Switch>
+        <Route path="/signin" component={SignIn} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/" component={SignIn} />
+        {/* <Redirect to='notfound'/> */}
+      </Switch>
+    </Router>
+  ) : (
     <Router>
       <Navbar />
       <div className={classes.container}>
@@ -89,18 +95,12 @@ function App() {
         </div>
       </div>
     </Router>
-  ) : (
-    //else
-    <Router>
-      <Navbar />
-      <Switch>
-        <Route path="/signin" component={SignIn} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/" component={SignIn} />
-        {/* <Redirect to='notfound'/> */}
-      </Switch>
-    </Router>
   );
+  // ) : (
+  //   <Router>
+  //     <Loader />
+  //   </Router>
+  // );
 }
 
 export default App;

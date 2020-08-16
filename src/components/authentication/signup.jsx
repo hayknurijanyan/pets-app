@@ -6,7 +6,8 @@ import * as firebase from "firebase";
 import PetsSelectFiled from "./petsSecelctFiled";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserAction } from "../../actions";
-
+import SetDefaultPictureUrl from "./setDefaultPictureUrl";
+// import Upload from "../upLoadingFiles/upLoad";
 import {
   Avatar,
   Button,
@@ -84,12 +85,23 @@ function SignUp() {
     country: "",
     city: "",
   });
+
   const [contactNumber, setContactNumber] = useState("");
   const [maleFemale, setMaleFemale] = useState("");
   const [profession, setProfession] = useState("");
   const [avatar, setAvata] = useState("");
   const [photos, setPhotos] = useState("");
   const [coverPhoto, setCoverPhoto] = useState("");
+  const [defaultPetUrl, setDefaultPetUrl] = useState("");
+  const [petInfo, setPetInfo] = useState({
+    name: "",
+    petsGender: "",
+    breed: "",
+    age: 0,
+    behavior: "",
+  });
+  const isUser = useSelector((state) => state.isUser); // ստեղ արդեն ունես isUser փոփոխականը որը կարաս get անես app ի ցանկացած մասից useSelector ով
+  const dispatch = useDispatch();
 
   // create in user  collection an array
   // setMyState({
@@ -97,29 +109,15 @@ function SignUp() {
   //   propB: false
   // });
 
-  const [petInfo, setPetInfo] = useState({
-    name: "",
-    petsGender: "",
-    breed: "",
-    url:
-      "https://images.photowall.com/products/57205/golden-retriever.jpg?h=699&q=85",
-    age: 0,
-    behavior: "",
-  });
-
-  const isUser = useSelector((state) => state.isUser); // ստեղ արդեն ունես isUser փոփոխականը որը կարաս get անես app ի ցանկացած մասից useSelector ով
-  const dispatch = useDispatch();
-
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        dispatch(isUserAction());
+        dispatch(isUserAction(user));
       } else {
         log("redux state.isUser is false");
       }
     });
   }, []);
-
   const handleLogout = () => {
     firebase
       .auth()
@@ -127,7 +125,6 @@ function SignUp() {
       // .then(() => alert("logout succsess"))
       .catch((e) => e.message);
   };
-
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -165,6 +162,7 @@ function SignUp() {
               profession,
               contactNumber,
               pet,
+              defaultPetUrl,
               userPetInfo: petInfo,
             },
           })
@@ -179,11 +177,12 @@ function SignUp() {
           // });
           .then(() => {
             db.collection("petsFinder")
-              .doc("9EjERLCKRVowoWKnC1j5")
+              .doc("eO9YaFFJToyZ4Me5uTe7")
               .update({
                 allPetsSearch: firebase.firestore.FieldValue.arrayUnion({
                   owner: { firstName, lastName },
                   pet,
+                  defaultPetUrl,
                   petInfo,
                   userId: data.user.uid,
                 }),
@@ -197,7 +196,6 @@ function SignUp() {
 
   return (
     <Grid container component="main" className={classes.root}>
-      {/* {log("user", user, "name", firstName, "sur", lastName, "email", email)} */}
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -239,6 +237,10 @@ function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <PetsSelectFiled onHandlePetSet={setPet} pet={pet} />
+                <SetDefaultPictureUrl
+                  onHandlePetUrlSet={setDefaultPetUrl}
+                  pet={pet}
+                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -295,6 +297,7 @@ function SignUp() {
             >
               Logout
             </Button>
+
             <Grid container justify="flex-end">
               <Grid item>
                 <Link href="signin" variant="body2">

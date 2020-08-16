@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function ImageAvatarSmall() {
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
       <Avatar
