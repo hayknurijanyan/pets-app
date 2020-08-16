@@ -22,6 +22,7 @@ const Posts = (props) => {
         commentCount={props.commentCount}
         name={props.name}
         isliked={props.isliked}
+        date={props.date}
         color={props.color}
         onDelete={props.onDelete}
       />

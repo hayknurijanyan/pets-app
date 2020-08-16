@@ -106,7 +106,7 @@ export default function Post(props) {
             {props.name}
           </Typography>
         }
-        subheader="August 03, 2020"
+        subheader={String(props.date)}
       />
       <CardContent>
         <Typography variant="body1" color="black" component="p">

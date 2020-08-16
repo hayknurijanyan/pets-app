@@ -1,22 +1,30 @@
 import React, { Component } from "react";
 import Posts from "./posts";
 import CreatePost from "./createpost";
+import { db } from "../../firebase";
+import { v4 as uuidv4 } from "uuid";
 
 class Newsfeed extends Component {
   state = {
-    posts: [
-      {
-        id: 33,
-        date: "August 20 2020",
-        name: "Johan Sebastian Bach",
-        content: "Something I want to learn about dog",
-        likes: 123,
-        liked: false,
-        comments: 3,
-      },
-    ],
+    posts: [],
     value: "",
   };
+
+  componentDidMount() {
+    db.collection("posts")
+      .where("id", ">=", 0)
+      .orderBy("id", "desc")
+      .get()
+      .then((snap) => {
+        let posts = [];
+        snap.forEach((doc) => {
+          const dbData = { ...doc.data() };
+          posts.push(dbData);
+          console.log("posts", posts);
+          this.setState({ posts });
+        });
+      });
+  }
 
   handleChange = (e) => {
     const value = e.target.value;
@@ -24,8 +32,15 @@ class Newsfeed extends Component {
   };
 
   handleSubmit = () => {
+    const fullname = "Hayk Nurijanyan";
+    let today = new Date();
+    let hours = today.getHours();
+    String(today).slice(4, 21);
+    let ampm = hours >= 12 ? "PM" : "AM";
+    let dateTime = String(today).slice(4, 21) + " " + ampm;
+
     let posts = [...this.state.posts];
-    let newId = 0;
+    let newId = Number(new Date());
     const newPost = this.state.value;
 
     if (!this.state.value) {
@@ -33,40 +48,74 @@ class Newsfeed extends Component {
     } else {
       if (posts.length === 0) {
         posts.push({
-          id: 1,
-          date: "August 20 2020",
-          name: "Johan Sebastian Bach",
+          id: newId,
+          date: dateTime,
+          name: fullname,
           content: newPost,
           likes: 0,
           liked: false,
           comments: 0,
         });
         this.setState({ posts, value: "" });
+        db.collection("posts")
+          .add({
+            id: newId,
+            date: dateTime,
+            name: fullname,
+            content: newPost,
+            likes: 0,
+            liked: false,
+            comments: 0,
+          })
+          .then(function (docRef) {
+            console.log("Document written with ID: ", docRef.id);
+          })
+          .catch(function (error) {
+            console.error("Error adding document: ", error);
+          });
       } else {
-        this.state.posts[0].id
-          ? (newId = this.state.posts[0].id + 1)
-          : (posts = 1);
         posts.unshift({
-          id: 1,
-          date: "August 20 2020",
-          name: "Johan Sebastian Bach",
+          id: newId,
+          date: dateTime,
+          name: fullname,
           content: newPost,
           likes: 0,
           liked: false,
           comments: 0,
         });
         this.setState({ posts, value: "" });
-        console.log(posts);
+        db.collection("posts")
+          .add({
+            id: newId,
+            date: dateTime,
+            name: fullname,
+            content: newPost,
+            likes: 0,
+            liked: false,
+            comments: 0,
+          })
+          .then(function (docRef) {
+            console.log("Document written with ID: ", docRef.id);
+          })
+          .catch(function (error) {
+            console.error("Error adding document: ", error);
+          });
       }
     }
   };
 
   handleDelete = (id) => {
+    console.log(id);
     let posts = this.state.posts.filter((el) => el.id !== id);
     this.setState({ posts });
+    let postsDB = db.collection("posts").where("id", "==", id);
+    postsDB.get().then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        doc.ref.delete();
+      });
+    });
   };
   handleLike = (el) => {
-    console.log(`Like button clicked ${el.id}`);
     if (el.liked) {
       el.liked = false;
       el.likes -= 1;
@@ -90,6 +139,7 @@ class Newsfeed extends Component {
             key={el.id}
             id={el.id}
             onDelete={() => this.handleDelete(el.id)}
+            date={el.date}
             value={el.content}
             likeCount={el.likes}
             commentCount={el.comments}
