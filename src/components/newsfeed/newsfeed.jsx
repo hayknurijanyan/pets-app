@@ -4,6 +4,9 @@ import CreatePost from "./createpost";
 import { db } from "../../firebase";
 import { v4 as uuidv4 } from "uuid";
 
+
+
+
 class Newsfeed extends Component {
   state = {
     posts: [],

@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
   CardHeader,
-  CardMedia,
   CardContent,
   CardActions,
   TextField,
@@ -14,10 +13,8 @@ import { Avatar, IconButton, Typography, Collapse } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { red } from "@material-ui/core/colors";
 import { Link } from "react-router-dom";
-import image from "../../images/dog.jpg";
 import ImageAvatar from "../profile/avatar";
 import PostImage from "./postimage";
 import Comments from "./comments";
