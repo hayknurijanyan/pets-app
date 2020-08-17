@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UpLoad() {
+function UpLoad(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [fileUrl, setFileUrl] = useState("");

@@ -13,7 +13,7 @@ function SetDefaultPictureUrl(props) {
         const fileRef = storageRef.child(`petPictures/${pet}.jpg`);
         setFileUrl(await fileRef.getDownloadURL());
       } catch (e) {
-        log(e.message);
+        // log(e.message);
       }
     };
     handleChange();
