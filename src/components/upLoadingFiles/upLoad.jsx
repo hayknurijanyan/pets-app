@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { fileUrlActionAsync } from "../../actions";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import SaveIcon from "@material-ui/icons/Save";
+import firebase from "firebase";
 import {
   Card,
   Toolbar,
@@ -27,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  button: {
+    margin: 10,
+  },
 }));
 
 function UpLoad() {
@@ -41,29 +46,26 @@ function UpLoad() {
     const fileRef = storageRef.child(file.name);
     await fileRef.put(file);
     setFileUrl(await fileRef.getDownloadURL());
-    if (fileUrl) {
-      dispatch(fileUrlActionAsync(fileUrl));
-    } else log("not url");
     alert("upload completed");
   };
 
-  const fileU = useSelector((state) => state);
-  log("fileU", fileU);
-  log("fileUrl", fileUrl);
-  //   const onSubmit = async (e) => {
-  //     e.preventDefault();
-  //     const username = e.target.username.value;
-  //     if (!username || !fileUrl) {
-  //       return;
-  //     }
-  //     await db.collection("users").doc(username).set({
-  //       name: username,
-  //       avatar: fileUrl,
-  //     });
-  //   };
-  const a = "asd";
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (!fileUrl) {
+      return;
+    }
+    const user = firebase.auth().currentUser;
+    if (user) {
+      db.collection("users").doc(user.uid).update({
+        avatar: fileUrl,
+      });
+      alert("completed");
+    } else {
+      log("user not found");
+    }
+  };
+
   useEffect(() => {
-    log("fileU", fileU);
     // const fetchUsers = async () => {
     //   const usersCollection = await db.collection("img").get();
     //   setUsers(
@@ -91,19 +93,32 @@ function UpLoad() {
         <Button
           variant="contained"
           color="primary"
+          component="span"
           className={classes.button}
+          size="small"
           startIcon={<CloudUploadIcon />}
         >
-          Upload file
+          Upload File
         </Button>
       </label>
+      <Button
+        onClick={onSubmit}
+        variant="contained"
+        color="primary"
+        size="small"
+        className={classes.button}
+        startIcon={<SaveIcon />}
+      >
+        Save
+      </Button>
 
       {/* <form onSubmit={onSubmit}>
         <input type="file" onChange={onFileChange} />
         <input type="text" name="username" placeholder="NAME" />
         <button>Submit</button>
-      </form>
-      <ul>
+      </form> */}
+
+      {/*<ul>
         {users.map((user) => {
           return (
             <li key={user.name}>

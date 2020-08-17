@@ -8,6 +8,8 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Pet from "./pet";
+import UpLoad from "../upLoadingFiles/upLoad";
+import FilterSelect from "./filterSelect";
 import { Router, Switch as Switched, Route, Redirect } from "react-router-dom";
 import {
   Typography,
@@ -71,12 +73,16 @@ const Petfinder = () => {
       setSearchResult(myArr);
     } else alert("write something");
   };
-
   const handleDeleteClick = (index) => {
     const newSearchResult = [...searchResult];
     newSearchResult.splice(index, 1);
     setSearchResult(newSearchResult);
   };
+
+  const handleFilterAge = () => {};
+  const handleFilterBreed = () => {};
+  const handleFilterName = () => {};
+  const handleFilterBehavior = () => {};
 
   return (
     <>
@@ -105,6 +111,27 @@ const Petfinder = () => {
             {/* <Pet result={searchResult} /> */}
           </CardContent>
           <CardActions className={classes.button}>
+            <FilterSelect
+              filterBy={"Age"}
+              searchResult={searchResult}
+              onAge={handleFilterAge}
+            />
+            <FilterSelect
+              filterBy={"Breed"}
+              searchResult={searchResult}
+              onBreed={handleFilterBreed}
+            />
+
+            <FilterSelect
+              filterBy={"Name"}
+              searchResult={searchResult}
+              onName={handleFilterName}
+            />
+            <FilterSelect
+              filterBy={"Behavior"}
+              searchResult={searchResult}
+              onBehavior={handleFilterBehavior}
+            />
             <Button
               onClick={handleClick}
               variant="contained"
@@ -115,6 +142,7 @@ const Petfinder = () => {
             </Button>
           </CardActions>
         </Card>
+        <UpLoad />
         <Pet handleDeleteClick={handleDeleteClick} result={searchResult} />
         {/* <EveryPet result={searchResult} /> */}
       </div>

@@ -76,7 +76,7 @@ export default function Pet(props) {
                               age: {obj.petInfo.age}
                             </Typography>
                             <Typography variant="body2" color="secondary">
-                              {`@${obj.pet}`}
+                              {`@${obj.petInfo.breed}`}
                             </Typography>
                           </Typography>
                           <Typography variant="body2" gutterBottom>
