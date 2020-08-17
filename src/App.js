@@ -18,7 +18,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import SidebarLeft from "./components/sidebarleft";
 import SidebarRight from "./components/sidebarright";
 import NotFound from "./components/notfound";
-import Users from "./components/users";
+import Users from "./components/displayUsers/users";
 import firebase from "firebase";
 import Logout from "./components/logout";
 
