@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card, CardContent, TextField, Button } from "@material-ui/core";
-import { Avatar, IconButton, Typography, Collapse } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Typography } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 import ImageAvatar from "../profile/avatar";
 import ImageIcon from "@material-ui/icons/Image";
-import Picker from "emoji-picker-react";
-import Emoji from "./emoji";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +48,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CreatePost(props) {
+  const [text, setText] = useState("");
+
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -78,6 +76,12 @@ function CreatePost(props) {
               }}
               variant="outlined"
             />
+            {/* <InputEmoji
+              value={props.value}
+              onChange={props.onChange}
+              cleanOnEnter
+              placeholder="What's on your mind"
+            /> */}
           </div>
           <div className={classes.buttons}>
             <div className={classes.iconbuttons}>
@@ -87,7 +91,6 @@ function CreatePost(props) {
                   Add Photo
                 </Typography>
               </Button>
-              <Emoji />
             </div>
             <Button variant="contained" color="primary" onClick={props.addPost}>
               Post
