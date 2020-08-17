@@ -1,16 +1,17 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Posts from "./posts";
 import CreatePost from "./createpost";
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
+import firebase from "firebase";
 import { v4 as uuidv4 } from "uuid";
+let log = console.log;
 
-class Newsfeed extends Component {
-  state = {
-    posts: [],
-    value: "",
-  };
+function Newsfeed() {
+  const [posts, setPosts] = useState([]);
+  const [value, setValue] = useState("");
+  const [fileUrl, setFileUrl] = useState("");
 
-  componentDidMount() {
+  useEffect(() => {
     db.collection("posts")
       .where("id", ">=", 0)
       .orderBy("id", "desc")
@@ -21,92 +22,85 @@ class Newsfeed extends Component {
         snap.forEach((doc) => {
           const dbData = { ...doc.data() };
           posts.push(dbData);
-          this.setState({ posts });
+          setPosts(posts);
         });
       });
-  }
+  }, []);
 
-  handleChange = (e) => {
+  const handleChange = (e) => {
     const value = e.target.value;
-    this.setState({ value });
+    setValue(value);
   };
 
-  handleSubmit = () => {
+  const onFileChange = async (e) => {
+    const file = e.target.files[0];
+    const storageRef = storage.ref();
+    const fileRef = storageRef.child(`postImgs/${file.name}`);
+    await fileRef.put(file);
+    setFileUrl(await fileRef.getDownloadURL());
+    alert("upload completed");
+  };
+
+  const handleSubmit = async (e) => {
     const fullname = "Hayk Nurijanyan";
+
     let today = new Date();
     let hours = today.getHours();
     String(today).slice(4, 21);
     let ampm = hours >= 12 ? "PM" : "AM";
     let dateTime = String(today).slice(4, 21) + " " + ampm;
-
-    let posts = [...this.state.posts];
+    console.log(dateTime);
+    let postsArray = [...posts];
     let newId = Number(new Date());
-    const newPost = this.state.value;
 
-    if (!this.state.value) {
-      alert("Please write something tom post");
+    const newPost = value;
+
+    if (!value) {
+      alert("Please write something to post");
     } else {
-      if (posts.length === 0) {
-        posts.push({
-          id: newId,
-          date: dateTime,
-          name: fullname,
-          content: newPost,
-          likes: 0,
-          liked: false,
-          comments: 0,
-        });
-        this.setState({ posts, value: "" });
-        db.collection("posts")
-          .add({
-            id: newId,
-            date: dateTime,
-            name: fullname,
-            content: newPost,
-            likes: 0,
-            liked: false,
-            comments: 0,
-          })
-          .then(function (docRef) {
-            console.log("Document written with ID: ", docRef.id);
-          })
-          .catch(function (error) {
-            console.error("Error adding document: ", error);
-          });
-      } else {
-        posts.unshift({
-          id: newId,
-          date: dateTime,
-          name: fullname,
-          content: newPost,
-          likes: 0,
-          liked: false,
-          comments: 0,
-        });
-        this.setState({ posts, value: "" });
-        db.collection("posts")
-          .add({
-            id: newId,
-            date: dateTime,
-            name: fullname,
-            content: newPost,
-            likes: 0,
-            liked: false,
-            comments: 0,
-          })
-          .then(function (docRef) {
-            console.log("Document written with ID: ", docRef.id);
-          })
-          .catch(function (error) {
-            console.error("Error adding document: ", error);
-          });
+      postsArray.unshift({
+        id: newId,
+        date: dateTime,
+        name: fullname,
+        content: newPost,
+        likes: 0,
+        liked: false,
+        comments: 0,
+        postImg: fileUrl,
+      });
+      //----------------------------------------------------------
+      e.preventDefault();
+      if (!fileUrl) {
+        return;
       }
+      const user = firebase.auth().currentUser;
+      if (user) {
+        db.collection("posts").add({
+          postImg: fileUrl,
+          userID: user.uid,
+          id: newId,
+          date: dateTime,
+          name: fullname,
+          content: newPost,
+          likes: 0,
+          liked: false,
+          comments: 0,
+        });
+        alert("completed");
+      } else {
+        log("user not found");
+      }
+      //------------------------------------------------------------
+      setPosts(postsArray);
+      setValue(value);
+      setFileUrl(fileUrl);
     }
   };
 
-  handleDelete = (id) => {
-    let posts = this.state.posts.filter((el) => el.id !== id);
-    this.setState({ posts });
+  const handleDelete = (id) => {
+    let postsArray = [...posts];
+    postsArray = posts.filter((el) => el.id !== id);
+    setPosts(postsArray);
     let postsDB = db.collection("posts").where("id", "==", id);
     postsDB
       .get()
@@ -121,47 +115,47 @@ class Newsfeed extends Component {
       });
   };
 
-  handleEdit = (id) => {
+  const handleEdit = (id) => {
     console.log("edit-id", id);
   };
 
-  handleLike = (el) => {
+  const handleLike = (el) => {
     if (el.liked) {
-      el.liked = false;
       el.likes -= 1;
+      el.liked = false;
     } else {
       el.liked = true;
       el.likes += 1;
     }
-    this.setState({ posts: this.state.posts });
+    let postsArray = [...posts];
+    setPosts(postsArray);
   };
 
-  render() {
-    return (
-      <div>
-        <CreatePost
-          value={this.state.value}
-          onChange={this.handleChange}
-          addPost={this.handleSubmit}
+  return (
+    <div>
+      <CreatePost
+        value={value}
+        onChange={handleChange}
+        addPost={handleSubmit}
+        fileChange={onFileChange}
+      />
+      {posts.map((el) => (
+        <Posts
+          key={el.id}
+          id={el.id}
+          onDelete={() => handleDelete(el.id)}
+          onEdit={() => handleEdit(el.id)}
+          date={el.date}
+          value={el.content}
+          likeCount={el.likes}
+          commentCount={el.comments}
+          name={el.name}
+          isliked={() => handleLike(el)}
+          color={el.liked}
+          postImage={el.postImg}
         />
-        {this.state.posts.map((el) => (
-          <Posts
-            key={el.id}
-            id={el.id}
-            onDelete={() => this.handleDelete(el.id)}
-            onEdit={() => this.handleEdit(el.id)}
-            date={el.date}
-            value={el.content}
-            likeCount={el.likes}
-            commentCount={el.comments}
-            name={el.name}
-            isliked={() => this.handleLike(el)}
-            color={el.liked}
-          />
-        ))}
-      </div>
-    );
-  }
+      ))}
+    </div>
+  );
 }
-
 export default Newsfeed;

@@ -26,6 +26,7 @@ const Posts = (props) => {
         color={props.color}
         onDelete={props.onDelete}
         onEdit={props.onEdit}
+        postImage={props.postImage}
       />
     </div>
   );

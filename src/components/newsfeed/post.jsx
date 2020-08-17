@@ -113,7 +113,11 @@ export default function Post(props) {
           {props.text}
         </Typography>
       </CardContent>
-      <PostImage />
+      <CardMedia
+        className={classes.media}
+        image={props.postImage}
+        title="Dog"
+      />
       <CardActions disableSpacing>
         <IconButton onClick={props.isliked} aria-label="add to favorites">
           <FavoriteIcon color={color} />
