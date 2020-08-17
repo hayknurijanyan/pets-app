@@ -16,40 +16,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FilterSelect(props) {
-  const { filterBy } = props;
+export default function FulterBreed(props) {
+  const { filterBy, petBreed, onHandlePetBreed } = props;
   const classes = useStyles();
   const [state, setState] = React.useState({
-    age: "",
+    gender: "",
     name: "hai",
   });
 
-  const handleChange = (event) => {
-    const name = event.target.name;
+  const handleChange = (e) => {
+    onHandlePetBreed(e.target.value);
+    const name = e.target.name;
     setState({
       ...state,
-      [name]: event.target.value,
+      [name]: e.target.value,
     });
   };
 
   return (
     <div>
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="age-native-helper">{filterBy} </InputLabel>
+        <InputLabel htmlFor="breed-native-helper">pet</InputLabel>
         <NativeSelect
-          value={state.age}
+          value={state.breed}
           onChange={handleChange}
           inputProps={{
-            name: `${filterBy}`,
-            id: `${filterBy}-native-helper`,
+            name: "breed",
+            id: "breed-native-helper",
           }}
         >
           <option aria-label="None" value="" />
-          <option value={10}>{filterBy}</option>
-          <option value={20}>{filterBy}</option>
-          <option value={30}>{filterBy}</option>
+
+          <option value={10}>Ten</option>
+          <option value={20}>Twenty</option>
+          <option value={30}>Thirty</option>
         </NativeSelect>
-        <FormHelperText>Filter by {filterBy} </FormHelperText>
+        <FormHelperText>Filter by pet</FormHelperText>
       </FormControl>
     </div>
   );

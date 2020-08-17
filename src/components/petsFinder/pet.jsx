@@ -15,12 +15,13 @@ let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    display: "flex",
+    maxWidth: "22rem",
     margin: 5,
   },
   paper: {
     padding: theme.spacing(2),
-    maxWidth: 300,
+    maxWidth: 500,
   },
   image: {
     width: 128,
@@ -39,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginLeft: "10px",
   },
+  petBox: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
 }));
 
 export default function Pet(props) {
@@ -46,7 +51,7 @@ export default function Pet(props) {
   const { searchValue } = useParams();
 
   return (
-    <div>
+    <div className={classes.petBox}>
       {props.result.length
         ? props.result.map((obj, index) => {
             return (

@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 20,
     marginBottom: 30,
   },
+  back: {
+    margin: "15px",
+  },
   content: {
     display: "flex",
     flexDirection: "row",
@@ -30,6 +33,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AboutEdit(props) {
   const classes = useStyles();
+  const {
+    bio,
+    firstName,
+    lastName,
+    profession,
+    location,
+    maleFemale,
+    age,
+    email,
+    contactNumber,
+  } = props.data;
 
   return (
     <Card className={classes.root}>
@@ -39,10 +53,16 @@ export default function AboutEdit(props) {
           variant="outlined"
           color="primary"
           onClick={props.handleClick}
+          className={classes.back}
         >
           Back
         </Button>
-        <Button size="small" variant="outlined" color="primary">
+        <Button
+          size="small"
+          variant="outlined"
+          color="primary"
+          onClick={props.handlerSubmit}
+        >
           Submit changes
         </Button>
         <Accordion>
@@ -54,7 +74,11 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>Bio</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <TextField defaultValue="Bio"></TextField>
+            <TextField
+              name="bio"
+              defaultValue={bio}
+              onChange={(e) => props.handlerInput(e)}
+            ></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -63,10 +87,30 @@ export default function AboutEdit(props) {
             aria-controls="panel2a-content"
             id="panel2a-header"
           >
-            <Typography className={classes.heading}>Full name</Typography>
+            <Typography className={classes.heading}>First Name</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <TextField defaultValue="Full Name"></TextField>
+            <TextField
+              name="fName"
+              defaultValue={firstName}
+              onChange={(e) => props.handlerInput(e)}
+            ></TextField>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography className={classes.heading}>Last Name</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <TextField
+              name="lName"
+              defaultValue={lastName}
+              onChange={(e) => props.handlerInput(e)}
+            ></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -78,7 +122,11 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>Profession</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <TextField defaultValue="Profession"></TextField>
+            <TextField
+              name="profession"
+              defaultValue={profession}
+              onChange={(e) => props.handlerInput(e)}
+            ></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -90,7 +138,11 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>City</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <TextField defaultValue="City"></TextField>
+            <TextField
+              name="city"
+              defaultValue={location.city}
+              onChange={(e) => props.handlerInput(e)}
+            ></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -102,7 +154,11 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>Country</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <TextField defaultValue="Country"></TextField>
+            <TextField
+              name="country"
+              defaultValue={location.country}
+              onChange={(e) => props.handlerInput(e)}
+            ></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -114,7 +170,11 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>Gender</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <TextField defaultValue="Gender"></TextField>
+            <TextField
+              name="gender"
+              defaultValue={maleFemale}
+              onChange={(e) => props.handlerInput(e)}
+            ></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -123,10 +183,14 @@ export default function AboutEdit(props) {
             aria-controls="panel2a-content"
             id="panel2a-header"
           >
-            <Typography className={classes.heading}>Birthday</Typography>
+            <Typography className={classes.heading}>Age</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <TextField defaultValue="Birthday"></TextField>
+            <TextField
+              name="age"
+              defaultValue={age}
+              onChange={(e) => props.handlerInput(e)}
+            ></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -138,7 +202,11 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>E-mail</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <TextField defaultValue="E-mail"></TextField>
+            <TextField
+              name="email"
+              defaultValue={email}
+              onChange={(e) => props.handlerInput(e)}
+            ></TextField>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -150,7 +218,11 @@ export default function AboutEdit(props) {
             <Typography className={classes.heading}>Phone number</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <TextField defaultValue="Phone number"></TextField>
+            <TextField
+              name="number"
+              defaultValue={contactNumber}
+              onChange={(e) => props.handlerInput(e)}
+            ></TextField>
           </AccordionDetails>
         </Accordion>
       </div>

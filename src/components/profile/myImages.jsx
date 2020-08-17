@@ -15,6 +15,7 @@ import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import { catdog } from "../../images/catdog.png";
 import PhotoSlider from "./photoSlider";
+import ImageDrop from "./imageDrop";
 const tileData = [
   {
     img: "https://coverfiles.alphacoders.com/927/92705.jpg",
@@ -130,7 +131,7 @@ const useStyles = makeStyles({
 });
 
 export default function About() {
-  const [isSlider, setIsSlider] = useState("false");
+  const [isSlider, setIsSlider] = useState("grid");
   const [imgIndex, setImgIndex] = useState(0);
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
@@ -138,12 +139,15 @@ export default function About() {
   function toSlide(index) {
     setImgIndex(index);
     console.log(index);
-    setIsSlider(!isSlider);
+    setIsSlider("slider");
   }
   function backToList() {
-    setIsSlider(!isSlider);
+    setIsSlider("grid");
   }
-  if (isSlider) {
+  function toDrop() {
+    setIsSlider("drop");
+  }
+  if (isSlider === "grid") {
     toRender = (
       <div>
         <Card className={classes.root}>
@@ -152,6 +156,14 @@ export default function About() {
               <CardActions>
                 <Button size="small" variant="outlined" color="primary">
                   Edit
+                </Button>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="primary"
+                  onClick={toDrop}
+                >
+                  Add image
                 </Button>
               </CardActions>
             }
@@ -183,7 +195,7 @@ export default function About() {
         </Card>
       </div>
     );
-  } else {
+  } else if (isSlider === "slider") {
     toRender = (
       <PhotoSlider
         clickHandler={toSlide}
@@ -192,6 +204,8 @@ export default function About() {
         index={imgIndex}
       />
     );
+  } else if (isSlider === "drop") {
+    toRender = <ImageDrop />;
   }
 
   return toRender;

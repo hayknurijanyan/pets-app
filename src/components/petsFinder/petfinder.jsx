@@ -9,7 +9,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Pet from "./pet";
 import UpLoad from "../upLoadingFiles/upLoad";
-import FilterSelect from "./filterSelect";
+import FilterBreed from "./filterBreed";
+import FilterGender from "./filterGender";
 import { Router, Switch as Switched, Route, Redirect } from "react-router-dom";
 import {
   Typography,
@@ -17,6 +18,7 @@ import {
   FormControl,
   OutlinedInput,
 } from "@material-ui/core";
+
 let log = console.log;
 
 const useStyles = makeStyles({
@@ -40,6 +42,10 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  content: {
+    display: "flex",
+    width: "45rem",
+  },
 });
 
 const Petfinder = () => {
@@ -48,7 +54,10 @@ const Petfinder = () => {
   const [searchVal, setSearchVal] = useState("");
   const [searchArr, setSearchArr] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
+  const [petGender, setPetGender] = useState("");
+  const [petBreed, setPetBreed] = useState("");
 
+  log(petGender);
   useEffect(() => {
     const ref = db.collection("petsFinder").doc("eO9YaFFJToyZ4Me5uTe7");
     let collection = ref
@@ -89,7 +98,7 @@ const Petfinder = () => {
       <div>
         <Toolbar />
         <Card className={classes.root}>
-          <CardContent>
+          <CardContent className={classes.content}>
             <FormControl
               fullWidth
               className={classes.margin}
@@ -111,27 +120,21 @@ const Petfinder = () => {
             {/* <Pet result={searchResult} /> */}
           </CardContent>
           <CardActions className={classes.button}>
-            <FilterSelect
-              filterBy={"Age"}
+            <FilterBreed
+              onHandlePetBreed={setPetBreed}
+              filterBy={"Breed"}
+              petBreed={petBreed}
               searchResult={searchResult}
               onAge={handleFilterAge}
             />
-            <FilterSelect
+            <FilterGender
+              onHandlePetGender={setPetGender}
+              petGender={petGender}
               filterBy={"Breed"}
               searchResult={searchResult}
               onBreed={handleFilterBreed}
             />
 
-            <FilterSelect
-              filterBy={"Name"}
-              searchResult={searchResult}
-              onName={handleFilterName}
-            />
-            <FilterSelect
-              filterBy={"Behavior"}
-              searchResult={searchResult}
-              onBehavior={handleFilterBehavior}
-            />
             <Button
               onClick={handleClick}
               variant="contained"
