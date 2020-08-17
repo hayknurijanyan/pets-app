@@ -95,7 +95,7 @@ export default function Post(props) {
             H
           </ImageAvatar>
         }
-        action={<EditPopup onDelete={props.onDelete} />}
+        action={<EditPopup onDelete={props.onDelete} onEdit={props.onEdit} />}
         title={
           <Typography
             className={classes.name}
@@ -115,8 +115,8 @@ export default function Post(props) {
       </CardContent>
       <PostImage />
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon color={color} onClick={props.isliked} />
+        <IconButton onClick={props.isliked} aria-label="add to favorites">
+          <FavoriteIcon color={color} />
         </IconButton>
         <Typography>{props.likeCount}</Typography>
         <IconButton aria-label="share">

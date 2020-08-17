@@ -90,7 +90,7 @@ function SignUp() {
   const [maleFemale, setMaleFemale] = useState("");
   const [profession, setProfession] = useState("");
   const [avatar, setAvata] = useState("");
-  const [photos, setPhotos] = useState("");
+  const [photos, setPhotos] = useState([]);
   const [coverPhoto, setCoverPhoto] = useState("");
   const [defaultPetUrl, setDefaultPetUrl] = useState("");
   const [petInfo, setPetInfo] = useState({
@@ -147,24 +147,22 @@ function SignUp() {
           .doc(data.user.uid)
           .set({
             userId: db.doc(`users/${data.user.uid}`),
-            currentUserInfo: {
-              email,
-              avatar,
-              photos,
-              coverPhoto,
-              email,
-              firstName,
-              lastName,
-              age,
-              bio,
-              location,
-              maleFemale,
-              profession,
-              contactNumber,
-              pet,
-              defaultPetUrl,
-              userPetInfo: petInfo,
-            },
+            email,
+            avatar,
+            photos,
+            coverPhoto,
+            email,
+            firstName,
+            lastName,
+            age,
+            bio,
+            location,
+            maleFemale,
+            profession,
+            contactNumber,
+            pet,
+            defaultPetUrl,
+            userPetInfo: petInfo,
           })
           // .then(() => {
           //   db.collection("usersPet")

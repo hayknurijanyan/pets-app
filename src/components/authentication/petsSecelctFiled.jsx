@@ -39,14 +39,6 @@ export default function PetsSelectFiled(props) {
       });
   }, []);
 
-  // const onFileChange = async (e) => {
-  //   const file = e.target.files[0];
-  //   const storageRef = storage.ref();
-  //   const fileRef = storageRef.child(file.name);
-  //   await fileRef.put(file);
-  //   setFileUrl(await fileRef.getDownloadURL());
-  // };
-
   const handleChange = async (event) => {
     props.onHandlePetSet(event.target.value);
   };

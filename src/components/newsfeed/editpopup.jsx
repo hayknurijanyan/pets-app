@@ -56,7 +56,7 @@ export default function EditPopup(props) {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Edit</MenuItem>
+        <MenuItem onClick={props.onEdit}>Edit</MenuItem>
         <MenuItem onClick={props.onDelete}>Delete</MenuItem>
       </Menu>
     </div>
