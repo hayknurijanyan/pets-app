@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Posts from "./posts";
 import CreatePost from "./createpost";
-import { db, storage } from "../../firebase";
+import { db, auth, storage } from "../../firebase";
 import firebase from "firebase";
 import { v4 as uuidv4 } from "uuid";
+import { useSelector } from "react-redux";
 let log = console.log;
 
 function Newsfeed() {
   const [posts, setPosts] = useState([]);
   const [value, setValue] = useState("");
   const [fileUrl, setFileUrl] = useState("");
+
+  const userData = useSelector((state) => state.userData);
+  log("--------this is user", userData);
 
   useEffect(() => {
     db.collection("posts")

@@ -6,6 +6,12 @@ export const isUserAction = (user) => {
     payload: user,
   };
 };
+export const userDataAction = (userData) => {
+  return {
+    type: "USER_DATA",
+    payload: userData,
+  };
+};
 
 export const authStateChangeAction = (user) => ({
   type: AUTH_STATE_CHANGE,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { isUserAction } from "../../actions";
+import { isUserAction, userDataAction } from "../../actions";
 import {
   Avatar,
   Button,
@@ -17,6 +17,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { db, auth } from "../../firebase";
 let log = console.log;
 function Copyright() {
   return (
@@ -95,11 +96,21 @@ function SignIn() {
       .catch((e) => e.message);
   };
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(() => alert("welcome back"))
+      .then(() => {
+        const fetchUserData = async () => {
+          const user = firebase.auth().currentUser;
+          const ref = db.collection("users").doc(user.uid);
+          const collection = await ref.get();
+          dispatch(userDataAction({ ...collection.data() }));
+        };
+        fetchUserData();
+        alert("welcome back");
+      })
+
       .catch((err) => alert(err));
   };
 

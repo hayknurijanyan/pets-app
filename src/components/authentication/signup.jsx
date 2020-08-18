@@ -5,7 +5,7 @@ import { db, auth, storage } from "../../firebase";
 import * as firebase from "firebase";
 import PetsSelectFiled from "./petsSecelctFiled";
 import { useDispatch, useSelector } from "react-redux";
-import { isUserAction } from "../../actions";
+import { isUserAction, userDataAction } from "../../actions";
 import SetDefaultPictureUrl from "./setDefaultPictureUrl";
 // import Upload from "../upLoadingFiles/upLoad";
 import {
@@ -164,15 +164,6 @@ function SignUp() {
             defaultPetUrl,
             userPetInfo: petInfo,
           })
-          // .then(() => {
-          //   db.collection("usersPet")
-          //     .doc(data.user.uid)
-          //     .set({
-          //       userId: db.doc(`users/${data.user.uid}`),
-          //       userPetInfo: petInfo,
-          //     })
-          //     .catch((err) => log(err));
-          // });
           .then(() => {
             db.collection("petsFinder")
               .doc("eO9YaFFJToyZ4Me5uTe7")
@@ -187,6 +178,13 @@ function SignUp() {
               })
               .catch((err) => log(err));
           });
+        const fetchUserData = async () => {
+          const user = firebase.auth().currentUser;
+          const ref = db.collection("users").doc(user.uid);
+          const collection = await ref.get();
+          dispatch(userDataAction({ ...collection.data() }));
+        };
+        fetchUserData();
         alert("welcome user");
       })
       .catch((err) => log(err));

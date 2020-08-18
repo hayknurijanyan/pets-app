@@ -28,10 +28,17 @@ import Loader from "./components/loader";
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
   container: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
   },
 }));
 
@@ -43,7 +50,6 @@ function App() {
       dispatch(authStateChangeAction(user));
     });
   }, []);
-
   // const user = firebase.auth().currentUser;
   // if (user) {
   //   log("currentuser", user);
@@ -72,11 +78,9 @@ function App() {
   ) : (
     <Router>
       <Navbar />
-      <div className={classes.container}>
-        <div>
-          <SidebarLeft />
-        </div>
-        <div>
+      <div className={classes.root}>
+        <SidebarLeft />
+        <main className={classes.content}>
           <Switch>
             <Route path="/friends" component={Friends} />
             <Route path="/users" component={Users} />
@@ -89,10 +93,8 @@ function App() {
             <Route path="/" component={Newsfeed} />
             {/* <Redirect to='notfound'/> */}
           </Switch>
-        </div>
-        <div>
-          <SidebarRight />
-        </div>
+        </main>
+        <SidebarRight />
       </div>
     </Router>
   );
