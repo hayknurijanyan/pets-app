@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
   CardHeader,
+  CardMedia,
   CardContent,
   CardActions,
   TextField,
@@ -92,7 +93,7 @@ export default function Post(props) {
             H
           </ImageAvatar>
         }
-        action={<EditPopup onDelete={props.onDelete} />}
+        action={<EditPopup onDelete={props.onDelete} onEdit={props.onEdit} />}
         title={
           <Typography
             className={classes.name}
@@ -110,10 +111,17 @@ export default function Post(props) {
           {props.text}
         </Typography>
       </CardContent>
-      <PostImage />
+
+      {props.postImage && (
+        <CardMedia
+          className={classes.media}
+          image={props.postImage}
+          title="Dog"
+        />
+      )}
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon color={color} onClick={props.isliked} />
+        <IconButton onClick={props.isliked} aria-label="add to favorites">
+          <FavoriteIcon color={color} />
         </IconButton>
         <Typography>{props.likeCount}</Typography>
         <IconButton aria-label="share">

@@ -8,6 +8,9 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Pet from "./pet";
+import UpLoad from "../upLoadingFiles/upLoad";
+import FilterBreed from "./filterBreed";
+import FilterGender from "./filterGender";
 import { Router, Switch as Switched, Route, Redirect } from "react-router-dom";
 import {
   Typography,
@@ -15,6 +18,7 @@ import {
   FormControl,
   OutlinedInput,
 } from "@material-ui/core";
+
 let log = console.log;
 
 const useStyles = makeStyles({
@@ -38,6 +42,10 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  content: {
+    display: "flex",
+    width: "45rem",
+  },
 });
 
 const Petfinder = () => {
@@ -46,7 +54,10 @@ const Petfinder = () => {
   const [searchVal, setSearchVal] = useState("");
   const [searchArr, setSearchArr] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
+  const [petGender, setPetGender] = useState("");
+  const [petBreed, setPetBreed] = useState("");
 
+  log(petGender);
   useEffect(() => {
     const ref = db.collection("petsFinder").doc("eO9YaFFJToyZ4Me5uTe7");
     let collection = ref
@@ -71,19 +82,23 @@ const Petfinder = () => {
       setSearchResult(myArr);
     } else alert("write something");
   };
-
   const handleDeleteClick = (index) => {
     const newSearchResult = [...searchResult];
     newSearchResult.splice(index, 1);
     setSearchResult(newSearchResult);
   };
 
+  const handleFilterAge = () => {};
+  const handleFilterBreed = () => {};
+  const handleFilterName = () => {};
+  const handleFilterBehavior = () => {};
+
   return (
     <>
       <div>
         <Toolbar />
         <Card className={classes.root}>
-          <CardContent>
+          <CardContent className={classes.content}>
             <FormControl
               fullWidth
               className={classes.margin}
@@ -105,6 +120,21 @@ const Petfinder = () => {
             {/* <Pet result={searchResult} /> */}
           </CardContent>
           <CardActions className={classes.button}>
+            <FilterBreed
+              onHandlePetBreed={setPetBreed}
+              filterBy={"Breed"}
+              petBreed={petBreed}
+              searchResult={searchResult}
+              onAge={handleFilterAge}
+            />
+            <FilterGender
+              onHandlePetGender={setPetGender}
+              petGender={petGender}
+              filterBy={"Breed"}
+              searchResult={searchResult}
+              onBreed={handleFilterBreed}
+            />
+
             <Button
               onClick={handleClick}
               variant="contained"
@@ -115,6 +145,7 @@ const Petfinder = () => {
             </Button>
           </CardActions>
         </Card>
+        <UpLoad />
         <Pet handleDeleteClick={handleDeleteClick} result={searchResult} />
         {/* <EveryPet result={searchResult} /> */}
       </div>

@@ -25,6 +25,8 @@ const Posts = (props) => {
         date={props.date}
         color={props.color}
         onDelete={props.onDelete}
+        onEdit={props.onEdit}
+        postImage={props.postImage}
       />
     </div>
   );

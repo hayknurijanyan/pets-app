@@ -6,17 +6,7 @@ import { fileUrlActionAsync } from "../../actions";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import SaveIcon from "@material-ui/icons/Save";
 import firebase from "firebase";
-import {
-  Card,
-  Toolbar,
-  ListItem,
-  List,
-  Avatar,
-  ListItemAvatar,
-  ListItemText,
-  Typography,
-  Button,
-} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UpLoad(props) {
+function PostUpload(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [fileUrl, setFileUrl] = useState("");
@@ -56,8 +46,24 @@ function UpLoad(props) {
     }
     const user = firebase.auth().currentUser;
     if (user) {
-      db.collection("users").doc(user.uid).update({
-        avatar: fileUrl,
+      const fullname = "Hayk Nurijanyan";
+      let today = new Date();
+      let hours = today.getHours();
+      String(today).slice(4, 21);
+      let ampm = hours >= 12 ? "PM" : "AM";
+      let dateTime = String(today).slice(4, 21) + " " + ampm;
+      let newId = Number(new Date());
+
+      db.collection("posts").add({
+        postImg: fileUrl,
+        userID: user.uid,
+        id: newId,
+        date: dateTime,
+        name: fullname,
+        content: "jhsd",
+        likes: 0,
+        liked: false,
+        comments: 0,
       });
       alert("completed");
     } else {
@@ -86,7 +92,7 @@ function UpLoad(props) {
         id="raised-button-file"
         multiple
         type="file"
-        onChange={onFileChange}
+        onChange={props.fileChange}
         placeholder="file"
       />
       <label htmlFor="raised-button-file">
@@ -102,34 +108,17 @@ function UpLoad(props) {
         </Button>
       </label>
       <Button
-        onClick={onSubmit}
+        onClick={props.addPost}
         variant="contained"
         color="primary"
         size="small"
         className={classes.button}
         startIcon={<SaveIcon />}
       >
-        Save
+        Post
       </Button>
-
-      {/* <form onSubmit={onSubmit}>
-        <input type="file" onChange={onFileChange} />
-        <input type="text" name="username" placeholder="NAME" />
-        <button>Submit</button>
-      </form> */}
-
-      {/*<ul>
-        {users.map((user) => {
-          return (
-            <li key={user.name}>
-              <img width="100" height="100" src={user.avatar} alt={user.name} />
-              <p>{user.name}</p>
-            </li>
-          );
-        })}
-      </ul> */}
     </>
   );
 }
 
-export default UpLoad;
+export default PostUpload;

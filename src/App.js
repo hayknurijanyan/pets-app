@@ -18,7 +18,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import SidebarLeft from "./components/sidebarleft";
 import SidebarRight from "./components/sidebarright";
 import NotFound from "./components/notfound";
-import Users from "./components/users";
+import Users from "./components/displayUsers/users";
 import firebase from "firebase";
 import Logout from "./components/logout";
 
@@ -36,17 +36,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     if (user) {
-  //       dispatch(isUserAction(user));
-  //     } else {
-  //       log("not found");
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(isUserAction(user));
+      } else {
+        log("not found");
+      }
+    });
+  }, []);
 
   // const user = firebase.auth().currentUser;
   // if (user) {
@@ -54,12 +54,12 @@ function App() {
   // } else {
   //   log("user not loged");
   // }
-  const isUser = useSelector((state) => state.isUser.user);
+  const isUser = useSelector((state) => state.isUser);
   log("user isUser state", isUser);
 
   const classes = useStyles();
 
-  return isUser === null ? ( //checking if the user is Loged in
+  return isUser.user === null ? ( //checking if the user is Loged in
     <Router>
       <Navbar />
       <Switch>
@@ -96,11 +96,10 @@ function App() {
       </div>
     </Router>
   );
+  //  isUser.user === undefined ? (
+  //   <Loader />
   // ) : (
-  //   <Router>
-  //     <Loader />
-  //   </Router>
-  // );
+  //   log("asd")
 }
 
 export default App;

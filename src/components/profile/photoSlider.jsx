@@ -24,7 +24,7 @@ class PhotoSlider extends React.Component {
     this.props.backClickHandler();
   };
   handleNext = () => {
-    if (this.state.index < this.props.images.length) {
+    if (this.state.index < this.props.images.length - 1) {
       this.setState({
         index: this.state.index + 1,
         open: true,
