@@ -14,8 +14,10 @@ import { Avatar, IconButton, Typography, Collapse } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { red } from "@material-ui/core/colors";
 import { Link } from "react-router-dom";
+import image from "../../images/dog.jpg";
 import ImageAvatar from "../profile/avatar";
 import PostImage from "./postimage";
 import Comments from "./comments";
@@ -24,7 +26,6 @@ import EditPopup from "./editpopup";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 20,
-    width: "37rem",
   },
   media: {
     height: 0,
@@ -112,14 +113,11 @@ export default function Post(props) {
           {props.text}
         </Typography>
       </CardContent>
-
-      {props.postImage && (
-        <CardMedia
-          className={classes.media}
-          image={props.postImage}
-          title="Dog"
-        />
-      )}
+      <CardMedia
+        className={classes.media}
+        image={props.postImage}
+        title="Dog"
+      />
       <CardActions disableSpacing>
         <IconButton onClick={props.isliked} aria-label="add to favorites">
           <FavoriteIcon color={color} />

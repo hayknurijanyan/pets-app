@@ -1,11 +1,20 @@
-const SIGN_IN = "SIGN_IN";
+export const SIGN_IN = "SIGN_IN";
+export const SIGN_OUT = "SIGN_OUT";
+export const AUTH_STATE_CHANGE = "AUTH_STATE_CHANGE";
 
-const userReducer = (state = { user: null }, action) => {
+const initialState = {
+  user: false,
+  isUrl: "",
+};
+
+const userReducer = (state = initialState.user, action) => {
   switch (action.type) {
     case SIGN_IN:
-      return {
-        user: action.payload,
-      };
+      return action.payload;
+    case SIGN_OUT:
+      return action.payload;
+    case AUTH_STATE_CHANGE:
+      return action.user;
     default:
       return state;
   }

@@ -23,22 +23,15 @@ import firebase from "firebase";
 import Logout from "./components/logout";
 
 import { useDispatch, useSelector } from "react-redux";
-import { isUserAction } from "./actions";
+import { isUserAction, authStateChangeAction } from "./actions";
 import Loader from "./components/loader";
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
   container: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
   },
 }));
 
@@ -47,11 +40,7 @@ function App() {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        dispatch(isUserAction(user));
-      } else {
-        log("not found");
-      }
+      dispatch(authStateChangeAction(user));
     });
   }, []);
 
@@ -61,12 +50,16 @@ function App() {
   // } else {
   //   log("user not loged");
   // }
-  const isUser = useSelector((state) => state.isUser);
-  log("user isUser state", isUser);
+  const user = useSelector((state) => state.user);
+  // log("user isUser state", isUser);
 
   const classes = useStyles();
 
-  return isUser.user === null ? ( //checking if the user is Loged in
+  if (user === false) {
+    return <Loader />;
+  }
+
+  return !user ? ( //checking if the user is Loged in
     <Router>
       <Navbar />
       <Switch>
@@ -79,9 +72,11 @@ function App() {
   ) : (
     <Router>
       <Navbar />
-      <div className={classes.root}>
-        <SidebarLeft />
-        <main className={classes.content}>
+      <div className={classes.container}>
+        <div>
+          <SidebarLeft />
+        </div>
+        <div>
           <Switch>
             <Route path="/friends" component={Friends} />
             <Route path="/users" component={Users} />
@@ -94,8 +89,10 @@ function App() {
             <Route path="/" component={Newsfeed} />
             {/* <Redirect to='notfound'/> */}
           </Switch>
-        </main>
-        <SidebarRight />
+        </div>
+        <div>
+          <SidebarRight />
+        </div>
       </div>
     </Router>
   );

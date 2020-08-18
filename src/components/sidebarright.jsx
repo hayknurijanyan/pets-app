@@ -49,6 +49,13 @@ export default function SidebarRight() {
   return (
     <div>
       <CssBaseline />
+      <AppBar item xs={0} position="fixed" className={classes.appBar}>
+        <Toolbar>
+          <Typography variant="h6" noWrap>
+            Charo
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <Drawer
         className={classes.drawer}
         variant="permanent"

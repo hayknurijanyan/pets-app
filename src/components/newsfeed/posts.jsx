@@ -4,9 +4,9 @@ import Post from "./post";
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    display: "flex",
     justifyContent: "center",
     padding: theme.spacing(3),
+    width: "40rem",
   },
 }));
 

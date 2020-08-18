@@ -1,6 +1,11 @@
 const URl = "URL";
 
-const urlReducer = (state = "", action) => {
+const initialState = {
+  user: false,
+  isUrl: "",
+};
+
+const urlReducer = (state = initialState.isUrl, action) => {
   switch (action.type) {
     case URl:
       return {

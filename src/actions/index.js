@@ -1,9 +1,16 @@
+import { AUTH_STATE_CHANGE } from "../reducers/isUser";
+
 export const isUserAction = (user) => {
   return {
     type: "SIGN_IN",
     payload: user,
   };
 };
+
+export const authStateChangeAction = (user) => ({
+  type: AUTH_STATE_CHANGE,
+  user,
+});
 
 export const fileUrlActionAsync = (string) => {
   return (dispatch) => {

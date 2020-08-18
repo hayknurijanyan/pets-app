@@ -22,17 +22,10 @@ function Newsfeed() {
         snap.forEach((doc) => {
           const dbData = { ...doc.data() };
           posts.push(dbData);
+          setPosts(posts);
         });
-        setPosts(posts);
       });
   }, []);
-
-  useEffect(() => {
-    // adding listeners everytime props.x changes
-    return () => {
-      // removing the listener when props.x changes
-    };
-  }, [fileUrl]);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -45,6 +38,7 @@ function Newsfeed() {
     const fileRef = storageRef.child(`postImgs/${file.name}`);
     await fileRef.put(file);
     setFileUrl(await fileRef.getDownloadURL());
+    alert("upload completed");
   };
 
   const handleSubmit = async (e) => {
@@ -61,7 +55,7 @@ function Newsfeed() {
 
     const newPost = value;
 
-    if (!value && !fileUrl) {
+    if (!value) {
       alert("Please write something to post");
     } else {
       postsArray.unshift({
@@ -76,9 +70,9 @@ function Newsfeed() {
       });
       //----------------------------------------------------------
       e.preventDefault();
-      // if (!fileUrl) {
-      //   return;
-      // }
+      if (!fileUrl) {
+        return;
+      }
       const user = firebase.auth().currentUser;
       if (user) {
         db.collection("posts").add({
@@ -92,13 +86,14 @@ function Newsfeed() {
           liked: false,
           comments: 0,
         });
+        alert("completed");
       } else {
         log("user not found");
       }
       //------------------------------------------------------------
       setPosts(postsArray);
-      setValue("");
-      setFileUrl("");
+      setValue(value);
+      setFileUrl(fileUrl);
     }
   };
 
@@ -122,7 +117,6 @@ function Newsfeed() {
 
   const handleEdit = (id) => {
     console.log("edit-id", id);
-    console.log(fileUrl);
   };
 
   const handleLike = (el) => {
@@ -144,7 +138,6 @@ function Newsfeed() {
         onChange={handleChange}
         addPost={handleSubmit}
         fileChange={onFileChange}
-        showImage={fileUrl}
       />
       {posts.map((el) => (
         <Posts

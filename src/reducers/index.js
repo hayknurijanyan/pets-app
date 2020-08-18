@@ -3,7 +3,7 @@ import urlReducer from "./isUrl";
 import { combineReducers } from "redux";
 
 const allReducers = combineReducers({
-  isUser: userReducer,
+  user: userReducer,
   isUrl: urlReducer,
 });
 
