@@ -24,6 +24,7 @@ import EditPopup from "./editpopup";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 20,
+    width: "37rem",
   },
   media: {
     height: 0,
