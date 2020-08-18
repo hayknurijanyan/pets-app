@@ -20,6 +20,14 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  logo: {
+    display: "flex",
+    justifyContent: "row",
+    alignItems: "center",
+  },
+  logoText: {
+    marginRight: 3,
+  },
 }));
 
 function Navbar() {
@@ -29,18 +37,21 @@ function Navbar() {
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Charo
+          <div className={classes.logo}>
+            <Typography variant="h6" className={classes.logoText}>
+              Charo
+            </Typography>
             <PetsOutlinedIcon />
-          </Typography>
-          <IconButton
+          </div>
+
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
         </Toolbar>
       </AppBar>
     </div>

@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Card, CardContent, TextField, Button } from "@material-ui/core";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  TextField,
+  Button,
+} from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 import ImageAvatar from "../profile/avatar";
@@ -22,26 +28,23 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     marginTop: 90,
   },
-  iconbuttons: {
-    display: "flex",
-    flexDirection: "row",
-    marginRight: 2,
-    alignItems: "center",
-  },
+
   buttons: {
-    marginLeft: 80,
-    marginRight: 10,
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center",
   },
-  photobutton: {
+  button: {
     alignItems: "center",
-    marginLeft: 5,
+    marginLeft: 40,
+    marginRight: 4,
   },
   media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
+    display: "flex",
+    height: "30%",
+    width: "30%",
+    PaddingTop: "30%",
+    margin: 30,
+    marginLeft: 80,
   },
   card: {
     margin: 0,
@@ -116,56 +119,53 @@ function CreatePost(props) {
               }}
               variant="outlined"
             />
-            {/* <InputEmoji
-              value={props.value}
-              onChange={props.onChange}
-              cleanOnEnter
-              placeholder="What's on your mind"
-            /> */}
           </div>
+          {props.showImage && (
+            <img
+              className={classes.media}
+              // image={props.showImage}
+              src={props.showImage}
+            />
+          )}
           <div className={classes.buttons}>
-            <div className={classes.iconbuttons}>
-              {/* <Button variant="outlined" onClick={props.addPost}>
-                <ImageIcon />
-                <Typography className={classes.photobutton}>
-                  Add Photo
-                </Typography>
-              </Button> */}
-              <div className={classes.buttons}>
-                <input
-                  accept="image/*"
-                  className={classes.input}
-                  style={{ display: "none" }}
-                  id="raised-button-file"
-                  multiple
-                  type="file"
-                  onChange={props.fileChange}
-                  placeholder="file"
-                />
-                <label htmlFor="raised-button-file">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    component="span"
-                    className={classes.button}
-                    size="small"
-                    startIcon={<CloudUploadIcon />}
-                  >
-                    Upload File
-                  </Button>
-                </label>
+            <div className={classes.button}>
+              <input
+                accept="image/*"
+                className={classes.input}
+                style={{ display: "none" }}
+                id="raised-button-file"
+                multiple
+                type="file"
+                onChange={props.fileChange}
+                placeholder="file"
+              />
+              <label htmlFor="raised-button-file">
                 <Button
-                  onClick={props.addPost}
-                  variant="contained"
-                  color="primary"
-                  size="small"
                   className={classes.button}
-                  startIcon={<SaveIcon />}
+                  variant="outlined"
+                  color="primary"
+                  component="span"
+                  className={classes.button}
+                  size="large"
+                  startIcon={<CloudUploadIcon />}
                 >
-                  Post
+                  Upload Photo
                 </Button>
-              </div>
+              </label>
             </div>
+            <div className={classes.button}>
+              <Button
+                className={classes.button}
+                onClick={props.addPost}
+                variant="contained"
+                color="primary"
+                size="large"
+                className={classes.button}
+              >
+                Post
+              </Button>
+            </div>
+
             {/* <Button variant="contained" color="primary" onClick={props.addPost}>
               Post
             </Button> */}

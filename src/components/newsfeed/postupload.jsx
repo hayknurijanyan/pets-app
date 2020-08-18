@@ -120,5 +120,4 @@ function PostUpload(props) {
     </>
   );
 }
-
 export default PostUpload;
