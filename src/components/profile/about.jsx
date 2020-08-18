@@ -10,7 +10,7 @@ import {
 import { Typography, Button } from "@material-ui/core";
 import ImageAvatar from "./avatar";
 import EditPopover from "../newsfeed/editpopup";
-import AboutEdit from "./AboutEdit";
+import AboutEdit from "./aboutEdit";
 import firebase from "firebase";
 import { db, auth } from "../../firebase";
 import { compose } from "redux";
@@ -94,7 +94,7 @@ export default function About() {
         bio,
         age,
         email,
-        firsName: fName,
+        firstName: fName,
         lastName: lName,
         profession,
         location,
@@ -108,6 +108,7 @@ export default function About() {
           const ref = db.collection("users").doc(auth.currentUser.uid);
           let collection = await ref.get();
           setUserData({ ...collection.data() });
+          editHandler();
         };
         fetchUser();
       })
