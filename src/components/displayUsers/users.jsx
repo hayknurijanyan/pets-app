@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { db } from "../../firebase.js";
-import { useDispatch, useSelector } from "react-redux";
-import { isLoggedAction } from "../../actions";
-import { store } from "../../index";
-import SidebarLeft from "../sidebarleft.jsx";
-import SidebarRight from "../sidebarright.jsx";
-import { makeStyles } from "@material-ui/core/styles";
-import User from "./user.jsx";
+import React, { useState, useEffect } from "react";
+import { db } from "../../firebase";
 import { Toolbar, Switch } from "@material-ui/core";
+
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
+import User from "./user";
+import UpLoad from "../upLoadingFiles/upLoad";
+
+import FilterGender from "./filterGender";
 import { Router, Switch as Switched, Route, Redirect } from "react-router-dom";
-import FilterBreed from "./filter";
 import {
   Typography,
   InputLabel,
@@ -25,7 +23,7 @@ let log = console.log;
 
 const useStyles = makeStyles({
   root: {
-    marginTop: 10,
+    marginTop: 5,
     minWidth: 275,
   },
   bullet: {
@@ -50,64 +48,115 @@ const useStyles = makeStyles({
   },
 });
 
-function Users() {
+const Users = () => {
   const classes = useStyles();
-  const [usersObject, setusersObject] = useState([]);
-  const [searchVal, setsearchVal] = useState("");
-  const [searchResult, setsearchResult] = useState([]);
+  const bull = <span className={classes.bullet}>•</span>;
+  const [searchVal, setSearchVal] = useState("");
+  const [searchArr, setSearchArr] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
+  const [userName, setUserName] = useState("");
+  // const [petBreed, setPetBreed] = useState("");
 
   useEffect(() => {
-    db.collection("users")
-      .get()
-      .then((querySnapshot) => {
-        const newArray = [];
-        querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          newArray.push(doc.data());
-          setusersObject(newArray);
-          // console.log(doc.id, " => ", doc.data());
-        });
+    const fetchData = async () => {
+      const newArray = [];
+      const snapshot = await db.collection("users").get();
+      snapshot.docs.forEach((doc) => {
+        newArray.push(doc.data());
+        setSearchArr(newArray);
       });
+    };
+    fetchData();
   }, []);
 
-  log("userobject", usersObject);
-  const handleChange = () => {};
-  const handleClick = () => {};
-  return (
-    <div className={classes.main}>
-      <Toolbar />
-      <Card className={classes.root}>
-        <CardContent className={classes.content}>
-          <FormControl fullWidth className={classes.margin} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-amount">Search</InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-amount"
-              value={searchVal}
-              labelWidth={60}
-              onChange={handleChange}
-            />
-          </FormControl>
-        </CardContent>
-        <CardActions className={classes.button}>
-          <FilterBreed
-            filterBy={"pet"}
-            petBreed={usersObject}
-            searchResult={searchResult}
-          />
+  log("searchArr", searchArr);
 
-          <Button
-            onClick={handleClick}
-            variant="contained"
-            color="secondary"
-            size="medium"
-          >
-            Search
-          </Button>
-        </CardActions>
-      </Card>
-      <User />
-    </div>
+  const handleChange = (e) => {
+    setSearchVal(e.target.value);
+  };
+
+  const handleClick = () => {
+    if (searchVal) {
+      const sVal = searchVal.toLowerCase().trim();
+      const newArr = [...searchArr];
+      const myArr = newArr.filter(
+        (man) => man.firstName.includes(sVal) || man.lastName.includes(sVal)
+      );
+      setSearchResult(myArr);
+    } else alert("write something");
+  };
+  const handleDeleteClick = (index) => {
+    const newSearchResult = [...searchResult];
+    newSearchResult.splice(index, 1);
+    setSearchResult(newSearchResult);
+  };
+
+  log("user searchResult", searchResult);
+  log("user searchArr", searchArr);
+  const handleFilterAge = () => {};
+  const handleFilterBreed = () => {};
+  const handleFilterName = () => {};
+  const handleFilterBehavior = () => {};
+
+  return (
+    <>
+      <div>
+        <Toolbar />
+        <Card className={classes.root}>
+          <CardContent className={classes.content}>
+            <FormControl
+              fullWidth
+              className={classes.margin}
+              variant="outlined"
+            >
+              <InputLabel htmlFor="outlined-adornment-amount">
+                Search
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-amount"
+                value={searchVal}
+                labelWidth={60}
+                onChange={handleChange}
+              />
+            </FormControl>
+            {/* <Switched>
+              <Route path="pathName/:searchValue" component={Pet} />
+            </Switched> */}
+            {/* <Pet result={searchResult} /> */}
+          </CardContent>
+          <CardActions className={classes.button}>
+            {/* <FilterBreed
+              onHandlePetBreed={setPetBreed}
+              searchResult={searchResult}
+              petBreed={petBreed}
+              filterBy={"Breed"}
+              searchResult={searchResult}
+              onAge={handleFilterAge}
+            /> */}
+            {/* <FilterGender
+              onHandlePetGender={setPetGender}
+              petGender={petGender}
+              filterBy={"Breed"}
+              searchResult={searchResult}
+              onBreed={handleFilterBreed}
+            /> */}
+
+            <Button
+              onClick={handleClick}
+              variant="contained"
+              color="secondary"
+              size="medium"
+            >
+              Search
+            </Button>
+          </CardActions>
+        </Card>
+
+        <User handleDeleteClick={handleDeleteClick} result={searchResult} />
+        {/* <EveryPet result={searchResult} /> */}
+      </div>
+    </>
   );
-}
+};
 
 export default Users;

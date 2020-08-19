@@ -57,29 +57,40 @@ const Petfinder = () => {
   const [petGender, setPetGender] = useState("");
   const [petBreed, setPetBreed] = useState("");
 
-  log(petGender);
   useEffect(() => {
-    const ref = db.collection("petsFinder").doc("eO9YaFFJToyZ4Me5uTe7");
-    let collection = ref
-      .get()
-      .then((doc) => {
-        const newArray = [...doc.data().allPetsSearch];
+    const fetchData = async () => {
+      const newArray = [];
+      const snapshot = await db.collection("users").get();
+      snapshot.docs.forEach((doc) => {
+        newArray.push(doc.data());
         setSearchArr(newArray);
-      })
-      .catch((error) => {
-        console.log("Error getting document:", error);
       });
+    };
+    fetchData();
   }, []);
+
+  log("searchArr", searchArr);
 
   const handleChange = (e) => {
     setSearchVal(e.target.value);
   };
   const handleClick = () => {
     if (searchVal) {
-      const sVal = searchVal.toLowerCase();
-      const newArr = [...searchArr];
-      const myArr = newArr.filter((animal) => animal.pet.includes(sVal));
-      setSearchResult(myArr);
+      if (!petGender && !petBreed) {
+        const sVal = searchVal.toLowerCase().trim();
+        const newArr = [...searchArr];
+        const myArr = newArr.filter((animal) => animal.pet.includes(sVal));
+        setSearchResult(myArr);
+      } else if (petGender && !petBreed) {
+        const sVal = searchVal.toLowerCase().trim();
+        const newArr = [...searchArr];
+        const myArr = newArr.filter(
+          (animal) =>
+            animal.pet.includes(sVal) &&
+            animal.userPetInfo.petsGender === petGender
+        );
+        setSearchResult(myArr);
+      }
     } else alert("write something");
   };
   const handleDeleteClick = (index) => {
@@ -122,8 +133,9 @@ const Petfinder = () => {
           <CardActions className={classes.button}>
             <FilterBreed
               onHandlePetBreed={setPetBreed}
-              filterBy={"Breed"}
+              searchResult={searchResult}
               petBreed={petBreed}
+              filterBy={"Breed"}
               searchResult={searchResult}
               onAge={handleFilterAge}
             />
@@ -145,7 +157,7 @@ const Petfinder = () => {
             </Button>
           </CardActions>
         </Card>
-        <UpLoad />
+
         <Pet handleDeleteClick={handleDeleteClick} result={searchResult} />
         {/* <EveryPet result={searchResult} /> */}
       </div>

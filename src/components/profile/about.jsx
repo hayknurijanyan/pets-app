@@ -8,8 +8,6 @@ import {
   Divider,
 } from "@material-ui/core";
 import { Typography, Button } from "@material-ui/core";
-import ImageAvatar from "./avatar";
-import EditPopover from "../newsfeed/editpopup";
 import AboutEdit from "./aboutEdit";
 import firebase from "firebase";
 import { db, auth } from "../../firebase";

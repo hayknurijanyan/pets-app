@@ -6,6 +6,7 @@ import firebase from "firebase";
 import { v4 as uuidv4 } from "uuid";
 import { useSelector } from "react-redux";
 import { EditedValueContext } from "./editpost";
+import { Hidden } from "@material-ui/core";
 
 let log = console.log;
 
@@ -14,8 +15,8 @@ function Newsfeed() {
   const [value, setValue] = useState("");
   const [fileUrl, setFileUrl] = useState("");
 
-  const userData = useSelector((state) => state.userData);
-  log("--------this is user", userData.firstName);
+  // const userData = useSelector((state) => state.userData);
+  // log("--------this is user", userData.firstName);
 
   useEffect(() => {
     db.collection("posts")
@@ -54,15 +55,21 @@ function Newsfeed() {
   };
 
   const handleSubmit = async (e) => {
-    const fullname = "Hayk Nurijanyan";
+    const user = firebase.auth().currentUser;
+    const userData = (await db.collection("users").doc(user.uid).get()).data();
+    const name = userData.firstName;
+    const surname = userData.lastName;
+    const fullname = `${name} ${surname}`;
+    console.log(fullname);
 
     let today = new Date();
     let hours = today.getHours();
     String(today).slice(4, 21);
     let ampm = hours >= 12 ? "PM" : "AM";
     let dateTime = String(today).slice(4, 21) + " " + ampm;
+
     let postsArray = [...posts];
-    let newId = Number(new Date());
+    let newId = Number(new Date()); //date id
 
     const newPost = value;
 

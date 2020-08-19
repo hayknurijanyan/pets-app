@@ -1,5 +1,5 @@
 import { AUTH_STATE_CHANGE } from "../reducers/isUser";
-
+import { PERSIST_USER_DATA } from "../reducers/userData";
 export const isUserAction = (user) => {
   return {
     type: "SIGN_IN",
@@ -9,6 +9,13 @@ export const isUserAction = (user) => {
 export const userDataAction = (userData) => {
   return {
     type: "USER_DATA",
+    payload: userData,
+  };
+};
+
+export const persistUserDataAction = (userData) => {
+  return {
+    type: PERSIST_USER_DATA,
     payload: userData,
   };
 };
