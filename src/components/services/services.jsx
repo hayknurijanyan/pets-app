@@ -111,8 +111,8 @@ function Services() {
           <Grid container spacing={4}>
             <Veterinary />
             <Grooming />
-            <Adopter />
             <Trainer />
+            <Adopter />
             <HomeCare />
             <FoodDelivery />
           </Grid>
