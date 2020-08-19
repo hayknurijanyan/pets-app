@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heroContent: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
+    padding: theme.spacing(2, 0, 2),
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -127,7 +127,7 @@ function Services() {
           color="textSecondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          For more infromation please contact us.
         </Typography>
         <Copyright />
       </footer>
