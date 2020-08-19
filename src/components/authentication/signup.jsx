@@ -166,7 +166,7 @@ function SignUp() {
           })
           .then(() => {
             db.collection("petsFinder")
-              .doc("eO9YaFFJToyZ4Me5uTe7")
+              .doc("petsID")
               .update({
                 allPetsSearch: firebase.firestore.FieldValue.arrayUnion({
                   owner: { firstName, lastName },

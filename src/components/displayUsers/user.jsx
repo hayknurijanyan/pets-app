@@ -1,78 +1,126 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import DeleteIcon from "@material-ui/icons/Delete";
+import uniqid from "uniqid";
 import {
-  Card,
-  ListItem,
-  List,
-  Avatar,
-  ListItemAvatar,
-  ListItemText,
+  Box,
+  ButtonBase,
   Typography,
   Button,
+  Paper,
+  Grid,
+  Divider,
 } from "@material-ui/core";
+import { useParams } from "react-router-dom";
+let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
-  container: {
+  root: {
     display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    maxWidth: "22rem",
+    margin: 5,
   },
-
-  main: {
+  paper: {
+    padding: theme.spacing(2),
+    maxWidth: 500,
+  },
+  image: {
+    width: 128,
+    height: 128,
+  },
+  row: {
     display: "flex",
-    flexWrap: "wrap",
-    marginTop: 10,
-    marginLeft: 5,
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
+  },
+  img: {
+    margin: "auto",
+    display: "block",
+    maxWidth: "100%",
+    maxHeight: "100%",
   },
   button: {
-    width: 100,
-    height: 30,
+    marginLeft: "10px",
+  },
+  petBox: {
+    display: "flex",
+    flexWrap: "wrap",
   },
 }));
 
-function User() {
+export default function User(props) {
   const classes = useStyles();
+  const { searchValue } = useParams();
 
   return (
-    <div>
-      <Card className={classes.main}>
-        <List className={classes.container}>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar
-                alt="Remy Sharp"
-                src="https://www.zone4homes.com/themes/fo/img/avatar.png"
-              />
-            </ListItemAvatar>
-            <ListItemText
-              primary="Name Surname"
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    className={classes.inline}
-                    color="secondary"
-                  >
-                    @dog
-                  </Typography>
-                  {" — Yerevan"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <Button
-            className={classes.button}
-            variant="contained"
-            color="primary"
-          >
-            Follow
-          </Button>
-        </List>
-      </Card>
+    <div className={classes.petBox}>
+      {props.result.length
+        ? props.result.map((obj, index) => {
+            return (
+              <div key={uniqid()} className={classes.root}>
+                <Paper className={classes.paper}>
+                  <Grid container spacing={2}>
+                    <Grid item>
+                      <ButtonBase className={classes.image}>
+                        <img
+                          className={classes.img}
+                          alt="complex"
+                          src={obj.avatar}
+                        />
+                      </ButtonBase>
+                    </Grid>
+                    <Grid item xs={12} sm container>
+                      <Grid item xs container direction="column" spacing={2}>
+                        <Grid item xs>
+                          <Typography gutterBottom variant="h6">
+                            Name: {obj.firstName}
+                          </Typography>
+                          <Typography gutterBottom variant="h6">
+                            {obj.pet}
+                          </Typography>
+                          <Typography className={classes.row}>
+                            <Typography variant="body2" gutterBottom>
+                              age: {obj.age}
+                            </Typography>
+                            <Typography variant="body2" color="secondary">
+                              asd {/* {`@${obj.userPetInfo.breed}`} */}
+                            </Typography>
+                          </Typography>
+                          <Typography variant="body2" gutterBottom>
+                            asd
+                          </Typography>
+                          <Divider />
+                          <Typography variant="body2" color="textSecondary">
+                            asd
+                          </Typography>
+                        </Grid>
+                        <Box
+                          display="flex"
+                          flexDirection="row-reverse"
+                          p={1}
+                          m={1}
+                          bgcolor="background.paper"
+                        >
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            className={classes.button}
+                            startIcon={<DeleteIcon />}
+                            onClick={() => props.handleDeleteClick(index)}
+                          >
+                            Delete
+                          </Button>
+                          <Button variant="contained" color="primary">
+                            Contact
+                          </Button>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Paper>
+              </div>
+            );
+          })
+        : ""}
     </div>
   );
 }
-
-export default User;

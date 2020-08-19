@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
+import { db, storage } from "../../firebase";
+import uniqid from "uniqid";
+let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -16,11 +19,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FulterBreed(props) {
-  const { filterBy, petBreed, onHandlePetBreed } = props;
+export default function FilterBreed(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    gender: "",
+  const [open, setOpen] = useState(false);
+  const [list, setList] = useState([]);
+  const [userPet, setUserPet] = useState("");
+  const { filterBy, petBreed, onHandlePetBreed, searchResult } = props;
+
+  const newArray = [];
+  searchResult.forEach((obj) => {
+    newArray.push(obj.userPetInfo.breed);
+  });
+
+  const [state, setState] = useState({
+    breed: "",
     name: "hai",
   });
 
@@ -36,22 +48,25 @@ export default function FulterBreed(props) {
   return (
     <div>
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="breed-native-helper">breed</InputLabel>
+        <InputLabel htmlFor={`petBreed-native-helper`}>{filterBy}</InputLabel>
         <NativeSelect
-          value={state.breed}
+          value={props.petBreed}
           onChange={handleChange}
           inputProps={{
             name: "breed",
-            id: "breed-native-helper",
+            id: "petBreed-native-helper",
           }}
         >
           <option aria-label="None" value="" />
-
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
+          {newArray.map((animal) => {
+            return (
+              <option key={uniqid()} value={animal}>
+                {animal}
+              </option>
+            );
+          })}
         </NativeSelect>
-        <FormHelperText>Filter by breed</FormHelperText>
+        <FormHelperText>Filter by {filterBy}</FormHelperText>
       </FormControl>
     </div>
   );
