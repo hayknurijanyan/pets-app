@@ -14,8 +14,6 @@ import Friends from "./components/friends";
 import Navbar from "./components/navbar";
 import Petfinder from "./components/petsFinder/petfinder";
 import { makeStyles } from "@material-ui/core/styles";
-import SidebarLeft from "./components/sidebarleft";
-import SidebarRight from "./components/sidebarright";
 import NotFound from "./components/notfound";
 import Users from "./components/displayUsers/users";
 import firebase from "firebase";
@@ -25,6 +23,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { isUserAction, authStateChangeAction } from "./actions";
 import Loader from "./components/loader";
 import Services from "./components/services/services";
+import SidebarRight from "./components/sidebarright";
+import SidebarLeft from "./components/sidebarleft";
+
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({

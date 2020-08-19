@@ -16,6 +16,7 @@ import {
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import Media from "react-media";
 
 const drawerWidth = 260;
 
@@ -48,46 +49,50 @@ export default function SidebarRight() {
 
   return (
     <div>
-      <CssBaseline />
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        anchor="right"
-      >
-        <Toolbar />
-        <div className={classes.toolbar} />
-        <Divider />
-        <List>
-          {["Friend 1", "Friend 2", "Friend 3", "Friend 4"].map(
-            (text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? (
-                    <AccountCircleIcon />
-                  ) : (
-                    <AccountCircleIcon />
-                  )}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            )
-          )}
-        </List>
-        <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
+      <Media
+        query="(min-width: 1100px)"
+        render={() => (
+          <Drawer
+            className={classes.drawer}
+            variant="permanent"
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            anchor="right"
+          >
+            <Toolbar />
+            <div className={classes.toolbar} />
+            <Divider />
+            <List>
+              {["Friend 1", "Friend 2", "Friend 3", "Friend 4"].map(
+                (text, index) => (
+                  <ListItem button key={text}>
+                    <ListItemIcon>
+                      {index % 2 === 0 ? (
+                        <AccountCircleIcon />
+                      ) : (
+                        <AccountCircleIcon />
+                      )}
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItem>
+                )
+              )}
+            </List>
+            <Divider />
+            <List>
+              {["All mail", "Trash", "Spam"].map((text, index) => (
+                <ListItem button key={text}>
+                  <ListItemIcon>
+                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
+              ))}
+            </List>
+          </Drawer>
+        )}
+      />
     </div>
   );
 }
