@@ -11,6 +11,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import { Typography } from "@material-ui/core";
 import ColorLensIcon from "@material-ui/icons/ColorLens";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import firebase from "firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +25,10 @@ const useStyles = makeStyles((theme) => ({
   },
   menuItem: {
     display: "flex",
-    margin: 10,
+    margin: 5,
+  },
+  text: {
+    marginLeft: 10,
   },
 }));
 
@@ -40,6 +44,15 @@ export function AccountIconButton(props) {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      // .then(() => alert("logout succsess"))
+      .catch((e) => e.message);
+    // window.location.reload(false);
   };
 
   return (
@@ -68,17 +81,17 @@ export function AccountIconButton(props) {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem className={classes.menuItem} onClick={props.onEdit}>
+        <MenuItem className={classes.menuItem} onClick={handleClose}>
           <SettingsIcon />
-          <Typography>Settings</Typography>
+          <Typography className={classes.text}>Settings</Typography>
         </MenuItem>
-        <MenuItem className={classes.menuItem} onClick={props.onEdit}>
+        <MenuItem className={classes.menuItem} onClick={handleClose}>
           <ColorLensIcon />
-          <Typography>Theme</Typography>
+          <Typography className={classes.text}>Theme</Typography>
         </MenuItem>
-        <MenuItem className={classes.menuItem} onClick={props.onDelete}>
+        <MenuItem className={classes.menuItem} onClick={handleLogout}>
           <ExitToAppIcon />
-          <Typography>Log out</Typography>
+          <Typography className={classes.text}>Log out</Typography>
         </MenuItem>
       </Menu>
     </div>
@@ -125,8 +138,8 @@ export function EmailIconButton(props) {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={props.onEdit}>Inbox</MenuItem>
-        <MenuItem onClick={props.onDelete}>Send Message</MenuItem>
+        <MenuItem onClick={handleClose}>Inbox</MenuItem>
+        <MenuItem onClick={handleClose}>Send Message</MenuItem>
       </Menu>
     </div>
   );
@@ -172,8 +185,8 @@ export function NotificationIconButton(props) {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={props.onEdit}>Show All</MenuItem>
-        <MenuItem onClick={props.onDelete}>Clear All</MenuItem>
+        <MenuItem onClick={handleClose}>Show All</MenuItem>
+        <MenuItem onClick={handleClose}>Clear All</MenuItem>
       </Menu>
     </div>
   );

@@ -12,7 +12,6 @@ import {
 import Profile from "./components/profile/profile";
 import Friends from "./components/friends";
 import Navbar from "./components/navbar";
-import Services from "./components/services";
 import Petfinder from "./components/petsFinder/petfinder";
 import { makeStyles } from "@material-ui/core/styles";
 import SidebarLeft from "./components/sidebarleft";
@@ -20,11 +19,12 @@ import SidebarRight from "./components/sidebarright";
 import NotFound from "./components/notfound";
 import Users from "./components/displayUsers/users";
 import firebase from "firebase";
-import Logout from "./components/logout";
+// import Logout from "./components/logout";
 
 import { useDispatch, useSelector } from "react-redux";
 import { isUserAction, authStateChangeAction } from "./actions";
 import Loader from "./components/loader";
+import Services from "./components/services/services";
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
@@ -89,7 +89,7 @@ function App() {
             <Route path="/services" component={Services} />
             <Route path="/petfinder" component={Petfinder} />
             <Route path="/notfound" component={NotFound} />
-            <Route path="/logout" component={Logout} />
+            {/* <Route path="/logout" component={Logout} /> */}
             <Route path="/" component={Newsfeed} />
             {/* <Redirect to='notfound'/> */}
           </Switch>
