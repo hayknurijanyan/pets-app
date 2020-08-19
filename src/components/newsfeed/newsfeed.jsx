@@ -5,6 +5,8 @@ import { db, auth, storage } from "../../firebase";
 import firebase from "firebase";
 import { v4 as uuidv4 } from "uuid";
 import { useSelector } from "react-redux";
+import { EditedValueContext } from "./editpost";
+
 let log = console.log;
 
 function Newsfeed() {
@@ -59,7 +61,6 @@ function Newsfeed() {
     String(today).slice(4, 21);
     let ampm = hours >= 12 ? "PM" : "AM";
     let dateTime = String(today).slice(4, 21) + " " + ampm;
-    console.log(dateTime);
     let postsArray = [...posts];
     let newId = Number(new Date());
 
@@ -148,7 +149,6 @@ function Newsfeed() {
       .get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          // console.log(doc.id, " => ", doc.data());
           db.collection("posts")
             .doc(doc.id)
             .update({ likes: el.likes, liked: el.liked });

@@ -60,8 +60,8 @@ export default function EditPopup(props) {
         <EditPost
           postImg={props.postImg}
           onEdit={props.onEdit}
-          value={props.value}
           handleClose={handleClose}
+          value={props.value}
         />
         <MenuItem onClick={props.onDelete}>Delete</MenuItem>
       </Menu>
