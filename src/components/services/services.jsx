@@ -13,6 +13,12 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
+import Veterinary from "./veterinary";
+import Grooming from "./grooming";
+import Adopter from "./adopter";
+import Trainer from "./trainer";
+import FoodDelivery from "./foodDelivery";
+import HomeCare from "./homecare";
 
 function Copyright() {
   return (
@@ -33,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heroContent: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
+    padding: theme.spacing(2, 0, 2),
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -58,8 +64,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(6),
   },
 }));
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 function Services() {
   const classes = useStyles();
@@ -103,36 +107,14 @@ function Services() {
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
+          {/* Services can be edited from here */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://content.jdmagicbox.com/comp/def_content/veterinary_doctors/default-veterinary-doctors-2.jpg"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Veterinary Doctor
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      Call
-                    </Button>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
+            <Veterinary />
+            <Grooming />
+            <Adopter />
+            <Trainer />
+            <HomeCare />
+            <FoodDelivery />
           </Grid>
         </Container>
       </main>
@@ -145,7 +127,7 @@ function Services() {
           color="textSecondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          For more infromation please contact us.
         </Typography>
         <Copyright />
       </footer>

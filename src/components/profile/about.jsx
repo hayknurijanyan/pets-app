@@ -94,7 +94,7 @@ export default function About() {
         bio,
         age,
         email,
-        firsName: fName,
+        firstName: fName,
         lastName: lName,
         profession,
         location,
@@ -108,6 +108,7 @@ export default function About() {
           const ref = db.collection("users").doc(auth.currentUser.uid);
           let collection = await ref.get();
           setUserData({ ...collection.data() });
+          editHandler();
         };
         fetchUser();
       })
