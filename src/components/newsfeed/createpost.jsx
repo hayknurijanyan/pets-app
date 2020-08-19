@@ -6,6 +6,7 @@ import {
   CardContent,
   TextField,
   Button,
+  IconButton,
 } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
@@ -19,6 +20,7 @@ import { fileUrlActionAsync } from "../../actions";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import SaveIcon from "@material-ui/icons/Save";
 import firebase from "firebase";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 let log = console.log;
 
@@ -57,6 +59,10 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
+  },
+  imgpreview: {
+    display: "flex",
+    flexDirection: "row",
   },
 }));
 
@@ -121,11 +127,18 @@ function CreatePost(props) {
             />
           </div>
           {props.showImage && (
-            <img
-              className={classes.media}
-              // image={props.showImage}
-              src={props.showImage}
-            />
+            <div className={classes.imgpreview}>
+              <img
+                className={classes.media}
+                // image={props.showImage}
+                src={props.showImage}
+              />
+              <div>
+                <IconButton onClick={props.previewDelete}>
+                  <HighlightOffIcon />
+                </IconButton>
+              </div>
+            </div>
           )}
           <div className={classes.buttons}>
             <div className={classes.button}>

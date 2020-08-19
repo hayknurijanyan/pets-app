@@ -17,8 +17,8 @@ function Newsfeed() {
 
   useEffect(() => {
     db.collection("posts")
-      .where("id", ">=", 0)
-      .orderBy("id", "desc")
+      .where("likes", ">=", 0)
+      .orderBy("likes", "desc")
       .limit(20)
       .get()
       .then((snap) => {
@@ -123,6 +123,9 @@ function Newsfeed() {
         console.error("Error deleting document: ", error);
       });
   };
+  const hanleDeletePreview = () => {
+    setFileUrl("");
+  };
 
   const handleEdit = (id) => {
     console.log("edit-id", id);
@@ -149,6 +152,7 @@ function Newsfeed() {
         addPost={handleSubmit}
         fileChange={onFileChange}
         showImage={fileUrl}
+        previewDelete={hanleDeletePreview}
       />
       {posts.map((el) => (
         <Posts

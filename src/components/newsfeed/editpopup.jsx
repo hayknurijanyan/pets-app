@@ -1,9 +1,10 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import EditPost from "./editpost";
+import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -56,7 +57,12 @@ export default function EditPopup(props) {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={props.onEdit}>Edit</MenuItem>
+        <EditPost
+          postImg={props.postImg}
+          onEdit={props.onEdit}
+          value={props.value}
+          handleClose={handleClose}
+        />
         <MenuItem onClick={props.onDelete}>Delete</MenuItem>
       </Menu>
     </div>
