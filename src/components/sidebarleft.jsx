@@ -26,7 +26,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import firebase from "firebase";
 import Media from "react-media";
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
   },
   drawerContainer: {
-    overflow: "auto",
+    overflow: "hidden",
   },
   logo: {
     display: "flex",

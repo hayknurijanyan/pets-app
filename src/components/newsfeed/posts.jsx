@@ -17,6 +17,8 @@ const Posts = (props) => {
       <Post
         id={props.id}
         onDelete={props.onDelete}
+        value={props.value}
+        onEdit={props.onEdit}
         likeCount={props.likeCount}
         text={props.value}
         commentCount={props.commentCount}
@@ -25,7 +27,6 @@ const Posts = (props) => {
         date={props.date}
         color={props.color}
         onDelete={props.onDelete}
-        onEdit={props.onEdit}
         postImage={props.postImage}
       />
     </div>

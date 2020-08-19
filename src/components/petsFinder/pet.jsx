@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
+import uniqid from "uniqid";
 import {
   Box,
   ButtonBase,
@@ -55,7 +56,7 @@ export default function Pet(props) {
       {props.result.length
         ? props.result.map((obj, index) => {
             return (
-              <div key={"asd" + 1} className={classes.root}>
+              <div key={uniqid()} className={classes.root}>
                 <Paper className={classes.paper}>
                   <Grid container spacing={2}>
                     <Grid item>
@@ -71,26 +72,25 @@ export default function Pet(props) {
                       <Grid item xs container direction="column" spacing={2}>
                         <Grid item xs>
                           <Typography gutterBottom variant="h6">
-                            {"pet Name"}
+                            Name: {obj.userPetInfo.name}
                           </Typography>
                           <Typography gutterBottom variant="h6">
                             {obj.pet}
                           </Typography>
                           <Typography className={classes.row}>
                             <Typography variant="body2" gutterBottom>
-                              age: {obj.petInfo.age}
+                              age: {obj.userPetInfo.age}
                             </Typography>
                             <Typography variant="body2" color="secondary">
-                              {`@${obj.petInfo.breed}`}
+                              {`@${obj.userPetInfo.breed}`}
                             </Typography>
                           </Typography>
                           <Typography variant="body2" gutterBottom>
-                            Behavior: {obj.petInfo.behavior}
+                            Behavior: {obj.userPetInfo.behavior}
                           </Typography>
                           <Divider />
                           <Typography variant="body2" color="textSecondary">
-                            Owner:{" "}
-                            {`${obj.owner.firstName} ${obj.owner.lastName}`}
+                            Owner: {`${obj.firstName} ${obj.lastName}`}
                           </Typography>
                         </Grid>
                         <Box

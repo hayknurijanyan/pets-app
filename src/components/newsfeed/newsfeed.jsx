@@ -5,6 +5,9 @@ import { db, auth, storage } from "../../firebase";
 import firebase from "firebase";
 import { v4 as uuidv4 } from "uuid";
 import { useSelector } from "react-redux";
+import { EditedValueContext } from "./editpost";
+import { Hidden } from "@material-ui/core";
+
 let log = console.log;
 
 function Newsfeed() {
@@ -12,13 +15,13 @@ function Newsfeed() {
   const [value, setValue] = useState("");
   const [fileUrl, setFileUrl] = useState("");
 
-  const userData = useSelector((state) => state.userData);
-  log("--------this is user", userData.firstName);
+  // const userData = useSelector((state) => state.userData);
+  // log("--------this is user", userData.firstName);
 
   useEffect(() => {
     db.collection("posts")
-      .where("id", ">=", 0)
-      .orderBy("id", "desc")
+      .where("likes", ">=", 0)
+      .orderBy("likes", "desc")
       .limit(20)
       .get()
       .then((snap) => {
@@ -52,16 +55,21 @@ function Newsfeed() {
   };
 
   const handleSubmit = async (e) => {
-    const fullname = "Hayk Nurijanyan";
+    const user = firebase.auth().currentUser;
+    const userData = (await db.collection("users").doc(user.uid).get()).data();
+    const name = userData.firstName;
+    const surname = userData.lastName;
+    const fullname = `${name} ${surname}`;
+    console.log(fullname);
 
     let today = new Date();
     let hours = today.getHours();
     String(today).slice(4, 21);
     let ampm = hours >= 12 ? "PM" : "AM";
     let dateTime = String(today).slice(4, 21) + " " + ampm;
-    console.log(dateTime);
+
     let postsArray = [...posts];
-    let newId = Number(new Date());
+    let newId = Number(new Date()); //date id
 
     const newPost = value;
 
@@ -123,10 +131,14 @@ function Newsfeed() {
         console.error("Error deleting document: ", error);
       });
   };
+  const hanleDeletePreview = () => {
+    setFileUrl("");
+  };
 
   const handleEdit = (id) => {
     console.log("edit-id", id);
     console.log(fileUrl);
+    setValue(value);
   };
 
   const handleLike = (el) => {
@@ -139,6 +151,19 @@ function Newsfeed() {
     }
     let postsArray = [...posts];
     setPosts(postsArray);
+    db.collection("posts")
+      .where("id", "==", el.id)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          db.collection("posts")
+            .doc(doc.id)
+            .update({ likes: el.likes, liked: el.liked });
+        });
+      });
+    // db.collection("posts").doc(doc.id).update({ likes: 3 });
+    // let data = db.collection("posts").where("id", "==", el.id).get();
+    // console.log(data);
   };
 
   return (
@@ -149,6 +174,7 @@ function Newsfeed() {
         addPost={handleSubmit}
         fileChange={onFileChange}
         showImage={fileUrl}
+        previewDelete={hanleDeletePreview}
       />
       {posts.map((el) => (
         <Posts

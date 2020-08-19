@@ -94,7 +94,14 @@ export default function Post(props) {
             H
           </ImageAvatar>
         }
-        action={<EditPopup onDelete={props.onDelete} onEdit={props.onEdit} />}
+        action={
+          <EditPopup
+            postImg={props.postImage}
+            onDelete={props.onDelete}
+            onEdit={props.onEdit}
+            value={props.value}
+          />
+        }
         title={
           <Typography
             className={classes.name}
