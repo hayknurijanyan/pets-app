@@ -16,6 +16,7 @@ import GridListTile from "@material-ui/core/GridListTile";
 import { catdog } from "../../images/catdog.png";
 import PhotoSlider from "./photoSlider";
 import ImageDrop from "./imageDrop";
+import UpLoad from "../upLoadingFiles/upLoad";
 const tileData = [
   {
     img: "https://coverfiles.alphacoders.com/927/92705.jpg",
@@ -208,5 +209,16 @@ export default function About() {
     toRender = <ImageDrop />;
   }
 
-  return toRender;
+  return (
+    <div
+      style={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        alignContent: "center",
+      }}
+    >
+      {toRender}
+    </div>
+  );
 }
