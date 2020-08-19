@@ -53,7 +53,7 @@ export default function Grooming() {
         />
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom variant="h5" component="h2">
-            Grooming Service
+            Grooming Services
           </Typography>
           <Typography>
             Pet grooming refers to both the hygienic care and cleaning of a pet.

@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     minWidth: 400,
+    marginRight: 25,
   },
   media: {
     display: "flex",

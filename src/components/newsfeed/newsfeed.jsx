@@ -130,6 +130,7 @@ function Newsfeed() {
   const handleEdit = (id) => {
     console.log("edit-id", id);
     console.log(fileUrl);
+    setValue(value);
   };
 
   const handleLike = (el) => {
@@ -142,6 +143,20 @@ function Newsfeed() {
     }
     let postsArray = [...posts];
     setPosts(postsArray);
+    db.collection("posts")
+      .where("id", "==", el.id)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          // console.log(doc.id, " => ", doc.data());
+          db.collection("posts")
+            .doc(doc.id)
+            .update({ likes: el.likes, liked: el.liked });
+        });
+      });
+    // db.collection("posts").doc(doc.id).update({ likes: 3 });
+    // let data = db.collection("posts").where("id", "==", el.id).get();
+    // console.log(data);
   };
 
   return (

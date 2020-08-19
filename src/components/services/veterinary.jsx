@@ -53,7 +53,7 @@ function Veterinary() {
         />
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom variant="h5" component="h2">
-            Veterinary Doctor
+            Veterinary
           </Typography>
           <Typography>
             Highest Quality Vet Care. Services: Emergency Care, Surgery,

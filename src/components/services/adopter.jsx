@@ -53,7 +53,7 @@ export default function Adopter() {
         />
         <CardContent className={classes.cardContent}>
           <Typography gutterBottom variant="h5" component="h2">
-            Pet Adopter
+            Pet Adoption
           </Typography>
           <Typography>
             There are many myths and misconceptions about adopting pets. Learn
