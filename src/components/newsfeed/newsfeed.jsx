@@ -13,7 +13,7 @@ function Newsfeed() {
   const [fileUrl, setFileUrl] = useState("");
 
   const userData = useSelector((state) => state.userData);
-  log("--------this is user", userData);
+  log("--------this is user", userData.firstName);
 
   useEffect(() => {
     db.collection("posts")
