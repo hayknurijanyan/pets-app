@@ -32,7 +32,7 @@ export const fileUrlActionAsync = (string) => {
   };
 };
 
-const fileUrlAction = (string) => {
+export const fileUrlAction = (string) => {
   return {
     type: "URL",
     payload: string,
