@@ -87,6 +87,7 @@ function SignUp() {
   const [petGender, setPetGender] = useState("");
   const [age, setAge] = useState(0);
   const [bio, setBio] = useState("");
+  const [open, setOpen] = useState(false);
   const [location, setLocation] = useState({
     country: "",
     city: "",
@@ -197,7 +198,6 @@ function SignUp() {
           dispatch(userDataAction({ ...collection.data() }));
         };
         fetchUserData();
-        alert("welcome user");
       })
       .catch((err) => log(err));
   };

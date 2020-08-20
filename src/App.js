@@ -17,7 +17,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import NotFound from "./components/notfound";
 import Users from "./components/displayUsers/users";
 import firebase from "firebase";
-// import Logout from "./components/logout";
 
 import { useDispatch, useSelector } from "react-redux";
 import { isUserAction, authStateChangeAction } from "./actions";
