@@ -10,11 +10,21 @@ function Newsfeed() {
   const [posts, setPosts] = useState([]);
   const [value, setValue] = useState("");
   const [fileUrl, setFileUrl] = useState("");
+  const [userData, setUserData] = useState({});
 
   // const userData = useSelector((state) => state.userData);
   // log("--------this is user", userData.firstName);
 
   useEffect(() => {
+    async function fetchMyData() {
+      const user = firebase.auth().currentUser;
+      const dbUserData = (
+        await db.collection("users").doc(user.uid).get()
+      ).data();
+      console.log(dbUserData);
+      setUserData(dbUserData);
+    }
+
     db.collection("posts")
       .where("likes", ">=", 0)
       .orderBy("likes", "desc")
@@ -28,14 +38,8 @@ function Newsfeed() {
         });
         setPosts(posts);
       });
+    fetchMyData();
   }, []);
-
-  useEffect(() => {
-    // adding listeners everytime props.x changes
-    return () => {
-      // removing the listener when props.x changes
-    };
-  }, [fileUrl]);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -51,12 +55,9 @@ function Newsfeed() {
   };
 
   const handleSubmit = async (e) => {
-    const user = firebase.auth().currentUser;
-    const userData = (await db.collection("users").doc(user.uid).get()).data();
     const name = userData.firstName;
     const surname = userData.lastName;
     const fullname = `${name} ${surname}`;
-    console.log(fullname);
 
     let today = new Date();
     let hours = today.getHours();
