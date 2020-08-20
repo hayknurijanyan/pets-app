@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
 import { db, auth, storage } from "../../firebase";
 import * as firebase from "firebase";
-import PetsSelectFiled from "./petsSecelctFiled";
+import PetsSelectFiled from "./petsSelectField";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserAction, userDataAction } from "../../actions";
 import SetDefaultPictureUrl from "./setDefaultPictureUrl";

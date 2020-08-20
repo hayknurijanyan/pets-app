@@ -148,7 +148,7 @@ export default function PetsSelectFiled(props) {
             value={props.petAge}
             fullWidth
             id="standard-number"
-            label="Age"
+            label="Pet's Age"
             type="number"
             name="age"
             autoComplete="lname"
