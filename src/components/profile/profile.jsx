@@ -11,6 +11,7 @@ import Friends from "../friends";
 import AllPets from "../allpets";
 import FriendsCard from "./friendscard";
 import PetsCard from "./petscard";
+
 let log = console.log;
 const useStyles = makeStyles((theme) => ({
   card: {

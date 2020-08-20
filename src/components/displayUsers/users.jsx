@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../firebase";
 import { Toolbar, Switch } from "@material-ui/core";
-
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -9,7 +8,6 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import User from "./user";
 import UpLoad from "../upLoadingFiles/upLoad";
-
 import FilterGender from "./filterGender";
 import { Router, Switch as Switched, Route, Redirect } from "react-router-dom";
 import {
@@ -18,7 +16,8 @@ import {
   FormControl,
   OutlinedInput,
 } from "@material-ui/core";
-
+import ChatMain from "../chat/chatMain";
+import ChatWithClass from "../chat/chatWithClass";
 let log = console.log;
 
 const useStyles = makeStyles({
@@ -151,9 +150,10 @@ const Users = () => {
             </Button>
           </CardActions>
         </Card>
-
         <User handleDeleteClick={handleDeleteClick} result={searchResult} />
         {/* <EveryPet result={searchResult} /> */}
+        <ChatMain />
+        {/* <ChatWithClass /> */}
       </div>
     </>
   );

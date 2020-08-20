@@ -7,6 +7,7 @@ import PetsSelectFiled from "./petsSecelctFiled";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserAction, userDataAction } from "../../actions";
 import SetDefaultPictureUrl from "./setDefaultPictureUrl";
+
 // import Upload from "../upLoadingFiles/upLoad";
 import {
   Avatar,
@@ -81,6 +82,7 @@ function SignUp() {
   const [pet, setPet] = useState("");
   const [age, setAge] = useState(0);
   const [bio, setBio] = useState("");
+  const [open, setOpen] = useState(false);
   const [location, setLocation] = useState({
     country: "",
     city: "",
@@ -185,7 +187,6 @@ function SignUp() {
           dispatch(userDataAction({ ...collection.data() }));
         };
         fetchUserData();
-        alert("welcome user");
       })
       .catch((err) => log(err));
   };
