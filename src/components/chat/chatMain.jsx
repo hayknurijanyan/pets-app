@@ -49,32 +49,35 @@ export default function ChatMain(props) {
   const [user, setUser] = useState([]);
   const myRef = React.createRef();
 
-  useEffect(async () => {
-    const user = firebase.auth().currentUser;
-    user ? setUser(user) : log("user not found");
-    setReadError(null);
-    setLoadingChats(true);
-    const chatArea = myRef.current;
-    try {
-      firebase
-        .database()
-        .ref("chats")
-        .on("value", (snapshot) => {
-          let chats = [];
-          snapshot.forEach((snap) => {
-            chats.push(snap.val());
+  useEffect(() => {
+    const fetchData = async () => {
+      const user = firebase.auth().currentUser;
+      user ? setUser(user) : log("user not found");
+      setReadError(null);
+      setLoadingChats(true);
+      const chatArea = myRef.current;
+      try {
+        firebase
+          .database()
+          .ref("chats")
+          .on("value", (snapshot) => {
+            let chats = [];
+            snapshot.forEach((snap) => {
+              chats.push(snap.val());
+            });
+            chats.sort(function (a, b) {
+              return a.timestamp - b.timestamp;
+            });
+            setChats(chats);
+            chatArea.scrollBy(0, chatArea.scrollHeight);
+            setLoadingChats(false);
           });
-          chats.sort(function (a, b) {
-            return a.timestamp - b.timestamp;
-          });
-          setChats(chats);
-          chatArea.scrollBy(0, chatArea.scrollHeight);
-          setLoadingChats(false);
-        });
-    } catch (error) {
-      setReadError(error.message);
-      setLoadingChats(false);
-    }
+      } catch (error) {
+        setReadError(error.message);
+        setLoadingChats(false);
+      }
+    };
+    fetchData();
   }, []);
 
   const formatTime = (timestamp) => {
