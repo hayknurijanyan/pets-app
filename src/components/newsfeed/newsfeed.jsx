@@ -3,10 +3,6 @@ import Posts from "./posts";
 import CreatePost from "./createpost";
 import { db, auth, storage } from "../../firebase";
 import firebase from "firebase";
-import { v4 as uuidv4 } from "uuid";
-import { useSelector } from "react-redux";
-import { EditedValueContext } from "./editpost";
-import { Hidden } from "@material-ui/core";
 
 let log = console.log;
 

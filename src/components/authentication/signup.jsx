@@ -7,7 +7,7 @@ import PetsSelectFiled from "./petsSecelctFiled";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserAction, userDataAction } from "../../actions";
 import SetDefaultPictureUrl from "./setDefaultPictureUrl";
-
+import { MenuItem, Select, FormControl, InputLabel } from "@material-ui/core";
 // import Upload from "../upLoadingFiles/upLoad";
 import {
   Avatar,
@@ -21,6 +21,7 @@ import {
   Checkbox,
   Paper,
   Box,
+  Divider,
 } from "@material-ui/core";
 
 let log = console.log;
@@ -80,6 +81,10 @@ function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [pet, setPet] = useState("");
+  const [breed, setBreed] = useState("");
+  const [petName, setPetName] = useState("");
+  const [petAge, setPetAge] = useState(0);
+  const [petGender, setPetGender] = useState("");
   const [age, setAge] = useState(0);
   const [bio, setBio] = useState("");
   const [open, setOpen] = useState(false);
@@ -164,7 +169,13 @@ function SignUp() {
             contactNumber,
             pet,
             defaultPetUrl,
-            userPetInfo: petInfo,
+            userPetInfo: {
+              name: petName,
+              petsGender: petGender,
+              breed: breed,
+              age: petAge,
+              behavior: "",
+            },
           })
           .then(() => {
             db.collection("petsFinder")
@@ -208,14 +219,15 @@ function SignUp() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   onChange={handleFirstName}
-                  placeholder="firstName"
+                  placeholder="First Name"
                   autoComplete="fname"
                   name="firstName"
                   variant="outlined"
                   required
+                  isRequired="true"
                   fullWidth
                   id="firstName"
-                  label="firstName"
+                  label="First Name"
                   autoFocus
                 />
               </Grid>
@@ -225,18 +237,11 @@ function SignUp() {
                   variant="outlined"
                   required
                   fullWidth
-                  placeholder="lastName"
+                  placeholder="Last Name"
                   id="lastName"
-                  label="lastname"
+                  label="Last Name"
                   name="lastName"
                   autoComplete="lname"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <PetsSelectFiled onHandlePetSet={setPet} pet={pet} />
-                <SetDefaultPictureUrl
-                  onHandlePetUrlSet={setDefaultPetUrl}
-                  pet={pet}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -266,12 +271,32 @@ function SignUp() {
                   autoComplete="current-password"
                 />
               </Grid>
+              <Divider />
+              <Grid item xs={12}>
+                <PetsSelectFiled
+                  onHandlePetSet={setPet}
+                  onHandleBreedSet={setBreed}
+                  onHandlePetName={setPetName}
+                  onHandlePetAge={setPetAge}
+                  onHandlePetGender={setPetGender}
+                  pet={pet}
+                  breed={breed}
+                  petName={petName}
+                  petAge={petAge}
+                  petGender={petGender}
+                />
+                <SetDefaultPictureUrl
+                  onHandlePetUrlSet={setDefaultPetUrl}
+                  pet={pet}
+                />
+              </Grid>
+
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
                   }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  label="I want to receive promotions and updates via email."
                 />
               </Grid>
             </Grid>
@@ -283,16 +308,6 @@ function SignUp() {
               onClick={() => handleSignUp()}
             >
               Sign Up
-            </Button>
-
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={() => handleLogout()}
-            >
-              Logout
             </Button>
 
             <Grid container justify="flex-end">

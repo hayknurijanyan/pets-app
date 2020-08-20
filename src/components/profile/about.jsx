@@ -8,14 +8,10 @@ import {
   Divider,
 } from "@material-ui/core";
 import { Typography, Button } from "@material-ui/core";
-import AboutEdit from "./aboutEdit";
-import firebase from "firebase";
 import { db, auth } from "../../firebase";
-import { compose } from "redux";
 import Loader from "../loader";
-import FloatingActionButtonZoom from "./editTabPanel";
+import EditTabPanel from "./editTabPanel";
 let log = console.log;
-//some comments to see
 
 const useStyles = makeStyles({
   root: {
@@ -59,30 +55,48 @@ const useStyles = makeStyles({
 });
 
 export default function About() {
-  useEffect(() => {
-    const fetchUser = async () => {
-      const ref = db.collection("users").doc(auth.currentUser.uid);
-      let collection = await ref.get();
-      setUserData({ ...collection.data() });
-    };
-    fetchUser();
-  }, []);
   const [edit, setEdit] = useState("false");
   const classes = { ...useStyles() };
   const bull = <span className={classes.bullet}>•</span>;
   let aboutList = null;
   let forEdit = null;
-  const [userData, setUserData] = useState(null);
-  const [bio, setBio] = useState(null);
-  const [fName, setFName] = useState(null);
-  const [lName, setLName] = useState(null);
-  const [profession, setProfession] = useState(null);
+  const [userData, setUserData] = useState({});
+  const [bio, setBio] = useState("");
+  const [fName, setFName] = useState("");
+  const [lName, setLName] = useState("");
+  const [profession, setProfession] = useState("");
   const [location, setLocation] = useState({ city: "", country: "" });
-  const [gender, setGender] = useState(null);
-  const [age, setAge] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [number, setNumber] = useState(null);
-
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
+  const [userPetInfo, setUserPetInfo] = useState({
+    age: "",
+    behavior: "",
+    breed: "",
+    name: "",
+    petsGender: "",
+  });
+  let collection;
+  useEffect(() => {
+    const fetchUser = async () => {
+      const ref = db.collection("users").doc(auth.currentUser.uid);
+      collection = await ref.get();
+      setUserData(collection.data());
+      log(userData);
+      setBio(userData.bio);
+      setFName(userData.firstName);
+      setLName(userData.lastName);
+      setProfession(userData.profession);
+      setLocation({ ...userData.location });
+      setGender(userData.gender);
+      setAge(userData.age);
+      setEmail(userData.email);
+      setNumber(userData.contactNumber);
+      setUserPetInfo(userData.userPetInfo);
+    };
+    fetchUser();
+  }, []);
   function editHandler() {
     setEdit(!edit);
   }
@@ -96,24 +110,25 @@ export default function About() {
         firstName: fName,
         lastName: lName,
         profession,
-        location,
+        location: { ...location },
         maleFemale: gender,
         age,
         email,
         contactNumber: number,
+        userPetInfo: { ...userPetInfo },
       })
       .then(() => {
         const fetchUser = async () => {
           const ref = db.collection("users").doc(auth.currentUser.uid);
           let collection = await ref.get();
           setUserData({ ...collection.data() });
-          // editHandler();
         };
         fetchUser();
       })
 
       .catch((err) => log(err));
   }
+
   function handlerInput(e) {
     if (userData !== null) {
       if (e.target.name === "bio") {
@@ -136,6 +151,46 @@ export default function About() {
         setEmail(e.target.value);
       } else if (e.target.name === "number") {
         setNumber(e.target.value);
+      } else if (e.target.name === "pName") {
+        setUserPetInfo({
+          age: userPetInfo.age,
+          breed: userPetInfo.breed,
+          behavior: userPetInfo.behavior,
+          petsGender: userPetInfo.petsGender,
+          name: e.target.value,
+        });
+      } else if (e.target.name === "pAge") {
+        setUserPetInfo({
+          age: e.target.value,
+          breed: userPetInfo.breed,
+          behavior: userPetInfo.behavior,
+          petsGender: userPetInfo.petsGender,
+          name: userPetInfo.name,
+        });
+      } else if (e.target.name === "pBehavior") {
+        setUserPetInfo({
+          age: userPetInfo.age,
+          breed: userPetInfo.breed,
+          behavior: e.target.value,
+          petsGender: userPetInfo.petsGender,
+          name: userPetInfo.name,
+        });
+      } else if (e.target.name === "pGender") {
+        setUserPetInfo({
+          age: userPetInfo.name,
+          breed: userPetInfo.breed,
+          behavior: userPetInfo.behavior,
+          petsGender: e.target.value,
+          name: userPetInfo.name,
+        });
+      } else if (e.target.name === "pBreed") {
+        setUserPetInfo({
+          age: userPetInfo.age,
+          breed: e.target.value,
+          behavior: userPetInfo.behavior,
+          petsGender: userPetInfo.petsGender,
+          name: userPetInfo.name,
+        });
       }
     }
   }
@@ -150,7 +205,9 @@ export default function About() {
       age,
       email,
       contactNumber,
+      userPetInfo,
     } = userData;
+    log("this is data", userData);
     forEdit = {
       bio,
       firstName,
@@ -161,6 +218,7 @@ export default function About() {
       age,
       email,
       contactNumber,
+      userPetInfo,
     };
 
     aboutList = (
@@ -189,6 +247,7 @@ export default function About() {
               </Typography>
             }
           />
+          <Divider />
           <CardContent>
             <div className={classes.bio}>
               <Typography
@@ -200,7 +259,7 @@ export default function About() {
               </Typography>
               <Typography variant="h6">{bio}</Typography>
             </div>
-            <Divider />
+
             <div className={classes.content}>
               <Typography
                 className={classes.text}
@@ -292,6 +351,62 @@ export default function About() {
               <Typography variant="h6">{contactNumber}</Typography>
             </div>
           </CardContent>
+          <Typography className={classes.title} color="primary" variant="h5">
+            About pet
+          </Typography>
+          <Divider />
+          <CardContent>
+            <div className={classes.content}>
+              <Typography
+                className={classes.text}
+                variant="h6"
+                color="textSecondary"
+              >
+                Age
+              </Typography>
+              <Typography variant="h6">{userPetInfo.age}</Typography>
+            </div>{" "}
+            <div className={classes.content}>
+              <Typography
+                className={classes.text}
+                variant="h6"
+                color="textSecondary"
+              >
+                Behavior
+              </Typography>
+              <Typography variant="h6">{userPetInfo.behavior}</Typography>
+            </div>{" "}
+            <div className={classes.content}>
+              <Typography
+                className={classes.text}
+                variant="h6"
+                color="textSecondary"
+              >
+                Breed
+              </Typography>
+              <Typography variant="h6">{userPetInfo.breed}</Typography>
+            </div>{" "}
+            <div className={classes.content}>
+              <Typography
+                className={classes.text}
+                variant="h6"
+                color="textSecondary"
+              >
+                Pets name
+              </Typography>
+              <Typography variant="h6">{userPetInfo.name}</Typography>
+            </div>{" "}
+            <div className={classes.content}>
+              <Typography
+                className={classes.text}
+                variant="h6"
+                color="textSecondary"
+              >
+                Pets gender
+              </Typography>
+              <Typography variant="h6">{userPetInfo.petsGender}</Typography>
+            </div>
+          </CardContent>
         </Card>
       </div>
     );
@@ -306,6 +421,7 @@ export default function About() {
       age,
       email,
       contactNumber,
+      userPetInfo,
     } = userData;
     forEdit = {
       bio,
@@ -317,16 +433,17 @@ export default function About() {
       age,
       email,
       contactNumber,
+      userPetInfo,
     };
-    aboutList = <FloatingActionButtonZoom />;
-    // aboutList = (
-    //   <AboutEdit
-    //     handleClick={editHandler}
-    //     data={forEdit}
-    //     handlerInput={(e) => handlerInput(e)}
-    //     handlerSubmit={handlerSubmit}
-    //   />
-    // );
+
+    aboutList = (
+      <EditTabPanel
+        data={forEdit}
+        handlerBack={editHandler}
+        handlerInput={(e) => handlerInput(e)}
+        handlerSubmit={handlerSubmit}
+      />
+    );
   }
 
   return userData !== null ? (

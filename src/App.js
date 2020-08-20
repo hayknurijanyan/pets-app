@@ -24,6 +24,7 @@ import Loader from "./components/loader";
 import Services from "./components/services/services";
 import SidebarRight from "./components/sidebarright";
 import SidebarLeft from "./components/sidebarleft";
+import { Hidden } from "@material-ui/core";
 
 let log = console.log;
 
@@ -79,7 +80,9 @@ function App() {
     <Router>
       <Navbar />
       <div className={classes.root}>
-        <SidebarLeft />
+        <Hidden mdDown>
+          <SidebarLeft />
+        </Hidden>
         <main className={classes.content}>
           <Switch>
             <Route path="/friends" component={Friends} />
@@ -94,8 +97,9 @@ function App() {
             {/* <Redirect to='notfound'/> */}
           </Switch>
         </main>
-
-        <SidebarRight />
+        <Hidden mdDown>
+          <SidebarRight />
+        </Hidden>
       </div>
     </Router>
   );

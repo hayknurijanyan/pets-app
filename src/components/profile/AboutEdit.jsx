@@ -48,23 +48,6 @@ export default function AboutEdit(props) {
   return (
     <Card className={classes.root}>
       <div>
-        <Button
-          size="small"
-          variant="outlined"
-          color="primary"
-          onClick={props.handleClick}
-          className={classes.back}
-        >
-          Back
-        </Button>
-        <Button
-          size="small"
-          variant="outlined"
-          color="primary"
-          onClick={props.handlerSubmit}
-        >
-          Submit changes
-        </Button>
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
