@@ -14,7 +14,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import UpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { green } from "@material-ui/core/colors";
 import Box from "@material-ui/core/Box";
-import About from "./about";
+import AboutEdit from "./aboutEdit";
+import PetsAbout from "./petsAbout";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,10 +54,19 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     minHeight: 200,
   },
+  tab: {
+    backgroundColor: "#4caf50",
+    color: "white",
+  },
   fab: {
     position: "absolute",
-    bottom: theme.spacing(2),
+    bottom: theme.spacing(-2),
     right: theme.spacing(2),
+  },
+  fab2: {
+    position: "absolute",
+    bottom: theme.spacing(-2),
+    right: theme.spacing(10),
   },
   fabGreen: {
     color: theme.palette.common.white,
@@ -67,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FloatingActionButtonZoom() {
+export default function EditTabPanel(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -89,12 +99,14 @@ export default function FloatingActionButtonZoom() {
     {
       color: "primary",
       className: classes.fab,
+      className2: classes.fab2,
       icon: <EditIcon />,
       label: "Add",
     },
     {
       color: "primary",
       className: classes.fab,
+      className2: classes.fab2,
       icon: <EditIcon />,
       label: "Edit",
     },
@@ -106,13 +118,17 @@ export default function FloatingActionButtonZoom() {
         <Tabs
           value={value}
           onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
+          indicatorColor="secondary"
+          textColor="secondary"
           variant="fullWidth"
           aria-label="action tabs example"
         >
-          <Tab label="Owner data" {...a11yProps(0)} />
-          <Tab label="Pet data" {...a11yProps(1)} />
+          <Tab label="Your info" {...a11yProps(0)} className={classes.tab} />
+          <Tab
+            label="Your pets info"
+            {...a11yProps(1)}
+            className={classes.tab}
+          />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -121,32 +137,58 @@ export default function FloatingActionButtonZoom() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <About />
+          <AboutEdit data={props.data} handlerInput={props.handlerInput} />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Pet info
+          <PetsAbout
+            data={props.data.userPetInfo}
+            handlerInput={props.handlerInput}
+          />
         </TabPanel>
       </SwipeableViews>
       {fabs.map((fab, index) => (
-        <Zoom
-          key={fab.color}
-          in={value === index}
-          timeout={transitionDuration}
-          style={{
-            transitionDelay: `${
-              value === index ? transitionDuration.exit : 0
-            }ms`,
-          }}
-          unmountOnExit
-        >
-          <Fab
-            aria-label={fab.label}
-            className={fab.className}
-            color={fab.color}
+        <div>
+          <Zoom
+            key={fab.color}
+            in={value === index}
+            timeout={transitionDuration}
+            style={{
+              transitionDelay: `${
+                value === index ? transitionDuration.exit : 0
+              }ms`,
+            }}
+            unmountOnExit
           >
-            {fab.icon}
-          </Fab>
-        </Zoom>
+            <Fab
+              aria-label={fab.label}
+              className={fab.className}
+              color={fab.color}
+              onClick={props.handlerSubmit}
+            >
+              Save
+            </Fab>
+          </Zoom>
+          <Zoom
+            key={fab.color}
+            in={value === index}
+            timeout={transitionDuration}
+            style={{
+              transitionDelay: `${
+                value === index ? transitionDuration.exit : 0
+              }ms`,
+            }}
+            unmountOnExit
+          >
+            <Fab
+              aria-label={fab.label}
+              className={fab.className2}
+              color={fab.color}
+              onClick={props.handlerBack}
+            >
+              back
+            </Fab>
+          </Zoom>
+        </div>
       ))}
     </div>
   );

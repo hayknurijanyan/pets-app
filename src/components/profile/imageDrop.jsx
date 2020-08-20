@@ -2,21 +2,38 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import UpLoad from "../upLoadingFiles/upLoad";
 import { Button } from "@material-ui/core";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  deleteButton: {
+    backgroundColor: "#ef5350",
+    color: "white",
+    border: "none",
+  },
+}));
 
 export default function ImageDrop() {
+  const classes = useStyles();
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     onDrop: (acceptedFiles) => {
       setFiles(
-        acceptedFiles.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
+        files.concat(
+          acceptedFiles.map((file) =>
+            Object.assign(file, {
+              preview: URL.createObjectURL(file),
+            })
+          )
         )
       );
     },
   });
+  function handleDelete(url) {
+    setFiles(files.filter((file) => file.preview !== url));
+  }
   const images = (
     <div
       style={{
@@ -42,16 +59,28 @@ export default function ImageDrop() {
           <div
             style={{
               display: "flex",
-              flexDirection: "row",
+              flexDirection: "column",
               alignContent: "center",
-              flexWrap: "wrap",
+              // flexWrap: "wrap",
             }}
           >
             <img
               src={file.preview}
-              style={{ width: "150px", height: "150px" }}
+              style={{
+                width: "150px",
+                height: "150px",
+                borderRadius: "3px",
+                marginBottom: "3px",
+              }}
               alt="picture"
             />
+            <Button
+              className={classes.deleteButton}
+              startIcon={<DeleteIcon />}
+              onClick={() => handleDelete(file.preview)}
+            >
+              Delete
+            </Button>
           </div>
         </div>
       ))}
@@ -95,8 +124,13 @@ export default function ImageDrop() {
         </div>
       </div>
       <div>{images}</div>
-      <Button variant="contained" size="medium" color="primary">
-        Upload
+      <Button
+        variant="contained"
+        size="medium"
+        color="primary"
+        startIcon={<CloudUploadIcon />}
+      >
+        <p>Upload {`(${files.length})`} files</p>
       </Button>
     </div>
   );
