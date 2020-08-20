@@ -64,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
   },
+  deleteButton: {
+    marginLeft: -40,
+  },
 }));
 
 function CreatePost(props) {
@@ -134,7 +137,10 @@ function CreatePost(props) {
                 src={props.showImage}
               />
               <div>
-                <IconButton onClick={props.previewDelete}>
+                <IconButton
+                  className={classes.deleteButton}
+                  onClick={props.previewDelete}
+                >
                   <HighlightOffIcon />
                 </IconButton>
               </div>

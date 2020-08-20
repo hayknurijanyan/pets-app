@@ -24,7 +24,6 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import firebase from "firebase";
-import Media from "react-media";
 
 const drawerWidth = 260;
 
@@ -85,125 +84,116 @@ export default function SidebarLeft() {
   };
 
   return (
-    <div>
-      <Media
-        query="(min-width: 1100px)"
-        render={() => (
-          <div className={classes.root}>
-            <CssBaseline />
-            <AppBar position="fixed" className={classes.appBar}>
-              <Toolbar className={classes.toolbar}>
-                <div className={classes.logo}>
-                  <Typography variant="h6" className={classes.logoText}>
-                    Charo
-                  </Typography>
-                  <PetsOutlinedIcon />
-                </div>
-                <div className={classes.toolbar}>
-                  <EmailIconButton />
-                  <NotificationIconButton />
-                  <AccountIconButton />
-                </div>
-              </Toolbar>
-            </AppBar>
-            <Drawer
-              className={classes.drawer}
-              variant="permanent"
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-            >
-              <Toolbar />
-              <div className={classes.drawerContainer}>
-                <Divider />
-                <List>
-                  <ListItem button component={Link} to="profile">
-                    <ListItemIcon>
-                      <ImageAvatar />
-                    </ListItemIcon>
-                    <Typography variant="h6">My Account</Typography>
-                  </ListItem>
-                </List>
-                <Divider />
-                <List>
-                  {/* {["Newsfeed", "Friends", "Petfinder", "Users", "Services"].map(
-            (text, index) => ( */}
-                  <ListItem
-                    className={classes.listItem}
-                    button
-                    component={Link}
-                    to="newsfeed"
-                  >
-                    <ListAltIcon />
-                    <Typography className={classes.listText} variant="body1">
-                      Newsfeed
-                    </Typography>
-                  </ListItem>
-                  <ListItem
-                    className={classes.listItem}
-                    button
-                    component={Link}
-                    to="friends"
-                  >
-                    <GroupIcon />
-                    <Typography className={classes.listText} variant="body1">
-                      Friends
-                    </Typography>
-                  </ListItem>
-                  <ListItem
-                    className={classes.listItem}
-                    button
-                    component={Link}
-                    to="petfinder"
-                  >
-                    <PetsOutlinedIcon />
-                    <Typography className={classes.listText} variant="body1">
-                      Petfinder
-                    </Typography>
-                  </ListItem>
-                  <ListItem
-                    className={classes.listItem}
-                    button
-                    component={Link}
-                    to="users"
-                  >
-                    <AccountBoxIcon />
-                    <Typography className={classes.listText} variant="body1">
-                      Users
-                    </Typography>
-                  </ListItem>
-                  <ListItem
-                    className={classes.listItem}
-                    button
-                    component={Link}
-                    to="services"
-                  >
-                    <BusinessCenterIcon />
-                    <Typography className={classes.listText} variant="body1">
-                      Services
-                    </Typography>
-                  </ListItem>
-                  {/* )
-            )} */}
-                  <Divider />
-                  <ListItem
-                    component={Link}
-                    to="signin"
-                    className={classes.listItem}
-                    onClick={handleLogout}
-                    button
-                  >
-                    <ExitToAppIcon color="secondary" />
-                    <Typography className={classes.listText}>
-                      Log out
-                    </Typography>
-                  </ListItem>
-                </List>
-              </div>
-            </Drawer>
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar className={classes.toolbar}>
+          <div className={classes.logo}>
+            <Typography variant="h6" className={classes.logoText}>
+              Charo
+            </Typography>
+            <PetsOutlinedIcon />
           </div>
-        )}
-      />
+          <div className={classes.toolbar}>
+            <EmailIconButton />
+            <NotificationIconButton />
+            <AccountIconButton />
+          </div>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="permanent"
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <Toolbar />
+        <div className={classes.drawerContainer}>
+          <Divider />
+          <List>
+            <ListItem button component={Link} to="profile">
+              <ListItemIcon>
+                <ImageAvatar />
+              </ListItemIcon>
+              <Typography variant="h6">My Account</Typography>
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
+            {/* {["Newsfeed", "Friends", "Petfinder", "Users", "Services"].map(
+            (text, index) => ( */}
+            <ListItem
+              className={classes.listItem}
+              button
+              component={Link}
+              to="newsfeed"
+            >
+              <ListAltIcon />
+              <Typography className={classes.listText} variant="body1">
+                Newsfeed
+              </Typography>
+            </ListItem>
+            <ListItem
+              className={classes.listItem}
+              button
+              component={Link}
+              to="friends"
+            >
+              <GroupIcon />
+              <Typography className={classes.listText} variant="body1">
+                Friends
+              </Typography>
+            </ListItem>
+            <ListItem
+              className={classes.listItem}
+              button
+              component={Link}
+              to="petfinder"
+            >
+              <PetsOutlinedIcon />
+              <Typography className={classes.listText} variant="body1">
+                Petfinder
+              </Typography>
+            </ListItem>
+            <ListItem
+              className={classes.listItem}
+              button
+              component={Link}
+              to="users"
+            >
+              <AccountBoxIcon />
+              <Typography className={classes.listText} variant="body1">
+                Users
+              </Typography>
+            </ListItem>
+            <ListItem
+              className={classes.listItem}
+              button
+              component={Link}
+              to="services"
+            >
+              <BusinessCenterIcon />
+              <Typography className={classes.listText} variant="body1">
+                Services
+              </Typography>
+            </ListItem>
+            {/* )
+            )} */}
+            <Divider />
+            <ListItem
+              component={Link}
+              to="signin"
+              className={classes.listItem}
+              onClick={handleLogout}
+              button
+            >
+              <ExitToAppIcon color="secondary" />
+              <Typography className={classes.listText}>Log out</Typography>
+            </ListItem>
+          </List>
+        </div>
+      </Drawer>
     </div>
   );
 }
