@@ -13,6 +13,7 @@ import firebase from "firebase";
 import { db, auth } from "../../firebase";
 import { compose } from "redux";
 import Loader from "../loader";
+import FloatingActionButtonZoom from "./editTabPanel";
 let log = console.log;
 //some comments to see
 
@@ -106,7 +107,7 @@ export default function About() {
           const ref = db.collection("users").doc(auth.currentUser.uid);
           let collection = await ref.get();
           setUserData({ ...collection.data() });
-          editHandler();
+          // editHandler();
         };
         fetchUser();
       })
@@ -317,18 +318,19 @@ export default function About() {
       email,
       contactNumber,
     };
-    aboutList = (
-      <AboutEdit
-        handleClick={editHandler}
-        data={forEdit}
-        handlerInput={(e) => handlerInput(e)}
-        handlerSubmit={handlerSubmit}
-      />
-    );
+    aboutList = <FloatingActionButtonZoom />;
+    // aboutList = (
+    //   <AboutEdit
+    //     handleClick={editHandler}
+    //     data={forEdit}
+    //     handlerInput={(e) => handlerInput(e)}
+    //     handlerSubmit={handlerSubmit}
+    //   />
+    // );
   }
 
   return userData !== null ? (
-    aboutList
+    <div className={classes.bio}>{aboutList}</div>
   ) : (
     <div className={classes.loader}>
       <Loader />
