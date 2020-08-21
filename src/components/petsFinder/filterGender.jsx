@@ -5,6 +5,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
+import { MenuItem } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -36,8 +37,8 @@ export default function FilterGender(props) {
   return (
     <div>
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="gender-native-helper">gender</InputLabel>
-        <NativeSelect
+        <InputLabel htmlFor="gender-native-helper">Gender</InputLabel>
+        <Select
           value={petGender}
           onChange={handleChange}
           inputProps={{
@@ -45,10 +46,10 @@ export default function FilterGender(props) {
             id: "gender-native-helper",
           }}
         >
-          <option aria-label="None" value="" />
-          <option value={"male"}>male</option>
-          <option value={"female"}>female</option>
-        </NativeSelect>
+          {/* <MenuItem aria-label="None" value="" /> */}
+          <MenuItem value={"male"}>male</MenuItem>
+          <MenuItem value={"female"}>female</MenuItem>
+        </Select>
         <FormHelperText>Filter by gender</FormHelperText>
       </FormControl>
     </div>

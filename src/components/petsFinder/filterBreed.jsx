@@ -7,6 +7,7 @@ import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import { db, storage } from "../../firebase";
 import uniqid from "uniqid";
+import { MenuItem } from "@material-ui/core";
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +50,7 @@ export default function FilterBreed(props) {
     <div>
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor={`petBreed-native-helper`}>{filterBy}</InputLabel>
-        <NativeSelect
+        <Select
           value={props.petBreed}
           onChange={handleChange}
           inputProps={{
@@ -57,15 +58,15 @@ export default function FilterBreed(props) {
             id: "petBreed-native-helper",
           }}
         >
-          <option aria-label="None" value="" />
+          <MenuItem aria-label="None" value="" />
           {newArray.map((animal) => {
             return (
-              <option key={uniqid()} value={animal}>
+              <MenuItem key={uniqid()} value={animal}>
                 {animal}
-              </option>
+              </MenuItem>
             );
           })}
-        </NativeSelect>
+        </Select>
         <FormHelperText>Filter by {filterBy}</FormHelperText>
       </FormControl>
     </div>
