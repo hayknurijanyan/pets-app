@@ -3,12 +3,14 @@ import Posts from "./posts";
 import CreatePost from "./createpost";
 import { db, auth, storage } from "../../firebase";
 import firebase from "firebase";
+import PostSnackBar from "./snackbar";
 
 let log = console.log;
 
 function Newsfeed() {
   const [posts, setPosts] = useState([]);
   const [value, setValue] = useState("");
+  const [postText, setPostText] = useState(true);
   const [fileUrl, setFileUrl] = useState("");
   const [userData, setUserData] = useState({});
 
@@ -21,7 +23,6 @@ function Newsfeed() {
       const dbUserData = (
         await db.collection("users").doc(user.uid).get()
       ).data();
-      console.log(dbUserData);
       setUserData(dbUserData);
     }
 
@@ -71,7 +72,7 @@ function Newsfeed() {
     const newPost = value;
 
     if (!value && !fileUrl) {
-      alert("Please write something to post");
+      setPostText(false);
     } else {
       postsArray.unshift({
         id: newId,
@@ -108,6 +109,7 @@ function Newsfeed() {
       setPosts(postsArray);
       setValue("");
       setFileUrl("");
+      setPostText(true);
     }
   };
 
@@ -167,6 +169,7 @@ function Newsfeed() {
     <div>
       <CreatePost
         value={value}
+        posttext={postText}
         onChange={handleChange}
         addPost={handleSubmit}
         fileChange={onFileChange}

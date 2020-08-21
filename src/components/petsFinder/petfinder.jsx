@@ -23,8 +23,7 @@ let log = console.log;
 
 const useStyles = makeStyles({
   root: {
-    marginTop: 5,
-    minWidth: 275,
+    margin: 25,
   },
   bullet: {
     display: "inline-block",
@@ -44,7 +43,7 @@ const useStyles = makeStyles({
   },
   content: {
     display: "flex",
-    width: "45rem",
+    flexDirection: "column",
   },
 });
 
@@ -56,6 +55,7 @@ const Petfinder = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [petGender, setPetGender] = useState("");
   const [petBreed, setPetBreed] = useState("");
+  const [showPets, setShowPets] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,8 +63,9 @@ const Petfinder = () => {
       const snapshot = await db.collection("users").get();
       snapshot.docs.forEach((doc) => {
         newArray.push(doc.data());
-        setSearchArr(newArray);
       });
+      setSearchArr(newArray);
+      setShowPets(newArray);
     };
     fetchData();
   }, []);
@@ -81,6 +82,7 @@ const Petfinder = () => {
         const newArr = [...searchArr];
         const myArr = newArr.filter((animal) => animal.pet.includes(sVal));
         setSearchResult(myArr);
+        setShowPets(myArr);
       } else if (petGender && !petBreed) {
         const sVal = searchVal.toLowerCase().trim();
         const newArr = [...searchArr];
@@ -110,55 +112,59 @@ const Petfinder = () => {
         <Toolbar />
         <Card className={classes.root}>
           <CardContent className={classes.content}>
-            <FormControl
-              fullWidth
-              className={classes.margin}
-              variant="outlined"
-            >
-              <InputLabel htmlFor="outlined-adornment-amount">
-                Search
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-amount"
-                value={searchVal}
-                labelWidth={60}
-                onChange={handleChange}
-              />
-            </FormControl>
-            {/* <Switched>
+            <div>
+              <FormControl
+                fullWidth
+                className={classes.margin}
+                variant="outlined"
+              >
+                <InputLabel htmlFor="outlined-adornment-amount">
+                  Search
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-amount"
+                  value={searchVal}
+                  labelWidth={60}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              {/* <Switched>
               <Route path="pathName/:searchValue" component={Pet} />
             </Switched> */}
-            {/* <Pet result={searchResult} /> */}
-          </CardContent>
-          <CardActions className={classes.button}>
-            <FilterBreed
-              onHandlePetBreed={setPetBreed}
-              searchResult={searchResult}
-              petBreed={petBreed}
-              filterBy={"Breed"}
-              searchResult={searchResult}
-              onAge={handleFilterAge}
-            />
-            <FilterGender
-              onHandlePetGender={setPetGender}
-              petGender={petGender}
-              filterBy={"Breed"}
-              searchResult={searchResult}
-              onBreed={handleFilterBreed}
-            />
+              {/* <Pet result={searchResult} /> */}
+            </div>
+            <div>
+              <CardActions className={classes.button}>
+                <FilterBreed
+                  onHandlePetBreed={setPetBreed}
+                  searchResult={searchResult}
+                  petBreed={petBreed}
+                  filterBy={"Breed"}
+                  searchResult={searchResult}
+                  onAge={handleFilterAge}
+                />
+                <FilterGender
+                  onHandlePetGender={setPetGender}
+                  petGender={petGender}
+                  filterBy={"Breed"}
+                  searchResult={searchResult}
+                  onBreed={handleFilterBreed}
+                />
 
-            <Button
-              onClick={handleClick}
-              variant="contained"
-              color="secondary"
-              size="medium"
-            >
-              Search
-            </Button>
-          </CardActions>
+                <Button
+                  onClick={handleClick}
+                  variant="contained"
+                  color="secondary"
+                  size="medium"
+                >
+                  Search
+                </Button>
+              </CardActions>
+            </div>
+          </CardContent>
         </Card>
 
-        <Pet handleDeleteClick={handleDeleteClick} result={searchResult} />
+        <Pet handleDeleteClick={handleDeleteClick} result={showPets} />
         {/* <EveryPet result={searchResult} /> */}
       </div>
     </>

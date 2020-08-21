@@ -17,12 +17,14 @@ let log = console.log;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    maxWidth: "22rem",
-    margin: 5,
+    justifyContent: "center",
+    margin: 10,
   },
   paper: {
     padding: theme.spacing(2),
-    maxWidth: 500,
+    // maxWidth: 500,
+    minWidth: 380,
+    maxWidth: 800,
   },
   image: {
     width: 128,
@@ -44,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
   petBox: {
     display: "flex",
     flexWrap: "wrap",
+    // backgroundColor: "red",
   },
 }));
 
@@ -52,55 +55,60 @@ export default function Pet(props) {
   const { searchValue } = useParams();
 
   return (
-    <div className={classes.petBox}>
-      {props.result.length
-        ? props.result.map((obj, index) => {
-            return (
-              <div key={uniqid()} className={classes.root}>
-                <Paper className={classes.paper}>
-                  <Grid container spacing={2}>
-                    <Grid item>
-                      <ButtonBase className={classes.image}>
-                        <img
-                          className={classes.img}
-                          alt="complex"
-                          src={obj.defaultPetUrl}
-                        />
-                      </ButtonBase>
-                    </Grid>
-                    <Grid item xs={12} sm container>
-                      <Grid item xs container direction="column" spacing={2}>
-                        <Grid item xs>
-                          <Typography gutterBottom variant="h6">
-                            Name: {obj.userPetInfo.name}
-                          </Typography>
-                          <Typography gutterBottom variant="h6">
-                            {obj.pet}
-                          </Typography>
-                          <Typography className={classes.row}>
+    <div className={classes.root}>
+      <div className={classes.petBox}>
+        {props.result.length
+          ? props.result.map((obj, index) => {
+              return (
+                <div key={uniqid()} className={classes.root}>
+                  <Paper className={classes.paper}>
+                    <Grid container spacing={2}>
+                      <Grid item>
+                        <ButtonBase className={classes.image}>
+                          <img
+                            className={classes.img}
+                            alt="complex"
+                            src={obj.defaultPetUrl}
+                          />
+                        </ButtonBase>
+                      </Grid>
+                      <Grid item xs={12} sm container>
+                        <Grid item xs container direction="column" spacing={2}>
+                          <Grid item xs>
+                            <Typography gutterBottom variant="h6">
+                              Name: {obj.userPetInfo.name}
+                            </Typography>
+                            <Typography
+                              gutterBottom
+                              variant="body1"
+                              color="textSecondary"
+                            >
+                              {obj.userPetInfo.breed}
+                            </Typography>
+                            <Typography className={classes.row}>
+                              <Typography variant="body2" gutterBottom>
+                                age: {obj.userPetInfo.age}
+                              </Typography>
+                              <Typography variant="body2" color="secondary">
+                                {`@${obj.pet}`}
+                              </Typography>
+                            </Typography>
                             <Typography variant="body2" gutterBottom>
-                              age: {obj.userPetInfo.age}
+                              Behavior: {obj.userPetInfo.behavior}
                             </Typography>
-                            <Typography variant="body2" color="secondary">
-                              {`@${obj.userPetInfo.breed}`}
+                            <Divider />
+                            <Typography variant="body2" color="textSecondary">
+                              Owner: {`${obj.firstName} ${obj.lastName}`}
                             </Typography>
-                          </Typography>
-                          <Typography variant="body2" gutterBottom>
-                            Behavior: {obj.userPetInfo.behavior}
-                          </Typography>
-                          <Divider />
-                          <Typography variant="body2" color="textSecondary">
-                            Owner: {`${obj.firstName} ${obj.lastName}`}
-                          </Typography>
-                        </Grid>
-                        <Box
-                          display="flex"
-                          flexDirection="row-reverse"
-                          p={1}
-                          m={1}
-                          bgcolor="background.paper"
-                        >
-                          <Button
+                          </Grid>
+                          <Box
+                            display="flex"
+                            flexDirection="row-reverse"
+                            p={1}
+                            m={1}
+                            bgcolor="background.paper"
+                          >
+                            {/* <Button
                             variant="contained"
                             color="secondary"
                             className={classes.button}
@@ -108,19 +116,20 @@ export default function Pet(props) {
                             onClick={() => props.handleDeleteClick(index)}
                           >
                             Delete
-                          </Button>
-                          <Button variant="contained" color="primary">
-                            Contact
-                          </Button>
-                        </Box>
+                          </Button> */}
+                            <Button variant="contained" color="primary">
+                              Contact
+                            </Button>
+                          </Box>
+                        </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                </Paper>
-              </div>
-            );
-          })
-        : ""}
+                  </Paper>
+                </div>
+              );
+            })
+          : ""}
+      </div>
     </div>
   );
 }
