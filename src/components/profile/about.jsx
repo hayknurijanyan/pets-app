@@ -56,35 +56,49 @@ const useStyles = makeStyles({
 });
 
 export default function About() {
-  const [edit, setEdit] = useState("false");
+  const [edit, setEdit] = useState(true);
   const classes = { ...useStyles() };
-  const bull = <span className={classes.bullet}>•</span>;
-  let aboutList = null;
-  let forEdit = null;
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({});
   const [bio, setBio] = useState("");
   const [fName, setFName] = useState("");
   const [lName, setLName] = useState("");
   const [profession, setProfession] = useState("");
-  const [location, setLocation] = useState({ city: "", country: "" });
-  const [gender, setGender] = useState("");
+  const [location, setLocation] = useState({
+    city: "",
+    country: "",
+  });
+  const [gender, setGender] = useState("r");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
   const [userPetInfo, setUserPetInfo] = useState({
-    age: "",
-    behavior: "",
-    breed: "",
-    name: "",
-    petsGender: "",
+    age: "age",
+    behavior: "asd",
+    breed: "asd",
+    name: "asd",
+    petsGender: "asd",
   });
-  useEffect(() => {
-    const fetchUser = async () => {
-      const ref = db.collection("users").doc(auth.currentUser.uid);
-      const collection = await ref.get();
-      setUserData(collection.data());
-    };
-    fetchUser();
+
+  let aboutList = null;
+  let forEdit = null;
+  useEffect(async () => {
+    const ref = db.collection("users").doc(auth.currentUser.uid);
+    const collection = await ref.get();
+    const data = collection.data();
+
+    setBio(data.bio);
+    setFName(data.firstName);
+    setLName(data.lastName);
+    setProfession(data.profession);
+    setLocation({
+      city: data.location.city,
+      country: data.location.country,
+    });
+    setGender(data.maleFemale);
+    setAge(data.age);
+    setEmail(data.email);
+    setNumber(data.contactNumber);
+    setUserPetInfo({ ...data.userPetInfo });
   }, []);
   function editHandler() {
     setEdit(!edit);
@@ -115,316 +129,133 @@ export default function About() {
       .catch((err) => log(err));
   }
 
-  function handlerInput(e) {
-    if (userData !== null) {
-      if (e.target.name === "bio") {
-        setBio(e.target.value);
-      } else if (e.target.name === "fName") {
-        setFName(e.target.value);
-      } else if (e.target.name === "lName") {
-        setLName(e.target.value);
-      } else if (e.target.name === "profession") {
-        setProfession(e.target.value);
-      } else if (e.target.name === "city") {
-        setLocation({ city: e.target.value, country: location.country });
-      } else if (e.target.name === "country") {
-        setLocation({ city: location.city, country: e.target.value });
-      } else if (e.target.name === "gender") {
-        setGender(e.target.value);
-      } else if (e.target.name === "age") {
-        setAge(e.target.value);
-      } else if (e.target.name === "email") {
-        setEmail(e.target.value);
-      } else if (e.target.name === "number") {
-        setNumber(e.target.value);
-      } else if (e.target.name === "pName") {
-        setUserPetInfo({
-          age: userPetInfo.age,
-          breed: userPetInfo.breed,
-          behavior: userPetInfo.behavior,
-          petsGender: userPetInfo.petsGender,
-          name: e.target.value,
-        });
-      } else if (e.target.name === "pAge") {
-        setUserPetInfo({
-          age: e.target.value,
-          breed: userPetInfo.breed,
-          behavior: userPetInfo.behavior,
-          petsGender: userPetInfo.petsGender,
-          name: userPetInfo.name,
-        });
-      } else if (e.target.name === "pBehavior") {
-        setUserPetInfo({
-          age: userPetInfo.age,
-          breed: userPetInfo.breed,
-          behavior: e.target.value,
-          petsGender: userPetInfo.petsGender,
-          name: userPetInfo.name,
-        });
-      } else if (e.target.name === "pGender") {
-        setUserPetInfo({
-          age: userPetInfo.name,
-          breed: userPetInfo.breed,
-          behavior: userPetInfo.behavior,
-          petsGender: e.target.value,
-          name: userPetInfo.name,
-        });
-      } else if (e.target.name === "pBreed") {
-        setUserPetInfo({
-          age: userPetInfo.age,
-          breed: e.target.value,
-          behavior: userPetInfo.behavior,
-          petsGender: userPetInfo.petsGender,
-          name: userPetInfo.name,
-        });
-      }
-    }
-  }
+  function handlerInput(e) {}
 
-  if (edit && userData !== null) {
-    const {
-      bio,
-      firstName,
-      lastName,
-      profession,
-      location,
-      maleFemale,
-      age,
-      email,
-      contactNumber,
-      userPetInfo,
-    } = userData;
-    log("this is data", userData);
-    forEdit = {
-      bio,
-      firstName,
-      lastName,
-      profession,
-      location,
-      maleFemale,
-      age,
-      email,
-      contactNumber,
-      userPetInfo,
-    };
-
-    if (Object.keys(userData).length) {
-      aboutList = (
-        <div>
-          <Card className={classes.root}>
-            <CardHeader
-              action={
-                <CardActions>
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    color="primary"
-                    onClick={editHandler}
-                  >
-                    Edit
-                  </Button>
-                </CardActions>
-              }
-              title={
-                <Typography
-                  className={classes.title}
+  if (edit) {
+    const userArr = [
+      {
+        title: "Bio",
+        value: bio,
+      },
+      {
+        title: "First Name",
+        value: fName,
+      },
+      {
+        title: "Last Name",
+        value: lName,
+      },
+      {
+        title: "Profession",
+        value: profession,
+      },
+      {
+        title: "City",
+        value: location.city,
+      },
+      {
+        title: "Country",
+        value: location.country,
+      },
+      {
+        title: "Gender",
+        value: gender,
+      },
+      {
+        title: "Age",
+        value: age,
+      },
+      {
+        title: "Email",
+        value: email,
+      },
+      {
+        title: "Phone number",
+        value: number,
+      },
+    ];
+    const petArr = [
+      { title: "Age", value: userPetInfo.age },
+      { title: "Behavior", value: userPetInfo.behavior },
+      { title: "Breed", value: userPetInfo.breed },
+      { title: "Name", value: userPetInfo.name },
+      { title: "Gender", value: userPetInfo.petsGender },
+    ];
+    aboutList = (
+      <div>
+        <Card className={classes.root}>
+          <CardHeader
+            action={
+              <CardActions>
+                <Button
+                  size="small"
+                  variant="outlined"
                   color="primary"
-                  variant="h5"
+                  onClick={editHandler}
                 >
-                  About Me
-                </Typography>
-              }
-            />
-            <Divider />
-            <CardContent>
+                  Edit
+                </Button>
+              </CardActions>
+            }
+            title={
+              <Typography
+                className={classes.title}
+                color="primary"
+                variant="h5"
+              >
+                About Me
+              </Typography>
+            }
+          />
+          <Divider />
+          <CardContent>
+            {userArr.map((title) => (
               <div className={classes.bio}>
                 <Typography
                   className={classes.text}
                   variant="h6"
                   color="textSecondary"
                 >
-                  Bio
+                  {title.title}
                 </Typography>
-                <Typography variant="h6">{bio}</Typography>
+                <Typography variant="h4">{title.value}</Typography>
               </div>
-
-              <div className={classes.content}>
+            ))}
+          </CardContent>
+          <Typography className={classes.title} color="primary" variant="h5">
+            About pet
+          </Typography>
+          <Divider />
+          <CardContent>
+            {petArr.map((title) => (
+              <div className={classes.bio}>
                 <Typography
                   className={classes.text}
                   variant="h6"
                   color="textSecondary"
                 >
-                  First Name
+                  {title.title}
                 </Typography>
-                <Typography variant="h6">{firstName}</Typography>
+                <Typography variant="h4">{title.value}</Typography>
               </div>
-              <div className={classes.content}>
-                <Typography
-                  className={classes.text}
-                  variant="h6"
-                  color="textSecondary"
-                >
-                  Last Name
-                </Typography>
-                <Typography variant="h6">{lastName}</Typography>
-              </div>
-              <div className={classes.content}>
-                <Typography
-                  className={classes.text}
-                  variant="h6"
-                  color="textSecondary"
-                >
-                  Profession
-                </Typography>
-                <Typography variant="h6">{profession}</Typography>
-              </div>
-              <div className={classes.content}>
-                <Typography
-                  className={classes.text}
-                  variant="h6"
-                  color="textSecondary"
-                >
-                  City
-                </Typography>
-                <Typography variant="h6">{location.city}</Typography>
-              </div>
-              <div className={classes.content}>
-                <Typography
-                  className={classes.text}
-                  variant="h6"
-                  color="textSecondary"
-                >
-                  Country
-                </Typography>
-                <Typography variant="h6">{location.country}</Typography>
-              </div>
-              <div className={classes.content}>
-                <Typography
-                  className={classes.text}
-                  variant="h6"
-                  color="textSecondary"
-                >
-                  Gender
-                </Typography>
-                <Typography variant="h6">{maleFemale}</Typography>
-              </div>
-              <div className={classes.content}>
-                <Typography
-                  className={classes.text}
-                  variant="h6"
-                  color="textSecondary"
-                >
-                  Age
-                </Typography>
-                <Typography variant="h6">{age}</Typography>
-              </div>
-              <div className={classes.content}>
-                <Typography
-                  className={classes.text}
-                  variant="h6"
-                  color="textSecondary"
-                >
-                  E-mail
-                </Typography>
-                <Typography variant="h6">{email}</Typography>
-              </div>
-              <div className={classes.content}>
-                <Typography
-                  className={classes.text}
-                  variant="h6"
-                  color="textSecondary"
-                >
-                  Phone Number
-                </Typography>
-                <Typography variant="h6">{contactNumber}</Typography>
-              </div>
-            </CardContent>
-            <Typography className={classes.title} color="primary" variant="h5">
-              About pet
-            </Typography>
-            <Divider />
-            <CardContent>
-              <div className={classes.content}>
-                <Typography
-                  className={classes.text}
-                  variant="h6"
-                  color="textSecondary"
-                >
-                  Age
-                </Typography>
-                <Typography variant="h6">{userPetInfo.age}</Typography>
-              </div>{" "}
-              <div className={classes.content}>
-                <Typography
-                  className={classes.text}
-                  variant="h6"
-                  color="textSecondary"
-                >
-                  Behavior
-                </Typography>
-                <Typography variant="h6">{userPetInfo.behavior}</Typography>
-              </div>{" "}
-              <div className={classes.content}>
-                <Typography
-                  className={classes.text}
-                  variant="h6"
-                  color="textSecondary"
-                >
-                  Breed
-                </Typography>
-                <Typography variant="h6">{userPetInfo.breed}</Typography>
-              </div>{" "}
-              <div className={classes.content}>
-                <Typography
-                  className={classes.text}
-                  variant="h6"
-                  color="textSecondary"
-                >
-                  Pets name
-                </Typography>
-                <Typography variant="h6">{userPetInfo.name}</Typography>
-              </div>{" "}
-              <div className={classes.content}>
-                <Typography
-                  className={classes.text}
-                  variant="h6"
-                  color="textSecondary"
-                >
-                  Pets gender
-                </Typography>
-                <Typography variant="h6">{userPetInfo.petsGender}</Typography>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      );
-    }
-  } else if (userData !== null) {
-    const {
-      bio,
-      firstName,
-      lastName,
-      profession,
-      location,
-      maleFemale,
-      age,
-      email,
-      contactNumber,
-      userPetInfo,
-    } = userData;
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+    );
+  } else {
     forEdit = {
-      bio,
-      firstName,
-      lastName,
-      profession,
-      location,
-      maleFemale,
       age,
+      bio,
+      fName,
+      lName,
+      gender,
       email,
-      contactNumber,
-      userPetInfo,
+      profession,
+      location: { ...location },
+      number,
+      userPetInfo: { ...userPetInfo },
     };
-
     aboutList = (
       <EditTabPanel
         data={{ ...forEdit }}
