@@ -11,6 +11,7 @@ import { Typography, Button } from "@material-ui/core";
 import { db, auth } from "../../firebase";
 import Loader from "../loader";
 import EditTabPanel from "./editTabPanel";
+
 let log = console.log;
 
 const useStyles = makeStyles({
@@ -80,10 +81,27 @@ export default function About() {
   useEffect(() => {
     const fetchUser = async () => {
       const ref = db.collection("users").doc(auth.currentUser.uid);
+<<<<<<< HEAD
       const collection = await ref.get();
       log("aaaaaaaaa", collection.data);
       setUserData(collection.data());
       log("bbbbbbbbbbb", userData);
+=======
+      collection = await ref.get();
+
+      const userData = collection.data();
+      setUserData(userData);
+      setBio(userData.bio);
+      setFName(userData.firstName);
+      setLName(userData.lastName);
+      setProfession(userData.profession);
+      setLocation({ ...userData.location });
+      setGender(userData.maleFemale);
+      setAge(userData.age);
+      setEmail(userData.email);
+      setNumber(userData.contactNumber);
+      setUserPetInfo(userData.userPetInfo);
+>>>>>>> 88447ad68a13ccf100a11c7cf0601d230aaf7235
     };
     fetchUser();
   }, []);
@@ -95,8 +113,6 @@ export default function About() {
       .doc(auth.currentUser.uid)
       .update({
         bio,
-        age,
-        email,
         firstName: fName,
         lastName: lName,
         profession,
@@ -115,7 +131,6 @@ export default function About() {
         };
         fetchUser();
       })
-
       .catch((err) => log(err));
   }
 
@@ -212,195 +227,197 @@ export default function About() {
       userPetInfo,
     };
 
-    aboutList = (
-      <div>
-        <Card className={classes.root}>
-          <CardHeader
-            action={
-              <CardActions>
-                <Button
-                  size="small"
-                  variant="outlined"
+    if (Object.keys(userData).length) {
+      aboutList = (
+        <div>
+          <Card className={classes.root}>
+            <CardHeader
+              action={
+                <CardActions>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="primary"
+                    onClick={editHandler}
+                  >
+                    Edit
+                  </Button>
+                </CardActions>
+              }
+              title={
+                <Typography
+                  className={classes.title}
                   color="primary"
-                  onClick={editHandler}
+                  variant="h5"
                 >
-                  Edit
-                </Button>
-              </CardActions>
-            }
-            title={
-              <Typography
-                className={classes.title}
-                color="primary"
-                variant="h5"
-              >
-                About Me
-              </Typography>
-            }
-          />
-          <Divider />
-          <CardContent>
-            <div className={classes.bio}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                Bio
-              </Typography>
-              <Typography variant="h6">{bio}</Typography>
-            </div>
+                  About Me
+                </Typography>
+              }
+            />
+            <Divider />
+            <CardContent>
+              <div className={classes.bio}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  Bio
+                </Typography>
+                <Typography variant="h6">{bio}</Typography>
+              </div>
 
-            <div className={classes.content}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                First Name
-              </Typography>
-              <Typography variant="h6">{firstName}</Typography>
-            </div>
-            <div className={classes.content}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                Last Name
-              </Typography>
-              <Typography variant="h6">{lastName}</Typography>
-            </div>
-            <div className={classes.content}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                Profession
-              </Typography>
-              <Typography variant="h6">{profession}</Typography>
-            </div>
-            <div className={classes.content}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                City
-              </Typography>
-              <Typography variant="h6">{location.city}</Typography>
-            </div>
-            <div className={classes.content}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                Country
-              </Typography>
-              <Typography variant="h6">{location.country}</Typography>
-            </div>
-            <div className={classes.content}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                Gender
-              </Typography>
-              <Typography variant="h6">{maleFemale}</Typography>
-            </div>
-            <div className={classes.content}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                Age
-              </Typography>
-              <Typography variant="h6">{age}</Typography>
-            </div>
-            <div className={classes.content}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                E-mail
-              </Typography>
-              <Typography variant="h6">{email}</Typography>
-            </div>
-            <div className={classes.content}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                Phone Number
-              </Typography>
-              <Typography variant="h6">{contactNumber}</Typography>
-            </div>
-          </CardContent>
-          <Typography className={classes.title} color="primary" variant="h5">
-            About pet
-          </Typography>
-          <Divider />
-          <CardContent>
-            <div className={classes.content}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                Age
-              </Typography>
-              <Typography variant="h6">{userPetInfo.age}</Typography>
-            </div>{" "}
-            <div className={classes.content}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                Behavior
-              </Typography>
-              <Typography variant="h6">{userPetInfo.behavior}</Typography>
-            </div>{" "}
-            <div className={classes.content}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                Breed
-              </Typography>
-              <Typography variant="h6">{userPetInfo.breed}</Typography>
-            </div>{" "}
-            <div className={classes.content}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                Pets name
-              </Typography>
-              <Typography variant="h6">{userPetInfo.name}</Typography>
-            </div>{" "}
-            <div className={classes.content}>
-              <Typography
-                className={classes.text}
-                variant="h6"
-                color="textSecondary"
-              >
-                Pets gender
-              </Typography>
-              <Typography variant="h6">{userPetInfo.petsGender}</Typography>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
+              <div className={classes.content}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  First Name
+                </Typography>
+                <Typography variant="h6">{firstName}</Typography>
+              </div>
+              <div className={classes.content}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  Last Name
+                </Typography>
+                <Typography variant="h6">{lastName}</Typography>
+              </div>
+              <div className={classes.content}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  Profession
+                </Typography>
+                <Typography variant="h6">{profession}</Typography>
+              </div>
+              <div className={classes.content}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  City
+                </Typography>
+                <Typography variant="h6">{location.city}</Typography>
+              </div>
+              <div className={classes.content}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  Country
+                </Typography>
+                <Typography variant="h6">{location.country}</Typography>
+              </div>
+              <div className={classes.content}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  Gender
+                </Typography>
+                <Typography variant="h6">{maleFemale}</Typography>
+              </div>
+              <div className={classes.content}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  Age
+                </Typography>
+                <Typography variant="h6">{age}</Typography>
+              </div>
+              <div className={classes.content}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  E-mail
+                </Typography>
+                <Typography variant="h6">{email}</Typography>
+              </div>
+              <div className={classes.content}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  Phone Number
+                </Typography>
+                <Typography variant="h6">{contactNumber}</Typography>
+              </div>
+            </CardContent>
+            <Typography className={classes.title} color="primary" variant="h5">
+              About pet
+            </Typography>
+            <Divider />
+            <CardContent>
+              <div className={classes.content}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  Age
+                </Typography>
+                <Typography variant="h6">{userPetInfo.age}</Typography>
+              </div>{" "}
+              <div className={classes.content}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  Behavior
+                </Typography>
+                <Typography variant="h6">{userPetInfo.behavior}</Typography>
+              </div>{" "}
+              <div className={classes.content}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  Breed
+                </Typography>
+                <Typography variant="h6">{userPetInfo.breed}</Typography>
+              </div>{" "}
+              <div className={classes.content}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  Pets name
+                </Typography>
+                <Typography variant="h6">{userPetInfo.name}</Typography>
+              </div>{" "}
+              <div className={classes.content}>
+                <Typography
+                  className={classes.text}
+                  variant="h6"
+                  color="textSecondary"
+                >
+                  Pets gender
+                </Typography>
+                <Typography variant="h6">{userPetInfo.petsGender}</Typography>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      );
+    }
   } else if (userData !== null) {
     const {
       bio,

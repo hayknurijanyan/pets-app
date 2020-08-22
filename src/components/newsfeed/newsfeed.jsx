@@ -3,18 +3,29 @@ import Posts from "./posts";
 import CreatePost from "./createpost";
 import { db, auth, storage } from "../../firebase";
 import firebase from "firebase";
+import PostSnackBar from "./snackbar";
 
 let log = console.log;
 
 function Newsfeed() {
   const [posts, setPosts] = useState([]);
   const [value, setValue] = useState("");
+  const [postText, setPostText] = useState(true);
   const [fileUrl, setFileUrl] = useState("");
+  const [userData, setUserData] = useState({});
 
   // const userData = useSelector((state) => state.userData);
   // log("--------this is user", userData.firstName);
 
   useEffect(() => {
+    async function fetchMyData() {
+      const user = firebase.auth().currentUser;
+      const dbUserData = (
+        await db.collection("users").doc(user.uid).get()
+      ).data();
+      setUserData(dbUserData);
+    }
+
     db.collection("posts")
       .where("likes", ">=", 0)
       .orderBy("likes", "desc")
@@ -28,14 +39,8 @@ function Newsfeed() {
         });
         setPosts(posts);
       });
+    fetchMyData();
   }, []);
-
-  useEffect(() => {
-    // adding listeners everytime props.x changes
-    return () => {
-      // removing the listener when props.x changes
-    };
-  }, [fileUrl]);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -51,12 +56,9 @@ function Newsfeed() {
   };
 
   const handleSubmit = async (e) => {
-    const user = firebase.auth().currentUser;
-    const userData = (await db.collection("users").doc(user.uid).get()).data();
     const name = userData.firstName;
     const surname = userData.lastName;
     const fullname = `${name} ${surname}`;
-    console.log(fullname);
 
     let today = new Date();
     let hours = today.getHours();
@@ -70,7 +72,7 @@ function Newsfeed() {
     const newPost = value;
 
     if (!value && !fileUrl) {
-      alert("Please write something to post");
+      setPostText(false);
     } else {
       postsArray.unshift({
         id: newId,
@@ -107,6 +109,7 @@ function Newsfeed() {
       setPosts(postsArray);
       setValue("");
       setFileUrl("");
+      setPostText(true);
     }
   };
 
@@ -166,6 +169,7 @@ function Newsfeed() {
     <div>
       <CreatePost
         value={value}
+        posttext={postText}
         onChange={handleChange}
         addPost={handleSubmit}
         fileChange={onFileChange}

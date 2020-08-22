@@ -25,6 +25,8 @@ import Services from "./components/services/services";
 import SidebarRight from "./components/sidebarright";
 import SidebarLeft from "./components/sidebarleft";
 import { Hidden } from "@material-ui/core";
+import ChatButton from "./components/chat/chatButton";
+import ChatBox from "./components/chat/chatBox";
 
 let log = console.log;
 
@@ -97,6 +99,7 @@ function App() {
             {/* <Redirect to='notfound'/> */}
           </Switch>
         </main>
+        <ChatBox />
         <Hidden mdDown>
           <SidebarRight />
         </Hidden>

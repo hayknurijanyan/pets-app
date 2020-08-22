@@ -16,6 +16,7 @@ import {
   Typography,
   TextField,
   Button,
+  CardContent,
 } from "@material-ui/core";
 
 let log = console.log;
@@ -36,6 +37,13 @@ const useStyles = makeStyles((theme) => ({
   input: {
     marginTop: 50,
   },
+  chatArea: {
+    display: "flex",
+    flexDirection: "column-reverse",
+    maxHeight: 500,
+    overflow: "auto",
+  },
+  inputArea: {},
 }));
 
 export default function ChatMain(props) {
@@ -49,32 +57,35 @@ export default function ChatMain(props) {
   const [user, setUser] = useState([]);
   const myRef = React.createRef();
 
-  useEffect(async () => {
-    const user = firebase.auth().currentUser;
-    user ? setUser(user) : log("user not found");
-    setReadError(null);
-    setLoadingChats(true);
-    const chatArea = myRef.current;
-    try {
-      firebase
-        .database()
-        .ref("chats")
-        .on("value", (snapshot) => {
-          let chats = [];
-          snapshot.forEach((snap) => {
-            chats.push(snap.val());
+  useEffect(() => {
+    const fetchData = async () => {
+      const user = firebase.auth().currentUser;
+      user ? setUser(user) : log("user not found");
+      setReadError(null);
+      setLoadingChats(true);
+      const chatArea = myRef.current;
+      try {
+        firebase
+          .database()
+          .ref("chats")
+          .on("value", (snapshot) => {
+            let chats = [];
+            snapshot.forEach((snap) => {
+              chats.push(snap.val());
+            });
+            chats.sort(function (a, b) {
+              return a.timestamp - b.timestamp;
+            });
+            setChats(chats);
+            chatArea.scrollBy(0, chatArea.scrollHeight);
+            setLoadingChats(false);
           });
-          chats.sort(function (a, b) {
-            return a.timestamp - b.timestamp;
-          });
-          setChats(chats);
-          chatArea.scrollBy(0, chatArea.scrollHeight);
-          setLoadingChats(false);
-        });
-    } catch (error) {
-      setReadError(error.message);
-      setLoadingChats(false);
-    }
+      } catch (error) {
+        setReadError(error.message);
+        setLoadingChats(false);
+      }
+    };
+    fetchData();
   }, []);
 
   const formatTime = (timestamp) => {
@@ -108,62 +119,62 @@ export default function ChatMain(props) {
 
   return (
     <>
-      <div>
-        <div className="chat-area" ref={myRef}>
-          {/* loading indicator */}
-          {loadingChats ? (
-            <div className="spinner-border text-success" role="status">
-              <span className="sr-only">Loading...</span>
-            </div>
-          ) : (
-            ""
-          )}
-          {/* chat area */}
-          {chats.map((chat) => {
-            return (
-              <p
-                key={chat.timestamp}
-                className={
-                  "chat-bubble " + (user.uid === chat.uid ? "current-user" : "")
-                }
-              >
-                {chat.content}
-                <br />
-                <span className="chat-time float-right">
-                  {formatTime(chat.timestamp)}
-                </span>
-              </p>
-            );
-          })}
+      <Card>
+        <CardContent className={classes.chatArea}>
+          <div className="chat-area" ref={myRef}>
+            {/* loading indicator */}
+            {loadingChats ? (
+              <div className="spinner-border text-success" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+            ) : (
+              ""
+            )}
+            {/* chat area */}
+            {chats.map((chat) => {
+              return (
+                <p
+                  key={chat.timestamp}
+                  className={
+                    "chat-bubble " +
+                    (user.uid === chat.uid ? "current-user" : "")
+                  }
+                >
+                  {chat.content}
+                  <br />
+                  <span className="chat-time float-right">
+                    {formatTime(chat.timestamp)}
+                  </span>
+                </p>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+      <Card className={classes.inputArea}>
+        <TextField
+          className={classes.input}
+          onChange={handleChange}
+          variant="outlined"
+          fullWidth
+          placeholder="Enter your message"
+          id="msg"
+          label="Enter your message"
+        />
+        <label htmlFor="raised-button-file"></label>
+        <Button
+          onClick={onSend}
+          variant="contained"
+          color="primary"
+          size="large"
+          className={classes.button}
+        >
+          Send
+        </Button>
+        <div className="py-5 mx-3">
+          Login in as: <strong className="text-info">{user.email}</strong>
         </div>
-      </div>
-
-      <TextField
-        className={classes.input}
-        onChange={handleChange}
-        variant="outlined"
-        required
-        fullWidth
-        placeholder="lastName"
-        id="lastName"
-        label="lastname"
-        name="lastName"
-        autoComplete="lname"
-      />
-      <label htmlFor="raised-button-file"></label>
-      <Button
-        onClick={onSend}
-        variant="contained"
-        color="primary"
-        size="small"
-        className={classes.button}
-        startIcon={<SaveIcon />}
-      >
-        Send
-      </Button>
-      <div className="py-5 mx-3">
-        Login in as: <strong className="text-info">{user.email}</strong>
-      </div>
+      </Card>
     </>
   );
 }

@@ -13,6 +13,8 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import Media from "react-media";
+import ChatBox from "./chat/chatBox";
+import ChatButton from "./chat/chatButton";
 
 const drawerWidth = 260;
 
@@ -76,6 +78,7 @@ export default function SidebarRight() {
           </ListItem>
         ))}
       </List>
+      <ChatBox />
     </Drawer>
   );
 }

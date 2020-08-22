@@ -7,6 +7,7 @@ import {
   TextField,
   Button,
   IconButton,
+  Snackbar,
 } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
@@ -21,6 +22,12 @@ import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import SaveIcon from "@material-ui/icons/Save";
 import firebase from "firebase";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import PostSnackBar from "./snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 let log = console.log;
 
@@ -29,6 +36,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     marginTop: 90,
+  },
+  snackbar: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
   },
 
   buttons: {
@@ -46,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     width: "30%",
     PaddingTop: "30%",
     margin: 30,
-    marginLeft: 80,
+    marginLeft: 85,
   },
   card: {
     margin: 0,
@@ -70,6 +83,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CreatePost(props) {
+  const [open, setOpen] = React.useState(false);
   const [text, setText] = useState("");
 
   const classes = useStyles();
@@ -77,37 +91,62 @@ function CreatePost(props) {
   const [fileUrl, setFileUrl] = useState("");
   const [users, setUsers] = useState([]);
 
-  const onFileChange = async (e) => {
-    const file = e.target.files[0];
-    const storageRef = storage.ref();
-    const fileRef = storageRef.child(file.name);
-    await fileRef.put(file);
-    setFileUrl(await fileRef.getDownloadURL());
-    alert("upload completed");
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (!fileUrl) {
+  // const onFileChange = async (e) => {
+  //   const file = e.target.files[0];
+  //   const storageRef = storage.ref();
+  //   const fileRef = storageRef.child(file.name);
+  //   await fileRef.put(file);
+  //   setFileUrl(await fileRef.getDownloadURL());
+  //   alert("upload completed");
+  // };
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
       return;
     }
-    const user = firebase.auth().currentUser;
-    if (user) {
-      db.collection("users").doc(user.uid).update({
-        avatar: fileUrl,
-      });
-      alert("completed");
+
+    setOpen(false);
+  };
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const checkPost = () => {
+    if (props.posttext) {
+      return (
+        <Alert onClose={handleClose} severity="success">
+          Post Succeed!
+        </Alert>
+      );
     } else {
-      log("user not found");
+      return (
+        <Alert onClose={handleClose} severity="error">
+          Nothing to post!
+        </Alert>
+      );
     }
   };
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (!fileUrl) {
+  //     return;
+  //   }
+  //   const user = firebase.auth().currentUser;
+  //   if (user) {
+  //     db.collection("users").doc(user.uid).update({
+  //       avatar: fileUrl,
+  //     });
+  //     alert("completed");
+  //   } else {
+  //     log("user not found");
+  //   }
+  // };
 
   // const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  // const handleExpandClick = () => {
+  //   setExpanded(!expanded);
+  // };
 
   return (
     <div className={classes.root}>
@@ -172,7 +211,7 @@ function CreatePost(props) {
                 </Button>
               </label>
             </div>
-            <div className={classes.button}>
+            <div onClick={handleClick} className={classes.button}>
               <Button
                 className={classes.button}
                 onClick={props.addPost}
@@ -180,6 +219,7 @@ function CreatePost(props) {
                 color="primary"
                 size="large"
                 className={classes.button}
+                // onKeyPressed={(e) => keyPressed(e)}
               >
                 Post
               </Button>
@@ -191,6 +231,11 @@ function CreatePost(props) {
           </div>
         </CardContent>
       </Card>
+      <div style={{ marginTop: 50 }}>
+        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+          {checkPost()}
+        </Snackbar>
+      </div>
     </div>
   );
 }
