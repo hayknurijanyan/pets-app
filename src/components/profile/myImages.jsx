@@ -107,16 +107,16 @@ const tileData = [
   },
 ];
 function getImages(value, setValue) {
-  const user = firebase.auth().currentUser;
-  const images = storage().ref(user.uid);
-  storage()
-    .ref(`images/${images}`)
-    .once("value")
-    .then((snapshot) => {
-      setValue({ value: snapshot.val() });
-      console.log(images);
-    })
-    .catch((error) => console.error(error));
+  // const user = firebase.auth().currentUser;
+  // const images = storage().ref(user.uid);
+  // storage()
+  //   .ref(`images/${images}`)
+  //   .once("value")
+  //   .then((snapshot) => {
+  //     setValue({ value: snapshot.val() });
+  //     console.log(images);
+  //   })
+  //   .catch((error) => console.error(error));
 }
 const useStyles = makeStyles({
   root: {

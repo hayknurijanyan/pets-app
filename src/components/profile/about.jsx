@@ -81,27 +81,9 @@ export default function About() {
   useEffect(() => {
     const fetchUser = async () => {
       const ref = db.collection("users").doc(auth.currentUser.uid);
-<<<<<<< HEAD
       const collection = await ref.get();
-      log("aaaaaaaaa", collection.data);
-      setUserData(collection.data());
-      log("bbbbbbbbbbb", userData);
-=======
-      collection = await ref.get();
 
-      const userData = collection.data();
-      setUserData(userData);
-      setBio(userData.bio);
-      setFName(userData.firstName);
-      setLName(userData.lastName);
-      setProfession(userData.profession);
-      setLocation({ ...userData.location });
-      setGender(userData.maleFemale);
-      setAge(userData.age);
-      setEmail(userData.email);
-      setNumber(userData.contactNumber);
-      setUserPetInfo(userData.userPetInfo);
->>>>>>> 88447ad68a13ccf100a11c7cf0601d230aaf7235
+      setUserData(collection.data());
     };
     fetchUser();
   }, []);
