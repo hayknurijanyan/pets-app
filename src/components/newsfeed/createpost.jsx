@@ -106,9 +106,6 @@ function CreatePost(props) {
 
     setOpen(false);
   };
-  // const keyPressed = (e) => {
-  //   console.log(e);
-  // };
 
   const handleClick = () => {
     setOpen(true);

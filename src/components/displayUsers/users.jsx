@@ -16,6 +16,7 @@ import {
   FormControl,
   OutlinedInput,
 } from "@material-ui/core";
+import ChatBox from "../chat/chatBox";
 import ChatMain from "../chat/chatMain";
 import ChatWithClass from "../chat/chatWithClass";
 let log = console.log;
