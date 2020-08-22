@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import UpLoad from "../upLoadingFiles/upLoad";
 import { Button } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core/styles";
+import firebase, { storage } from "firebase";
 
 const useStyles = makeStyles((theme) => ({
   deleteButton: {
@@ -31,6 +31,35 @@ export default function ImageDrop() {
       );
     },
   });
+  function uploadHandler() {
+    const user = firebase.auth().currentUser;
+
+    if (user) {
+      files.forEach((file) => {
+        const referance = storage();
+        const uploadTask = referance
+          .ref(`images/${user.uid}/${file.name}`)
+          .put(file);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {},
+          (error) => {
+            console.log(error);
+          },
+          () => {
+            storage()
+              .ref("images")
+              .child(file.name)
+              .getDownloadURL()
+              .then((url) => {
+                console.log(url);
+              });
+          }
+        );
+      });
+    }
+    setFiles([]);
+  }
   function handleDelete(url) {
     setFiles(files.filter((file) => file.preview !== url));
   }
@@ -129,6 +158,7 @@ export default function ImageDrop() {
         size="medium"
         color="primary"
         startIcon={<CloudUploadIcon />}
+        onClick={uploadHandler}
       >
         <p>Upload {`(${files.length})`} files</p>
       </Button>

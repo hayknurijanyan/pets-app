@@ -61,7 +61,7 @@ export default function About() {
   const bull = <span className={classes.bullet}>•</span>;
   let aboutList = null;
   let forEdit = null;
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(null);
   const [bio, setBio] = useState("");
   const [fName, setFName] = useState("");
   const [lName, setLName] = useState("");
@@ -78,24 +78,12 @@ export default function About() {
     name: "",
     petsGender: "",
   });
-  let collection;
   useEffect(() => {
     const fetchUser = async () => {
       const ref = db.collection("users").doc(auth.currentUser.uid);
-      collection = await ref.get();
+      const collection = await ref.get();
 
-      const userData = collection.data();
-      setUserData(userData);
-      setBio(userData.bio);
-      setFName(userData.firstName);
-      setLName(userData.lastName);
-      setProfession(userData.profession);
-      setLocation({ ...userData.location });
-      setGender(userData.maleFemale);
-      setAge(userData.age);
-      setEmail(userData.email);
-      setNumber(userData.contactNumber);
-      setUserPetInfo(userData.userPetInfo);
+      setUserData(collection.data());
     };
     fetchUser();
   }, []);
@@ -193,6 +181,7 @@ export default function About() {
       }
     }
   }
+
   if (edit && userData !== null) {
     const {
       bio,
@@ -439,7 +428,7 @@ export default function About() {
 
     aboutList = (
       <EditTabPanel
-        data={forEdit}
+        data={{ ...forEdit }}
         handlerBack={editHandler}
         handlerInput={(e) => handlerInput(e)}
         handlerSubmit={handlerSubmit}
