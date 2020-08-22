@@ -71,17 +71,17 @@ function PostUpload(props) {
     }
   };
 
-  useEffect(() => {
-    // const fetchUsers = async () => {
-    //   const usersCollection = await db.collection("img").get();
-    //   setUsers(
-    //     usersCollection.docs.map((doc) => {
-    //       return doc.data();
-    //     })
-    //   );
-    // };
-    // fetchUsers();
-  }, []);
+  // useEffect(() => {
+  // const fetchUsers = async () => {
+  //   const usersCollection = await db.collection("img").get();
+  //   setUsers(
+  //     usersCollection.docs.map((doc) => {
+  //       return doc.data();
+  //     })
+  //   );
+  // };
+  // fetchUsers();
+  // }, []);
 
   return (
     <>

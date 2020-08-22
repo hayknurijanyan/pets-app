@@ -188,6 +188,7 @@ export default function ChatMain(props) {
         <TextField
           value={content}
           className={classes.input}
+          value={content}
           onChange={handleChange}
           variant="outlined"
           fullWidth
@@ -203,6 +204,7 @@ export default function ChatMain(props) {
           color="primary"
           size="large"
           className={classes.button}
+          disabled={content ? false : true}
         >
           Send
         </Button>

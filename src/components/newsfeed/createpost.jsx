@@ -2,27 +2,17 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
-  CardMedia,
   CardContent,
   TextField,
   Button,
   IconButton,
   Snackbar,
 } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 import ImageAvatar from "../profile/avatar";
-import ImageIcon from "@material-ui/icons/Image";
-import PostUpload from "./postupload";
-import { db, auth, storage } from "../../firebase";
 import { useSelector, useDispatch } from "react-redux";
-
-import { fileUrlActionAsync } from "../../actions";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-import SaveIcon from "@material-ui/icons/Save";
-import firebase from "firebase";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import PostSnackBar from "./snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 
 function Alert(props) {
@@ -91,14 +81,6 @@ function CreatePost(props) {
   const [fileUrl, setFileUrl] = useState("");
   const [users, setUsers] = useState([]);
 
-  // const onFileChange = async (e) => {
-  //   const file = e.target.files[0];
-  //   const storageRef = storage.ref();
-  //   const fileRef = storageRef.child(file.name);
-  //   await fileRef.put(file);
-  //   setFileUrl(await fileRef.getDownloadURL());
-  //   alert("upload completed");
-  // };
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -126,27 +108,6 @@ function CreatePost(props) {
       );
     }
   };
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (!fileUrl) {
-  //     return;
-  //   }
-  //   const user = firebase.auth().currentUser;
-  //   if (user) {
-  //     db.collection("users").doc(user.uid).update({
-  //       avatar: fileUrl,
-  //     });
-  //     alert("completed");
-  //   } else {
-  //     log("user not found");
-  //   }
-  // };
-
-  // const classes = useStyles();
-
-  // const handleExpandClick = () => {
-  //   setExpanded(!expanded);
-  // };
 
   return (
     <div className={classes.root}>
