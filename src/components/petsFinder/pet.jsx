@@ -58,7 +58,7 @@ export default function Pet(props) {
     <div className={classes.root}>
       <div className={classes.petBox}>
         {props.result.length
-          ? props.result.map((obj, index) => {
+          ? props.result.map((obj) => {
               return (
                 <div key={uniqid()} className={classes.root}>
                   <Paper className={classes.paper}>
