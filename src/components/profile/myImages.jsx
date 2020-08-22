@@ -17,6 +17,8 @@ import { catdog } from "../../images/catdog.png";
 import PhotoSlider from "./photoSlider";
 import ImageDrop from "./imageDrop";
 import UpLoad from "../upLoadingFiles/upLoad";
+import firebase, { storage } from "firebase";
+import { useEffect } from "react";
 const tileData = [
   {
     img: "https://coverfiles.alphacoders.com/927/92705.jpg",
@@ -104,7 +106,18 @@ const tileData = [
     title: "Image",
   },
 ];
-
+function getImages(value, setValue) {
+  const user = firebase.auth().currentUser;
+  const images = storage().ref(user.uid);
+  storage()
+    .ref(`images/${images}`)
+    .once("value")
+    .then((snapshot) => {
+      setValue({ value: snapshot.val() });
+      console.log(images);
+    })
+    .catch((error) => console.error(error));
+}
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
@@ -131,7 +144,8 @@ const useStyles = makeStyles({
   },
 });
 
-export default function About() {
+export default function ImageGridList() {
+  const [images, setImages] = useState({});
   const [isSlider, setIsSlider] = useState("grid");
   const [imgIndex, setImgIndex] = useState(0);
   const classes = useStyles();
@@ -139,7 +153,6 @@ export default function About() {
   let toRender = null;
   function toSlide(index) {
     setImgIndex(index);
-    console.log(index);
     setIsSlider("slider");
   }
   function backToList() {
@@ -148,6 +161,9 @@ export default function About() {
   function toDrop() {
     setIsSlider("drop");
   }
+  useEffect((images, setImages) => {
+    getImages(images, setImages);
+  });
   if (isSlider === "grid") {
     toRender = (
       <div>
