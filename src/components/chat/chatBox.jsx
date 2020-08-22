@@ -16,7 +16,8 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import ChatMain from "./chatMain";
-
+import ChatWithClass from "./chatWithClass.js";
+import ChatWIthStyle from "./chatWithStyle";
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: "relative",
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   fab: {
-    position: "absolute",
+    position: "fixed",
     bottom: theme.spacing(3),
     right: theme.spacing(4),
   },
@@ -74,6 +75,8 @@ export default function ChatBox() {
             </IconButton>
           </Toolbar>
         </AppBar>
+        {/* <ChatWithClass /> */}
+        {/* <ChatWIthStyle /> */}
         <ChatMain />
       </Dialog>
     </div>
