@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   fab: {
-    position: "absolute",
+    position: "fixed",
     bottom: theme.spacing(3),
     right: theme.spacing(4),
   },
