@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import firebase from "firebase";
+import "./styles.css";
 
 export default class ChatWithClass extends Component {
   constructor(props) {

@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { db, auth, storage } from "../../firebase";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-import SaveIcon from "@material-ui/icons/Save";
+import Divider from "@material-ui/core/Divider";
 import firebase from "firebase";
-import Loader from "./loader";
-import "./styles.css";
+import { db, auth } from "../../firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { userDataAction } from "../../actions";
+import uniqid from "uniqid";
 import {
   Card,
   Toolbar,
@@ -20,37 +19,33 @@ import {
   Button,
   CardContent,
 } from "@material-ui/core";
-
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    width: "100%",
+    maxWidth: "36ch",
+    backgroundColor: theme.palette.background.paper,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  inline: {
+    display: "inline",
   },
-  title: {
-    flexGrow: 1,
-  },
-  button: {
-    margin: 10,
-  },
-  input: {
-    marginTop: 50,
+  inputArea: {
+    margin: "5px",
   },
   chatArea: {
     display: "flex",
-    flexDirection: "column-reverse",
+    flexDirection: "column",
     maxHeight: 500,
     overflow: "auto",
   },
   inputArea: {
-    marginBottom: "50px",
+    margin: "10px",
+    width: "25ch",
   },
 }));
 
-export default function ChatMain(props) {
+export default function ChatWIthStyle() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [chats, setChats] = useState([]);
@@ -83,7 +78,6 @@ export default function ChatMain(props) {
               return a.timestamp - b.timestamp;
             });
             setChats(chats);
-            chatArea.scrollBy(0, chatArea.scrollHeight);
             setLoadingChats(false);
           });
       } catch (error) {
@@ -93,6 +87,9 @@ export default function ChatMain(props) {
     };
     fetchData();
   }, []);
+
+  const data = useSelector((state) => state.userData);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -140,55 +137,49 @@ export default function ChatMain(props) {
         lastName: userData.lastName,
       });
       setContent("");
-      chatArea.scrollBy(0, chatArea.scrollHeight);
     } catch (error) {
       setWriteError(error.message);
     }
   };
-
   return (
     <>
+      <CardContent className={classes.chatArea}>
+        {chats.slice(chats.length - 150, chats.length).map((obj) => {
+          return (
+            <List key={uniqid()} className={classes.root}>
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar
+                    alt={`${obj.firstName[0]}`}
+                    src={`${obj.avatar}` || `/static/images/avatar/1.jpg`}
+                  />
+                </ListItemAvatar>
+                <ListItemText secondary={`${obj.firstName}  ${obj.lastName}`} />
+                <ListItemText
+                  primary={obj.content}
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        className={classes.inline}
+                        color="textPrimary"
+                      ></Typography>
+                      {formatTime(obj.timestamp)}
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+              <Divider variant="inset" component="li" />
+            </List>
+          );
+        })}
+      </CardContent>
       <Card>
-        <CardContent className={classes.chatArea}>
-          <div className="chat-area" ref={myRef}>
-            {/* loading indicator */}
-            {loadingChats ? <Loader /> : ""}
-            {/* chat area */}
-            {chats.slice(chats.length - 150, chats.length).map((chat) => {
-              return (
-                <>
-                  <p
-                    key={chat.timestamp}
-                    className={
-                      "chat-bubble " +
-                      (user.uid === chat.uid ? "current-user" : "")
-                    }
-                  >
-                    <ListItemAvatar>
-                      <Avatar
-                        alt={`${chat.firstName[0]}`}
-                        src={`${chat.avatar}` || `/static/images/avatar/1.jpg`}
-                      />
-                    </ListItemAvatar>
-
-                    <br />
-                    <span className="content">{chat.content}</span>
-                    <br />
-                    <span className="chat-time float-right">
-                      {formatTime(chat.timestamp)}
-                    </span>
-                  </p>
-                </>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
-      <Card className={classes.inputArea}>
         <TextField
+          className={classes.inputArea}
           value={content}
           className={classes.input}
-          value={content}
           onChange={handleChange}
           variant="outlined"
           fullWidth
@@ -198,13 +189,13 @@ export default function ChatMain(props) {
         />
         <label htmlFor="raised-button-file"></label>
         <Button
+          className={classes.inputArea}
           disabled={content ? false : true}
           onClick={onSend}
           variant="contained"
           color="primary"
           size="large"
           className={classes.button}
-          disabled={content ? false : true}
         >
           Send
         </Button>

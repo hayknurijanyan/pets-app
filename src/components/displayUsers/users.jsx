@@ -19,7 +19,6 @@ import {
 } from "@material-ui/core";
 import ChatBox from "../chat/chatBox";
 import ChatMain from "../chat/chatMain";
-import ChatWithClass from "../chat/chatWithClass";
 let log = console.log;
 
 const useStyles = makeStyles({
@@ -158,7 +157,6 @@ const Users = () => {
         </Card>
         <User handleDeleteClick={handleDeleteClick} result={showUsers} />
         {/* <EveryPet result={searchResult} /> */}
-        {/* <ChatWithClass /> */}
       </div>
     </>
   );
