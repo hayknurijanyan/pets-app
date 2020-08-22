@@ -179,7 +179,7 @@ export default function Post(props) {
             </Button>
           </div>
           {props.postComments.map((el) => (
-            <Comment key={el.id} content={el.content} />
+            <Comment key={el.id} content={el.content} name={el.name} />
           ))}
         </Collapse>
       </Card>

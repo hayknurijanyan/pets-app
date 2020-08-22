@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Comment(props) {
-  let text = "hello I want to buy this dog, how much is it?";
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -56,7 +55,7 @@ export default function Comment(props) {
               color="TextSecondary"
               variant="body2"
             >
-              Hayk Nurijanyan
+              {props.name}
             </Typography>
 
             <Typography className={classes.commentText} variant="body1">

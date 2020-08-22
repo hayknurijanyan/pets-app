@@ -32,8 +32,8 @@ function Newsfeed() {
     }
 
     db.collection("posts")
-      .where("likes", ">=", 0)
-      .orderBy("likes", "desc")
+      .where("id", ">=", 0)
+      .orderBy("id", "desc")
       .limit(20)
       .get()
       .then((snap) => {
@@ -117,11 +117,15 @@ function Newsfeed() {
   };
 
   const handleCommentSubmit = (el) => {
+    const name = userData.firstName;
+    const surname = userData.lastName;
+    const fullname = `${name} ${surname}`;
     // console.log("--------", commentValue.content);
     if (commentValue) {
       el.postComments.unshift({
         content: commentValue,
         userID: "id to be added",
+        name: fullname,
       });
       let newComment = [el.postComments];
       setPostComments(newComment);
@@ -138,6 +142,7 @@ function Newsfeed() {
                 postComments: firebase.firestore.FieldValue.arrayUnion({
                   content: commentValue,
                   userID: "to be added",
+                  name: fullname,
                 }),
               });
           });
