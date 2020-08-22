@@ -10,6 +10,7 @@ import User from "./user";
 import UpLoad from "../upLoadingFiles/upLoad";
 import FilterGender from "./filterGender";
 import { Router, Switch as Switched, Route, Redirect } from "react-router-dom";
+import filterFunction from "./filterFunction";
 import {
   Typography,
   InputLabel,
@@ -54,6 +55,7 @@ const Users = () => {
   const [searchArr, setSearchArr] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [userName, setUserName] = useState("");
+  const [showUsers, setShowUsers] = useState("");
   // const [petBreed, setPetBreed] = useState("");
 
   useEffect(() => {
@@ -62,8 +64,9 @@ const Users = () => {
       const snapshot = await db.collection("users").get();
       snapshot.docs.forEach((doc) => {
         newArray.push(doc.data());
-        setSearchArr(newArray);
       });
+      setSearchArr(newArray);
+      setShowUsers(newArray);
     };
     fetchData();
   }, []);
@@ -71,17 +74,19 @@ const Users = () => {
   log("searchArr", searchArr);
 
   const handleChange = (e) => {
+    // e.preventDefault();
     setSearchVal(e.target.value);
   };
 
   const handleClick = () => {
     if (searchVal) {
-      const sVal = searchVal.toLowerCase().trim();
+      const sVal = searchVal.trim();
       const newArr = [...searchArr];
       const myArr = newArr.filter(
         (man) => man.firstName.includes(sVal) || man.lastName.includes(sVal)
       );
-      setSearchResult(myArr);
+
+      setShowUsers(myArr);
     } else alert("write something");
   };
   const handleDeleteClick = (index) => {
@@ -150,9 +155,8 @@ const Users = () => {
             </Button>
           </CardActions>
         </Card>
-        <User handleDeleteClick={handleDeleteClick} result={searchResult} />
+        <User handleDeleteClick={handleDeleteClick} result={showUsers} />
         {/* <EveryPet result={searchResult} /> */}
-        <ChatMain />
         {/* <ChatWithClass /> */}
       </div>
     </>
