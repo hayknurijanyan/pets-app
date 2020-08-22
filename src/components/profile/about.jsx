@@ -82,7 +82,6 @@ export default function About() {
     const fetchUser = async () => {
       const ref = db.collection("users").doc(auth.currentUser.uid);
       const collection = await ref.get();
-
       setUserData(collection.data());
     };
     fetchUser();
