@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Friend() {
+function Friend(props) {
   const classes = useStyles();
 
   return (
@@ -54,7 +54,7 @@ function Friend() {
               />
             </ListItemAvatar>
             <ListItemText
-              primary="Name Surname"
+              primary={props.name}
               secondary={
                 <React.Fragment>
                   <Typography

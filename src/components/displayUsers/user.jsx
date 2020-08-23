@@ -11,6 +11,8 @@ import {
   Typography,
   Button,
 } from "@material-ui/core";
+import { db, storage } from "../../firebase";
+import firebase from "firebase";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -34,6 +36,32 @@ const useStyles = makeStyles((theme) => ({
 
 function User(props) {
   const classes = useStyles();
+
+  const handleFollowClick = (obj) => {
+    // console.log(obj);
+    const friendName = `${obj.firstName} ${obj.lastName}`;
+    const friendEmail = obj.email;
+    // console.log(friendEmail);
+    const user = firebase.auth().currentUser;
+    if (user) {
+      db.collection("users")
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            db.collection("users")
+              .doc(doc.id)
+              .update({
+                friends: firebase.firestore.FieldValue.arrayUnion({
+                  name: friendName,
+                  email: friendEmail,
+                }),
+              });
+          });
+        });
+    } else {
+      alert("enter value");
+    }
+  };
 
   return (
     <>
@@ -71,6 +99,7 @@ function User(props) {
                       />
                     </ListItem>
                     <Button
+                      onClick={() => handleFollowClick(obj)}
                       className={classes.button}
                       variant="contained"
                       color="primary"

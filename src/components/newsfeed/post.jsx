@@ -103,8 +103,9 @@ export default function Post(props) {
             <EditPopup
               postImg={props.postImage}
               onDelete={props.onDelete}
-              onEdit={props.onEdit}
+              onEdit={props.onSaveEdit}
               value={props.value}
+              postEditedValue={props.postEditedValue}
             />
           }
           title={
@@ -179,7 +180,12 @@ export default function Post(props) {
             </Button>
           </div>
           {props.postComments.map((el) => (
-            <Comment key={el.id} content={el.content} name={el.name} />
+            <Comment
+              key={el.id}
+              content={el.content}
+              name={el.name}
+              // onCommentDelete={props.onCommentDelete(el)}
+            />
           ))}
         </Collapse>
       </Card>

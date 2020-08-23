@@ -14,7 +14,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import UpIcon from "@material-ui/icons/KeyboardArrowUp";
 import { green } from "@material-ui/core/colors";
 import Box from "@material-ui/core/Box";
-import AboutEdit from "./AboutEdit";
+import AboutEdit from "./aboutEdit";
 import PetsAbout from "./petsAbout";
 
 function TabPanel(props) {
@@ -118,6 +118,8 @@ export default function EditTabPanel(props) {
         <Tabs
           value={value}
           onChange={handleChange}
+          indicatorColor="secondary"
+          textColor="secondary"
           variant="fullWidth"
           aria-label="action tabs example"
         >

@@ -14,6 +14,7 @@ function Newsfeed() {
   const [userData, setUserData] = useState({});
   const [postComments, setPostComments] = useState([]);
   const [commentValue, setCommentValue] = useState("");
+  const [postEditedValue, setPostEditedValue] = useState("");
 
   // const userData = useSelector((state) => state.userData);
   // log("--------this is user", userData.firstName);
@@ -26,6 +27,7 @@ function Newsfeed() {
           await db.collection("users").doc(user.uid).get()
         ).data();
         setUserData(dbUserData);
+        console.log(dbUserData);
       } else {
         console.log("user not found");
       }
@@ -111,6 +113,7 @@ function Newsfeed() {
     const value = e.target.value;
     setValue(value);
   };
+
   const handleCommentChange = (e) => {
     const value = e.target.value;
     setCommentValue(value);
@@ -181,10 +184,15 @@ function Newsfeed() {
     setFileUrl("");
   };
 
-  const handleEdit = (id) => {
+  const handleSaveEdit = (id) => {
     console.log("edit-id", id);
     console.log(fileUrl);
     setValue(value);
+  };
+  const handlePostEditedValue = (e) => {
+    let value = e.target.value;
+    console.log(value);
+    // setPostEditedValue(value);
   };
 
   const handleLike = (el) => {
@@ -225,8 +233,10 @@ function Newsfeed() {
           key={el.id}
           id={el.id}
           name={el.name}
+          value={el.content}
           onDelete={() => handleDelete(el.id)}
-          onEdit={() => handleEdit(el.id)}
+          postEditedValue={() => handlePostEditedValue(el)}
+          onSaveEdit={() => handleSaveEdit(el.id)}
           date={el.date}
           text={el.content}
           likeCount={el.likes}

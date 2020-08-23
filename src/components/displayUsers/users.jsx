@@ -71,7 +71,7 @@ const Users = () => {
     fetchData();
   }, []);
 
-  log("searchArr", searchArr);
+  // log("searchArr", searchArr);
 
   const handleChange = (e) => {
     // e.preventDefault();
@@ -95,8 +95,8 @@ const Users = () => {
     setSearchResult(newSearchResult);
   };
 
-  log("user searchResult", searchResult);
-  log("user searchArr", searchArr);
+  // log("user searchResult", searchResult);
+  // log("user searchArr", searchArr);
   const handleFilterAge = () => {};
   const handleFilterBreed = () => {};
   const handleFilterName = () => {};

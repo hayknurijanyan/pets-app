@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { store } from "../index";
 import Friend from "./friend.jsx";
 import { makeStyles } from "@material-ui/core/styles";
+import { useState } from "react";
+import firebase from "firebase";
 
 let log = console.log;
 
@@ -22,28 +24,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Friends() {
+  const [friendList, setFriendList] = useState([]);
   const classes = useStyles();
 
   useEffect(() => {
-    const ref = db.collection("users").doc("asd");
-    const collection = ref.get();
-    const a = collection.then((asd) => asd);
-    // log("db result", a);
-  });
+    async function fetchMyData() {
+      const user = firebase.auth().currentUser;
+      if (user) {
+        const dbUserData = (
+          await db.collection("users").doc(user.uid).get()
+        ).data();
+        let friendsArray = [...dbUserData.friends];
+        setFriendList(friendsArray);
+        console.log(dbUserData.friends);
+      } else {
+        console.log("user not found");
+      }
+    }
+    fetchMyData();
+  }, []);
 
   const isLogged = useSelector((state) => state.isLogged);
   const dispatch = useDispatch();
 
   return (
     <div className={classes.main}>
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
-      <Friend />
+      {friendList.map((el) => (
+        <Friend key={el.email} name={el.name} email={el.email} />
+      ))}
     </div>
   );
 }

@@ -64,7 +64,7 @@ export default function Comment(props) {
           </CardContent>
         </div>
         <div>
-          <EditComment />
+          <EditComment onCommentDelete={props.onCommentDelete} />
         </div>
       </div>
     </div>

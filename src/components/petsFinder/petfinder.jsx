@@ -70,7 +70,7 @@ const Petfinder = () => {
     fetchData();
   }, []);
 
-  log("searchArr", searchArr);
+  // log("searchArr", searchArr);
 
   const handleChange = (e) => {
     setSearchVal(e.target.value);

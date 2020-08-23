@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 export default function EditPost(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = useState(props.value);
+  const [commentValue, setCommentValue] = useState(props.value);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -42,7 +42,7 @@ export default function EditPost(props) {
   };
   const handleChange = (e) => {
     let newValue = e.target.value;
-    setValue(newValue);
+    setCommentValue(newValue);
   };
 
   return (
@@ -57,7 +57,7 @@ export default function EditPost(props) {
         <DialogContent className={classes.content}>
           <TextField
             onChange={handleChange}
-            value={value}
+            value={commentValue}
             autoFocus
             margin="dense"
             id="name"
