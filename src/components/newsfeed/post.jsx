@@ -184,7 +184,7 @@ export default function Post(props) {
               key={el.id}
               content={el.content}
               name={el.name}
-              // onCommentDelete={props.onCommentDelete(el)}
+              // onCommentDelete={(el) => props.handleCommentDelete(el)}
             />
           ))}
         </Collapse>

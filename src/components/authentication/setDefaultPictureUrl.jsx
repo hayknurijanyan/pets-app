@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { storage } from "../../firebase";
+import PropTypes from "prop-types";
 let log = console.log;
 
 function SetDefaultPictureUrl(props) {
@@ -22,5 +23,10 @@ function SetDefaultPictureUrl(props) {
 
   return null;
 }
+
+SetDefaultPictureUrl.propTypes = {
+  onHandlePetUrlSet: PropTypes.func.isRequired,
+  pet: PropTypes.string.isRequired,
+};
 
 export default SetDefaultPictureUrl;

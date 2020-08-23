@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { isUserAction, userDataAction } from "../../actions";
 import SetDefaultPictureUrl from "./setDefaultPictureUrl";
 import { MenuItem, Select, FormControl, InputLabel } from "@material-ui/core";
-// import Upload from "../upLoadingFiles/upLoad";
 import {
   Avatar,
   Button,

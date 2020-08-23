@@ -6,7 +6,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import { MenuItem } from "@material-ui/core";
-
+import PropTypes from "prop-types";
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -55,3 +55,9 @@ export default function FilterGender(props) {
     </div>
   );
 }
+
+FilterGender.propTypes = {
+  filterBy: PropTypes.string.isRequired,
+  petGender: PropTypes.string.isRequired,
+  onHandlePetGender: PropTypes.func.isRequired,
+};
