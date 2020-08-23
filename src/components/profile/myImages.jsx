@@ -19,6 +19,8 @@ import ImageDrop from "./imageDrop";
 import UpLoad from "../upLoadingFiles/upLoad";
 import firebase, { storage } from "firebase";
 import { useEffect } from "react";
+import noImage from "../../images/noImage.png";
+
 const tileData = [
   {
     img: "https://coverfiles.alphacoders.com/927/92705.jpg",
@@ -106,18 +108,7 @@ const tileData = [
     title: "Image",
   },
 ];
-function getImages(value, setValue) {
-  // const user = firebase.auth().currentUser;
-  // const images = storage().ref(user.uid);
-  // storage()
-  //   .ref(`images/${images}`)
-  //   .once("value")
-  //   .then((snapshot) => {
-  //     setValue({ value: snapshot.val() });
-  //     console.log(images);
-  //   })
-  //   .catch((error) => console.error(error));
-}
+
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
@@ -145,12 +136,12 @@ const useStyles = makeStyles({
 });
 
 export default function ImageGridList() {
-  const [images, setImages] = useState({});
+  const [images, setImages] = useState({ a: 5 });
   const [isSlider, setIsSlider] = useState("grid");
   const [imgIndex, setImgIndex] = useState(0);
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
   let toRender = null;
+  let grid = null;
   function toSlide(index) {
     setImgIndex(index);
     setIsSlider("slider");
@@ -161,11 +152,21 @@ export default function ImageGridList() {
   function toDrop() {
     setIsSlider("drop");
   }
-  useEffect((images, setImages) => {
-    getImages(images, setImages);
-  });
-  if (isSlider === "grid") {
-    toRender = (
+  // const tileData = Object.keys(images).length?
+  // useEffect(() => {
+  //   const user = firebase.auth().currentUser;
+  //   const images = storage().ref(user.uid);
+  //   storage()
+  //     .ref(`images/${images}`)
+  //     .once("value")
+  //     .then((snapshot) => {
+  //       setValue({ value: snapshot.val() });
+  //       console.log(images);
+  //     })
+  //     .catch((error) => console.error(error));
+  // });
+  if (Object.keys(images).length) {
+    grid = (
       <div>
         <Card className={classes.root}>
           <CardHeader
@@ -212,6 +213,11 @@ export default function ImageGridList() {
         </Card>
       </div>
     );
+  } else {
+    grid = <img src={noImage}></img>;
+  }
+  if (isSlider === "grid") {
+    toRender = grid;
   } else if (isSlider === "slider") {
     toRender = (
       <PhotoSlider

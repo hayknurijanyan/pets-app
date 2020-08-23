@@ -32,18 +32,17 @@ export default function AboutEdit(props) {
     email,
     number,
   } = props.data;
-  console.log(props.data, "bbbbbbbbbbbbbbbbbb");
   let dataArray = [
-    { text: "Bio", value: bio },
-    { text: "Name", value: fName },
-    { text: "Surname", value: lName },
-    { text: "Prof", value: profession },
-    { text: "City", value: props.data.location.city },
-    { text: "Country", value: props.data.location.country },
-    { text: "Gender", value: gender },
-    { text: "Age", value: age },
-    { text: "Email", value: email },
-    { text: "Number", value: number },
+    { text: "Bio", value: bio, name: "bio" },
+    { text: "Name", value: fName, name: "fName" },
+    { text: "Surname", value: lName, name: "lName" },
+    { text: "Prof", value: profession, name: "profession" },
+    { text: "City", value: props.data.location.city, name: "city" },
+    { text: "Country", value: props.data.location.country, name: "country" },
+    { text: "Gender", value: gender, name: "gender" },
+    { text: "Age", value: age, name: "age" },
+    { text: "Email", value: email, name: "email" },
+    { text: "Number", value: number, name: "number" },
   ];
 
   return (
@@ -54,6 +53,7 @@ export default function AboutEdit(props) {
             {value.text}
           </InputLabel>
           <OutlinedInput
+            name={value.name}
             id="outlined-adornment-amount"
             onChange={(e) => props.handlerInput(e)}
             labelWidth={60}
