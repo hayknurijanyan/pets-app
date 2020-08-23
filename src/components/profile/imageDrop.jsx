@@ -5,6 +5,7 @@ import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase, { storage } from "firebase";
+import { getStoredState } from "redux-persist";
 
 const useStyles = makeStyles((theme) => ({
   deleteButton: {
@@ -17,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
 export default function ImageDrop() {
   const classes = useStyles();
   const [files, setFiles] = useState([]);
+  const [url, setUrl] = useState([]);
+
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
     onDrop: (acceptedFiles) => {
@@ -33,32 +36,17 @@ export default function ImageDrop() {
   });
   function uploadHandler() {
     const user = firebase.auth().currentUser;
-
     if (user) {
-      files.forEach((file) => {
-        const referance = storage();
-        const uploadTask = referance
-          .ref(`images/${user.uid}/${file.name}`)
-          .put(file);
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {},
-          (error) => {
-            console.log(error);
-          },
-          () => {
-            storage()
-              .ref("images")
-              .child(file.name)
-              .getDownloadURL()
-              .then((url) => {
-                console.log(url);
-              });
-          }
-        );
+      files.forEach(async (file) => {
+        const referance = storage().ref();
+        const uploadTask = referance.child(`images/${user.uid}/${file.name}`);
+        await uploadTask.put(file);
+        const newUrl = await uploadTask.getDownloadURL();
+        setUrl([...url, newUrl]);
       });
     }
     setFiles([]);
+    setUrl([]);
   }
   function handleDelete(url) {
     setFiles(files.filter((file) => file.preview !== url));
@@ -115,6 +103,7 @@ export default function ImageDrop() {
       ))}
     </div>
   );
+  console.log(url, "==================================");
   return (
     <div
       style={{

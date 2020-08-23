@@ -25,11 +25,11 @@ export default function AboutEdit(props) {
 
   const { age, name, breed, petsGender, behavior } = props.data;
   let dataArray = [
-    { text: "Name", value: name },
-    { text: "Breed", value: breed },
-    { text: "Gender", value: petsGender },
-    { text: "Age", value: age },
-    { text: "Behavior", value: behavior },
+    { text: "Name", value: name, key: "petsName" },
+    { text: "Breed", value: breed, key: "petsBreed" },
+    { text: "Gender", value: petsGender, key: "petsGender" },
+    { text: "Age", value: age, key: "petsAge" },
+    { text: "Behavior", value: behavior, key: "petsBehavior" },
   ];
   return (
     <Card className={classes.root}>
@@ -39,6 +39,7 @@ export default function AboutEdit(props) {
             {value.text}
           </InputLabel>
           <OutlinedInput
+            name={value.key}
             id="outlined-adornment-amount"
             onChange={(e) => props.handlerInput(e)}
             labelWidth={60}
