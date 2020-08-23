@@ -7,6 +7,7 @@ import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import { db, storage } from "../../firebase";
 import uniqid from "uniqid";
+import PropTypes from "prop-types";
 import { MenuItem } from "@material-ui/core";
 let log = console.log;
 
@@ -27,10 +28,13 @@ export default function FilterBreed(props) {
   const [userPet, setUserPet] = useState("");
   const { filterBy, petBreed, onHandlePetBreed, searchResult } = props;
 
-  const newArray = [];
-  searchResult.forEach((obj) => {
-    newArray.push(obj.userPetInfo.breed);
-  });
+  useEffect(() => {
+    const newArray = [];
+    searchResult.forEach((obj) => {
+      newArray.push(obj.userPetInfo.breed);
+      setList(newArray);
+    });
+  }, []);
 
   const [state, setState] = useState({
     breed: "",
@@ -59,7 +63,7 @@ export default function FilterBreed(props) {
           }}
         >
           <MenuItem aria-label="None" value="" />
-          {newArray.map((animal) => {
+          {list.map((animal) => {
             return (
               <MenuItem key={uniqid()} value={animal}>
                 {animal}
@@ -72,3 +76,10 @@ export default function FilterBreed(props) {
     </div>
   );
 }
+
+FilterBreed.propTypes = {
+  filterBy: PropTypes.string.isRequired,
+  petBreed: PropTypes.string,
+  onHandlePetBreed: PropTypes.func.isRequired,
+  searchResult: PropTypes.array,
+};

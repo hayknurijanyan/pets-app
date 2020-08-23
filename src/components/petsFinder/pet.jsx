@@ -12,6 +12,7 @@ import {
   Divider,
 } from "@material-ui/core";
 import { useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
@@ -53,12 +54,12 @@ const useStyles = makeStyles((theme) => ({
 export default function Pet(props) {
   const classes = useStyles();
   const { searchValue } = useParams();
-
+  const { result } = props;
   return (
     <div className={classes.root}>
       <div className={classes.petBox}>
-        {props.result.length
-          ? props.result.map((obj) => {
+        {result.length
+          ? result.map((obj) => {
               return (
                 <div key={uniqid()} className={classes.root}>
                   <Paper className={classes.paper}>
@@ -133,3 +134,7 @@ export default function Pet(props) {
     </div>
   );
 }
+
+Pet.propTypes = {
+  result: PropTypes.array.isRequired,
+};

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import uniqid from "uniqid";
+import PropTypes from "prop-types";
 import {
   Card,
   ListItem,
@@ -33,12 +34,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function User(props) {
+  const { result } = props;
   const classes = useStyles();
 
   return (
     <>
-      {props.result.length
-        ? props.result.map((obj) => {
+      {result.length
+        ? result.map((obj) => {
             return (
               <div key={uniqid()}>
                 <Card className={classes.main}>
@@ -65,7 +67,7 @@ function User(props) {
                             >
                               {`@${obj.pet}`}
                             </Typography>
-                            {`${obj.location.city || ""}`}
+                            {obj.location.city ? ` -${obj.location.city}` : ""}
                           </React.Fragment>
                         }
                       />
@@ -86,5 +88,9 @@ function User(props) {
     </>
   );
 }
+
+User.propTypes = {
+  result: PropTypes.array.isRequired,
+};
 
 export default User;
