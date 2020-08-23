@@ -54,10 +54,10 @@ const Users = () => {
   const [searchVal, setSearchVal] = useState("");
   const [searchArr, setSearchArr] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
-  const [userName, setUserName] = useState("");
-  const [showUsers, setShowUsers] = useState("");
-  // const [petBreed, setPetBreed] = useState("");
+  const [userName, setUserName] = useState([]);
 
+  // const [petBreed, setPetBreed] = useState("");
+  const [showArr, setShowArr] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       const newArray = [];
@@ -66,18 +66,15 @@ const Users = () => {
         newArray.push(doc.data());
       });
       setSearchArr(newArray);
-      setShowUsers(newArray);
+      setShowArr(newArray);
     };
     fetchData();
   }, []);
 
-  log("searchArr", searchArr);
-
   const handleChange = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     setSearchVal(e.target.value);
   };
-
   const handleClick = () => {
     if (searchVal) {
       const sVal = searchVal.trim();
@@ -85,18 +82,13 @@ const Users = () => {
       const myArr = newArr.filter(
         (man) => man.firstName.includes(sVal) || man.lastName.includes(sVal)
       );
-
-      setShowUsers(myArr);
+      setShowArr(myArr);
     } else alert("write something");
   };
-  const handleDeleteClick = (index) => {
-    const newSearchResult = [...searchResult];
-    newSearchResult.splice(index, 1);
-    setSearchResult(newSearchResult);
+  const handleReset = () => {
+    setShowArr(searchArr);
   };
 
-  log("user searchResult", searchResult);
-  log("user searchArr", searchArr);
   const handleFilterAge = () => {};
   const handleFilterBreed = () => {};
   const handleFilterName = () => {};
@@ -153,9 +145,17 @@ const Users = () => {
             >
               Search
             </Button>
+            <Button
+              onClick={handleReset}
+              variant="contained"
+              color="primary"
+              size="medium"
+            >
+              Reset
+            </Button>
           </CardActions>
         </Card>
-        <User handleDeleteClick={handleDeleteClick} result={showUsers} />
+        <User result={showArr} />
         {/* <EveryPet result={searchResult} /> */}
       </div>
     </>

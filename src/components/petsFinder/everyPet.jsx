@@ -9,7 +9,7 @@ import Friend from "../friend.jsx";
 import { makeStyles } from "@material-ui/core/styles";
 import { Toolbar } from "@material-ui/core";
 import Pet from "./pet.jsx";
-
+import PropTypes from "prop-types";
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
@@ -34,5 +34,9 @@ function EveryPet(props) {
     </div>
   );
 }
+
+EveryPet.propTypes = {
+  result: PropTypes.array.isRequired,
+};
 
 export default EveryPet;

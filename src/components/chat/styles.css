@@ -19,6 +19,9 @@ body {
   height: 300px;
   overflow-y: scroll;
 }
+.avatar {
+  margin: 3px;
+}
 
 .chat-area .chat-bubble {
   background-color: #0078ff;

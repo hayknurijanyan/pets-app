@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FulterBreed(props) {
+export default function FilterBreed(props) {
   const { filterBy, petBreed, onHandlePetBreed } = props;
   const classes = useStyles();
   const [state, setState] = React.useState({

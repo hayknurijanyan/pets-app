@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
 import {
   TextField,
   Grid,
@@ -10,6 +9,7 @@ import {
   InputLabel,
 } from "@material-ui/core";
 import { db, storage } from "../../firebase";
+import PropTypes from "prop-types";
 
 let log = console.log;
 
@@ -40,6 +40,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PetsSelectFiled(props) {
+  const {
+    petGender,
+    breed,
+    petName,
+    pet,
+    petAge,
+    onHandlePetSet,
+    onHandleBreedSet,
+    onHandlePetName,
+    onHandlePetAge,
+    onHandlePetGender,
+  } = props;
+
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([]);
@@ -59,20 +72,20 @@ export default function PetsSelectFiled(props) {
   }, []);
 
   const handleChange = async (event) => {
-    props.onHandlePetSet(event.target.value);
+    onHandlePetSet(event.target.value);
   };
 
   const handleBreed = async (event) => {
-    props.onHandleBreedSet(event.target.value);
+    onHandleBreedSet(event.target.value);
   };
   const handlePetName = async (event) => {
-    props.onHandlePetName(event.target.value);
+    onHandlePetName(event.target.value);
   };
   const handlePetAge = async (event) => {
-    props.onHandlePetAge(event.target.value);
+    onHandlePetAge(event.target.value);
   };
   const handlePetGender = async (event) => {
-    props.onHandlePetGender(event.target.value);
+    onHandlePetGender(event.target.value);
   };
 
   const handleClose = () => {
@@ -96,7 +109,7 @@ export default function PetsSelectFiled(props) {
             id="demo-simple-select-outlined"
             label="Pet"
             open={open}
-            value={props.pet}
+            value={pet}
             onClose={handleClose}
             onOpen={handleOpen}
             onChange={handleChange}
@@ -116,7 +129,7 @@ export default function PetsSelectFiled(props) {
         <Grid item xs={12} sm={6}>
           <TextField
             onChange={handlePetName}
-            value={props.petName}
+            value={petName}
             placeholder="Pet Name"
             autoComplete="pname"
             name="Pet Name"
@@ -131,7 +144,7 @@ export default function PetsSelectFiled(props) {
         <Grid item xs={12} sm={6}>
           <TextField
             onChange={handleBreed}
-            value={props.breed}
+            value={breed}
             variant="outlined"
             fullWidth
             placeholder="Breed"
@@ -145,7 +158,7 @@ export default function PetsSelectFiled(props) {
           <TextField
             className={classes.formControlNew}
             onChange={handlePetAge}
-            value={props.petAge}
+            value={petAge}
             fullWidth
             id="standard-number"
             label="Pet's Age"
@@ -161,7 +174,7 @@ export default function PetsSelectFiled(props) {
             <Select
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
-              value={props.petGender}
+              value={petGender}
               onChange={handlePetGender}
             >
               <MenuItem value="">
@@ -176,3 +189,16 @@ export default function PetsSelectFiled(props) {
     </div>
   );
 }
+
+PetsSelectFiled.propTypes = {
+  petGender: PropTypes.string.isRequired,
+  breed: PropTypes.string.isRequired,
+  petName: PropTypes.string.isRequired,
+  pet: PropTypes.string.isRequired,
+  petAge: PropTypes.string.isRequired,
+  onHandlePetSet: PropTypes.func.isRequired,
+  onHandleBreedSet: PropTypes.func.isRequired,
+  onHandlePetName: PropTypes.func.isRequired,
+  onHandlePetAge: PropTypes.func.isRequired,
+  onHandlePetGender: PropTypes.func.isRequired,
+};

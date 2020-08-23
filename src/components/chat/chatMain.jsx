@@ -20,6 +20,7 @@ import {
   Button,
   CardContent,
 } from "@material-ui/core";
+import useCurrentUserData from "../customHooks/useCurrentUserData";
 
 let log = console.log;
 
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ChatMain(props) {
+export default function ChatMain() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [chats, setChats] = useState([]);
@@ -59,7 +60,6 @@ export default function ChatMain(props) {
   const [loadingChats, setLoadingChats] = useState(false);
   const [content, setContent] = useState("");
   const [user, setUser] = useState([]);
-  const [userData, setUserData] = useState({});
   const myRef = React.createRef();
 
   useEffect(() => {
@@ -93,19 +93,8 @@ export default function ChatMain(props) {
     };
     fetchData();
   }, []);
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const ref = db.collection("users").doc(auth.currentUser.uid);
-        const collection = await ref.get();
-        setUserData({ ...collection.data() });
-        // dispatch(userDataAction({ ...collection.data() }));
-      } catch (error) {
-        log(error);
-      }
-    };
-    fetchUserData();
-  }, []);
+
+  const userData = useCurrentUserData();
 
   const formatTime = (timestamp) => {
     const d = new Date(timestamp);
@@ -164,12 +153,16 @@ export default function ChatMain(props) {
                       (user.uid === chat.uid ? "current-user" : "")
                     }
                   >
-                    <ListItemAvatar>
-                      <Avatar
-                        alt={`${chat.firstName[0]}`}
-                        src={`${chat.avatar}` || `/static/images/avatar/1.jpg`}
-                      />
-                    </ListItemAvatar>
+                    <span className="avatar">
+                      <ListItemAvatar>
+                        <Avatar
+                          alt={`${chat.firstName[0]}`}
+                          src={
+                            `${chat.avatar}` || `/static/images/avatar/1.jpg`
+                          }
+                        />
+                      </ListItemAvatar>
+                    </span>
 
                     <br />
                     <span className="content">{chat.content}</span>
