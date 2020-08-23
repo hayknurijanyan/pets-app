@@ -175,6 +175,7 @@ function SignUp() {
               age: petAge,
               behavior: "",
             },
+            friends: [],
           })
           .then(() => {
             db.collection("petsFinder")

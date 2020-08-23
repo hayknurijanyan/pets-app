@@ -129,7 +129,86 @@ export default function About() {
       .catch((err) => log(err));
   }
 
-  function handlerInput(e) {}
+  function handlerInput(e) {
+    switch (e.target.name) {
+      case "bio":
+        setBio(e.target.value);
+        break;
+      case "age":
+        setAge(e.target.value);
+        break;
+      case "fName":
+        setFName(e.target.value);
+        break;
+      case "lName":
+        setLName(e.target.value);
+        break;
+      case "profession":
+        setProfession(e.target.value);
+        break;
+      case "gender":
+        setGender(e.target.value);
+        break;
+      case "city":
+        setLocation({ city: e.target.value, country: location.country });
+        break;
+      case "country":
+        setLocation({ city: location.city, country: e.target.value });
+        break;
+      case "email":
+        setEmail(e.target.value);
+        break;
+      case "number":
+        setNumber(e.target.value);
+        break;
+      case "petsName":
+        setUserPetInfo({
+          name: e.target.value,
+          age: userPetInfo.age,
+          breed: userPetInfo.breed,
+          behavior: userPetInfo.behavior,
+          petsGender: userPetInfo.petsGender,
+        });
+        break;
+      case "petsAge":
+        setUserPetInfo({
+          name: userPetInfo.name,
+          age: e.target.value,
+          breed: userPetInfo.breed,
+          behavior: userPetInfo.behavior,
+          petsGender: userPetInfo.petsGender,
+        });
+        break;
+      case "petsGender":
+        alert(e.target.name);
+        setUserPetInfo({
+          name: userPetInfo.name,
+          age: userPetInfo.age,
+          breed: userPetInfo.breed,
+          behavior: userPetInfo.behavior,
+          petsGender: e.target.value,
+        });
+        break;
+      case "petsBreed":
+        setUserPetInfo({
+          name: userPetInfo.name,
+          age: userPetInfo.age,
+          breed: e.target.value,
+          behavior: userPetInfo.behavior,
+          petsGender: userPetInfo.petsGender,
+        });
+        break;
+      case "petsBehavior":
+        setUserPetInfo({
+          name: userPetInfo.name,
+          age: userPetInfo.age,
+          breed: userPetInfo.breed,
+          behavior: e.target.value,
+          petsGender: userPetInfo.petsGender,
+        });
+        break;
+    }
+  }
 
   if (edit) {
     const userArr = [

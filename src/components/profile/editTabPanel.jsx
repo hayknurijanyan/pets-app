@@ -118,6 +118,8 @@ export default function EditTabPanel(props) {
         <Tabs
           value={value}
           onChange={handleChange}
+          indicatorColor="secondary"
+          textColor="secondary"
           variant="fullWidth"
           aria-label="action tabs example"
         >

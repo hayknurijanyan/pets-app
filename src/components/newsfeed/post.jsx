@@ -19,7 +19,6 @@ import { Link } from "react-router-dom";
 import ImageAvatar from "../profile/avatar";
 import EditPopup from "./editpopup";
 import Comment from "./comment";
-import uniqid from "uniqid";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -104,8 +103,9 @@ export default function Post(props) {
             <EditPopup
               postImg={props.postImage}
               onDelete={props.onDelete}
-              onEdit={props.onEdit}
+              onEdit={props.onSaveEdit}
               value={props.value}
+              postEditedValue={props.postEditedValue}
             />
           }
           title={
@@ -180,7 +180,12 @@ export default function Post(props) {
             </Button>
           </div>
           {props.postComments.map((el) => (
-            <Comment key={uniqid()} content={el.content} />
+            <Comment
+              key={el.id}
+              content={el.content}
+              name={el.name}
+              // onCommentDelete={(el) => props.handleCommentDelete(el)}
+            />
           ))}
         </Collapse>
       </Card>
