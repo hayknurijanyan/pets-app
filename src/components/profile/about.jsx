@@ -128,7 +128,9 @@ export default function About() {
       .catch((err) => log(err));
   }
 
-  function handlerInput(e) {}
+  function handlerInput(e) {
+    log(e.target.value, "ooooooooooooooooooooooooooooooooooooo");
+  }
 
   if (edit) {
     const userArr = [
