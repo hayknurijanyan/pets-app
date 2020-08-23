@@ -1,22 +1,26 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Card, CardHeader, CardContent } from "@material-ui/core";
-import { Avatar, IconButton, Typography, Collapse } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
-import EditPopover from "./editpopup";
-import image from "../../images/dog.jpg";
+import { CardContent, Typography } from "@material-ui/core";
+import EditComment from "./editcomment";
 import ImageAvatar from "../profile/avatar";
 
 const useStyles = makeStyles((theme) => ({
-  avatar: {
-    backgroundColor: red[500],
-    textDecoration: "none",
-  },
   comment: {
-    margin: 20,
+    display: "flex",
+    flexDirection: "row",
+    margin: 10,
+    borderRadius: 50,
+    minHeight: 40,
+    overflow: "wrap",
+  },
+  name: { marginLeft: 2, marginBottom: 5 },
+  avatar: {
+    display: "flex",
   },
   commentText: {
-    marginLeft: 10,
+    display: "flex",
+
+    overflowWrap: "anywhere",
   },
   addButton: {
     width: 70,
@@ -25,11 +29,13 @@ const useStyles = makeStyles((theme) => ({
   },
   commentLine: {
     backgroundColor: "#fafafa",
-    // borderRadius: 5,
+    borderRadius: 50,
   },
+  main: { display: "flex" },
 }));
 
-export default function Comment() {
+export default function Comment(props) {
+  let text = "hello I want to buy this dog, how much is it?";
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -38,22 +44,30 @@ export default function Comment() {
   };
 
   return (
-    <Card className={classes.comment}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            H
-          </Avatar>
-        }
-        action={<EditPopover />}
-        title="Hayk Nurijanyan"
-        subheader="August 03, 2020"
-      />
-      <CardContent className={classes.commentLine}>
-        <Typography className={classes.commentText}>
-          this is comments
-        </Typography>
-      </CardContent>
-    </Card>
+    <div>
+      <div className={classes.comment}>
+        <div className={classes.avatar}>
+          <ImageAvatar />
+        </div>
+        <div>
+          <CardContent className={classes.commentLine}>
+            <Typography
+              className={classes.name}
+              color="TextSecondary"
+              variant="body2"
+            >
+              Hayk Nurijanyan
+            </Typography>
+
+            <Typography className={classes.commentText} variant="body1">
+              {props.content}
+            </Typography>
+          </CardContent>
+        </div>
+        <div>
+          <EditComment />
+        </div>
+      </div>
+    </div>
   );
 }

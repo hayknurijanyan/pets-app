@@ -46,6 +46,8 @@ export function AccountIconButton(props) {
     setAnchorEl(null);
   };
 
+  const handleAccount = () => {};
+
   const handleLogout = () => {
     firebase
       .auth()
@@ -81,6 +83,10 @@ export function AccountIconButton(props) {
         open={open}
         onClose={handleClose}
       >
+        <MenuItem className={classes.menuItem} onClick={handleClose}>
+          <AccountCircleIcon />
+          <Typography className={classes.text}>Account</Typography>
+        </MenuItem>
         <MenuItem className={classes.menuItem} onClick={handleClose}>
           <SettingsIcon />
           <Typography className={classes.text}>Settings</Typography>

@@ -17,11 +17,15 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { red } from "@material-ui/core/colors";
 import { Link } from "react-router-dom";
 import ImageAvatar from "../profile/avatar";
-import PostImage from "./postimage";
-import Comments from "./comments";
 import EditPopup from "./editpopup";
+import Comment from "./comment";
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    padding: theme.spacing(3),
+  },
   root: {
     marginTop: 20,
     width: "37rem",
@@ -82,96 +86,103 @@ export default function Post(props) {
   };
 
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <ImageAvatar
-            component={Link}
-            to="/profile/"
-            aria-label="recipe"
-            className={classes.avatar}
-          >
-            H
-          </ImageAvatar>
-        }
-        action={
-          <EditPopup
-            postImg={props.postImage}
-            onDelete={props.onDelete}
-            onEdit={props.onEdit}
-            value={props.value}
-          />
-        }
-        title={
-          <Typography
-            className={classes.name}
-            component={Link}
-            to="/profile"
-            variant="h6"
-          >
-            {props.name}
-          </Typography>
-        }
-        subheader={String(props.date)}
-      />
-      <CardContent>
-        <Typography variant="body1" color="black" component="p">
-          {props.text}
-        </Typography>
-      </CardContent>
-
-      {props.postImage && (
-        <CardMedia
-          className={classes.media}
-          image={props.postImage}
-          title="Dog"
+    <div className={classes.container}>
+      <Card className={classes.root}>
+        <CardHeader
+          avatar={
+            <ImageAvatar
+              component={Link}
+              to="/profile/"
+              aria-label="recipe"
+              className={classes.avatar}
+            >
+              H
+            </ImageAvatar>
+          }
+          action={
+            <EditPopup
+              postImg={props.postImage}
+              onDelete={props.onDelete}
+              onEdit={props.onEdit}
+              value={props.value}
+            />
+          }
+          title={
+            <Typography
+              className={classes.name}
+              component={Link}
+              to="/profile"
+              variant="h6"
+            >
+              {props.name}
+            </Typography>
+          }
+          subheader={String(props.date)}
         />
-      )}
-      <CardActions disableSpacing>
-        <IconButton onClick={props.isliked} aria-label="add to favorites">
-          <FavoriteIcon color={color} />
-        </IconButton>
-        <Typography>{props.likeCount}</Typography>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-        <Typography style={{ marginRight: 10 }} color="textSecondary">
-          Comments {props.commentCount}
-        </Typography>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <div className={classes.commentInput}>
-          <TextField
-            id="outlined-full-width"
-            style={{ margin: 6 }}
-            placeholder="Write a comment"
-            margin="normal"
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="outlined"
+        <CardContent>
+          <Typography variant="body1" color="black" component="p">
+            {props.text}
+          </Typography>
+        </CardContent>
+
+        {props.postImage && (
+          <CardMedia
+            className={classes.media}
+            image={props.postImage}
+            title="Dog"
           />
-          <Button
-            className={classes.addButton}
-            variant="contained"
-            color="primary"
+        )}
+        <CardActions disableSpacing>
+          <IconButton onClick={props.isliked} aria-label="add to favorites">
+            <FavoriteIcon color={color} />
+          </IconButton>
+          <Typography>{props.likeCount}</Typography>
+          <IconButton aria-label="share">
+            <ShareIcon />
+          </IconButton>
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
           >
-            Add
-          </Button>
-        </div>
-        <Comments />
-      </Collapse>
-    </Card>
+            <ExpandMoreIcon />
+          </IconButton>
+          <Typography style={{ marginRight: 10 }} color="textSecondary">
+            Comments {props.commentCount}
+          </Typography>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <div className={classes.commentInput}>
+            <TextField
+              id="outlined-full-width"
+              onChange={props.onCommentChange}
+              value={props.commentValue}
+              style={{ margin: 6 }}
+              placeholder="Write a comment"
+              margin="normal"
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="outlined"
+            />
+            <Button
+              className={classes.addButton}
+              variant="contained"
+              color="primary"
+              onClick={props.addComment}
+            >
+              Add
+            </Button>
+          </div>
+          {props.postComments.map((el) => (
+            <Comment key={el.id} content={el.content} />
+          ))}
+        </Collapse>
+      </Card>
+    </div>
   );
 }

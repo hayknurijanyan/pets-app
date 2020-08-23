@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Posts from "./posts";
+import Post from "./post";
 import CreatePost from "./createpost";
-import { db, auth, storage } from "../../firebase";
+import { db, storage } from "../../firebase";
 import firebase from "firebase";
-import PostSnackBar from "./snackbar";
 
 let log = console.log;
 
@@ -13,6 +12,8 @@ function Newsfeed() {
   const [postText, setPostText] = useState(true);
   const [fileUrl, setFileUrl] = useState("");
   const [userData, setUserData] = useState({});
+  const [postComments, setPostComments] = useState([]);
+  const [commentValue, setCommentValue] = useState("");
 
   // const userData = useSelector((state) => state.userData);
   // log("--------this is user", userData.firstName);
@@ -20,10 +21,14 @@ function Newsfeed() {
   useEffect(() => {
     async function fetchMyData() {
       const user = firebase.auth().currentUser;
-      const dbUserData = (
-        await db.collection("users").doc(user.uid).get()
-      ).data();
-      setUserData(dbUserData);
+      if (user) {
+        const dbUserData = (
+          await db.collection("users").doc(user.uid).get()
+        ).data();
+        setUserData(dbUserData);
+      } else {
+        console.log("user not found");
+      }
     }
 
     db.collection("posts")
@@ -41,19 +46,6 @@ function Newsfeed() {
       });
     fetchMyData();
   }, []);
-
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setValue(value);
-  };
-
-  const onFileChange = async (e) => {
-    const file = e.target.files[0];
-    const storageRef = storage.ref();
-    const fileRef = storageRef.child(`postImgs/${file.name}`);
-    await fileRef.put(file);
-    setFileUrl(await fileRef.getDownloadURL());
-  };
 
   const handleSubmit = async (e) => {
     const name = userData.firstName;
@@ -83,6 +75,7 @@ function Newsfeed() {
         liked: false,
         comments: 0,
         postImg: fileUrl,
+        postComments: [],
       });
       //----------------------------------------------------------
       e.preventDefault();
@@ -101,6 +94,7 @@ function Newsfeed() {
           likes: 0,
           liked: false,
           comments: 0,
+          postComments: [],
         });
       } else {
         log("user not found");
@@ -111,6 +105,54 @@ function Newsfeed() {
       setFileUrl("");
       setPostText(true);
     }
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setValue(value);
+  };
+  const handleCommentChange = (e) => {
+    const value = e.target.value;
+    setCommentValue(value);
+  };
+
+  const handleCommentSubmit = (el) => {
+    // console.log("--------", commentValue.content);
+    if (commentValue) {
+      el.postComments.unshift({
+        content: commentValue,
+        userID: "id to be added",
+      });
+      let newComment = [el.postComments];
+      setPostComments(newComment);
+      setCommentValue("");
+
+      db.collection("posts")
+        .where("id", "==", el.id)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            db.collection("posts")
+              .doc(doc.id)
+              .update({
+                postComments: firebase.firestore.FieldValue.arrayUnion({
+                  content: commentValue,
+                  userID: "to be added",
+                }),
+              });
+          });
+        });
+    } else {
+      alert("enter value");
+    }
+  };
+
+  const onFileChange = async (e) => {
+    const file = e.target.files[0];
+    const storageRef = storage.ref();
+    const fileRef = storageRef.child(`postImgs/${file.name}`);
+    await fileRef.put(file);
+    setFileUrl(await fileRef.getDownloadURL());
   };
 
   const handleDelete = (id) => {
@@ -160,9 +202,6 @@ function Newsfeed() {
             .update({ likes: el.likes, liked: el.liked });
         });
       });
-    // db.collection("posts").doc(doc.id).update({ likes: 3 });
-    // let data = db.collection("posts").where("id", "==", el.id).get();
-    // console.log(data);
   };
 
   return (
@@ -177,19 +216,23 @@ function Newsfeed() {
         previewDelete={hanleDeletePreview}
       />
       {posts.map((el) => (
-        <Posts
+        <Post
           key={el.id}
           id={el.id}
+          name={el.name}
           onDelete={() => handleDelete(el.id)}
           onEdit={() => handleEdit(el.id)}
           date={el.date}
-          value={el.content}
+          text={el.content}
           likeCount={el.likes}
-          commentCount={el.comments}
-          name={el.name}
           isliked={() => handleLike(el)}
           color={el.liked}
           postImage={el.postImg}
+          commentCount={el.postComments.length}
+          postComments={el.postComments}
+          addComment={() => handleCommentSubmit(el)}
+          onCommentChange={handleCommentChange}
+          commentValue={commentValue}
         />
       ))}
     </div>

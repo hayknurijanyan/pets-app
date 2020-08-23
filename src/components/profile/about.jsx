@@ -78,6 +78,7 @@ export default function About() {
     name: "asd",
     petsGender: "asd",
   });
+
   let aboutList = null;
   let forEdit = null;
   useEffect(async () => {
