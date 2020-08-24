@@ -3,8 +3,13 @@ import Post from "./post";
 import CreatePost from "./createpost";
 import { db, storage } from "../../firebase";
 import firebase from "firebase";
-
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 let log = console.log;
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 function Newsfeed() {
   const [posts, setPosts] = useState([]);
@@ -15,6 +20,7 @@ function Newsfeed() {
   const [postComments, setPostComments] = useState([]);
   const [commentValue, setCommentValue] = useState("");
   const [postEditedValue, setPostEditedValue] = useState("");
+  const [open, setOpen] = useState(false);
 
   // const userData = useSelector((state) => state.userData);
   // log("--------this is user", userData.firstName);
@@ -32,7 +38,6 @@ function Newsfeed() {
         console.log("user not found");
       }
     }
-
     db.collection("posts")
       .where("id", ">=", 0)
       .orderBy("id", "desc")
@@ -48,6 +53,31 @@ function Newsfeed() {
       });
     fetchMyData();
   }, []);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setOpen(true);
+      } else {
+        log("redux not done");
+      }
+    });
+  }, []);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const welcomeUser = () => {
+    return (
+      <Alert onClose={handleClose} severity="success">
+        Welcome back!
+      </Alert>
+    );
+  };
 
   const handleSubmit = async (e) => {
     const name = userData.firstName;
@@ -219,6 +249,9 @@ function Newsfeed() {
 
   return (
     <div>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        {welcomeUser()}
+      </Snackbar>
       <CreatePost
         value={value}
         posttext={postText}

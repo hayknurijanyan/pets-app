@@ -12,15 +12,19 @@ import UpLoad from "../upLoadingFiles/upLoad";
 import FilterBreed from "./filterBreed";
 import FilterGender from "./filterGender";
 import { Router, Switch as Switched, Route, Redirect } from "react-router-dom";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 import {
   Typography,
   InputLabel,
   FormControl,
   OutlinedInput,
 } from "@material-ui/core";
-
 let log = console.log;
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const useStyles = makeStyles({
   root: {
     margin: 25,
@@ -56,6 +60,7 @@ const Petfinder = () => {
   const [petGender, setPetGender] = useState("");
   const [petBreed, setPetBreed] = useState("");
   const [showPets, setShowPets] = useState([]);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +81,9 @@ const Petfinder = () => {
     setSearchVal(e.target.value);
   };
   const handleClick = () => {
+    setOpen(true);
     if (searchVal) {
+      setOpen(false);
       if (!petGender && !petBreed) {
         const sVal = searchVal.toLowerCase().trim();
         const newArr = [...searchArr];
@@ -93,7 +100,7 @@ const Petfinder = () => {
         );
         setSearchResult(myArr);
       }
-    } else alert("write something");
+    }
   };
   const handleDeleteClick = (index) => {
     const newSearchResult = [...searchResult];
@@ -108,10 +115,29 @@ const Petfinder = () => {
   const handleFilterName = () => {};
   const handleFilterBehavior = () => {};
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const checkSearchVal = () => {
+    if (!searchVal) {
+      return (
+        <Alert onClose={handleClose} severity="error">
+          Please write something to search!
+        </Alert>
+      );
+    }
+  };
   return (
     <>
       <div>
         <Toolbar />
+        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+          {checkSearchVal()}
+        </Snackbar>
         <Card className={classes.root}>
           <CardContent className={classes.content}>
             <div>
