@@ -257,9 +257,9 @@ function Newsfeed() {
 
   return (
     <div>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+      {/* <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         {welcomeUser()}
-      </Snackbar>
+      </Snackbar> */}
       <CreatePost
         value={value}
         posttext={postText}

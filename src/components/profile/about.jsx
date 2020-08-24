@@ -82,24 +82,27 @@ export default function About() {
   let aboutList = null;
   let forEdit = null;
 
-  useEffect(async () => {
-    const ref = db.collection("users").doc(auth.currentUser.uid);
-    const collection = await ref.get();
-    const data = collection.data();
+  useEffect(() => {
+    async function fetchMyData() {
+      const ref = db.collection("users").doc(auth.currentUser.uid);
+      const collection = await ref.get();
+      const data = collection.data();
 
-    setBio(data.bio);
-    setFName(data.firstName);
-    setLName(data.lastName);
-    setProfession(data.profession);
-    setLocation({
-      city: data.location.city,
-      country: data.location.country,
-    });
-    setGender(data.maleFemale);
-    setAge(data.age);
-    setEmail(data.email);
-    setNumber(data.contactNumber);
-    setUserPetInfo({ ...data.userPetInfo });
+      setBio(data.bio);
+      setFName(data.firstName);
+      setLName(data.lastName);
+      setProfession(data.profession);
+      setLocation({
+        city: data.location.city,
+        country: data.location.country,
+      });
+      setGender(data.maleFemale);
+      setAge(data.age);
+      setEmail(data.email);
+      setNumber(data.contactNumber);
+      setUserPetInfo({ ...data.userPetInfo });
+    }
+    fetchMyData();
   }, []);
   function editHandler() {
     setEdit(!edit);
