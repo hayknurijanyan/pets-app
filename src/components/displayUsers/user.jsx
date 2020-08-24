@@ -16,10 +16,15 @@ import { db, storage } from "../../firebase";
 import firebase from "firebase";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
   container: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    width: "100%",
   },
 
   main: {
@@ -28,14 +33,34 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 10,
     marginLeft: 5,
     justifyContent: "flex-start",
+    minWidth: 400,
+    minHeight: 140,
   },
   button: {
     width: 120,
     height: 30,
+    marginRight: 20,
+  },
+  inline: {
+    display: "flex",
+    flexDirection: "column",
   },
 }));
 
 function User(props) {
+  console.log(props.result);
+
+  // const checkFollowing = () => {
+
+  //   let found = false;
+  //   for (let i = 0; i < firnds.length; i++) {
+  //     if (friends[i].email == "Magenic") {
+  //       found = true;
+  //       break;
+  //     }
+  //   }
+  // };
+
   const { result } = props;
   const classes = useStyles();
 
@@ -66,7 +91,7 @@ function User(props) {
   };
 
   return (
-    <>
+    <div className={classes.root}>
       {result.length
         ? result.map((obj) => {
             return (
@@ -91,11 +116,20 @@ function User(props) {
                               component="span"
                               variant="body2"
                               className={classes.inline}
+                              color="textSecondary"
+                            >
+                              {obj.location.city
+                                ? `  ${obj.location.city}`
+                                : ""}
+                            </Typography>
+                            <Typography
+                              component="span"
+                              variant="body2"
+                              className={classes.inline}
                               color="secondary"
                             >
                               {`@${obj.pet}`}
                             </Typography>
-                            {obj.location.city ? `  ${obj.location.city}` : ""}
                           </React.Fragment>
                         }
                       />
@@ -114,7 +148,7 @@ function User(props) {
             );
           })
         : ""}
-    </>
+    </div>
   );
 }
 

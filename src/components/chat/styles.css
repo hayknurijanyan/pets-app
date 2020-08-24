@@ -24,7 +24,8 @@ body {
 }
 
 .chat-area .chat-bubble {
-  background-color: #0078ff;
+  background-color: rgb(61, 61, 61);
+
   padding: 20px;
   border-radius: 15px;
   max-width: 300px;
@@ -39,7 +40,7 @@ body {
 
 .chat-area .chat-bubble.current-user {
   margin-left: auto;
-  background-color: #4caf50;
+  background-color: #009688;
 }
 .name-color {
   color: rgb(224, 223, 223);

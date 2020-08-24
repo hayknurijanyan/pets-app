@@ -27,6 +27,7 @@ import SidebarLeft from "./components/sidebarleft";
 import { Hidden } from "@material-ui/core";
 import ChatButton from "./components/chat/chatButton";
 import ChatBox from "./components/chat/chatBox";
+import FriendsCard from "./components/profile/friendscard";
 
 let log = console.log;
 
