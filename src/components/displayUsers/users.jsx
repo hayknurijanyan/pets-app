@@ -136,15 +136,6 @@ const Users = () => {
               searchResult={searchResult}
               onBreed={handleFilterBreed}
             /> */}
-
-            <Button
-              onClick={handleClick}
-              variant="contained"
-              color="secondary"
-              size="medium"
-            >
-              Search
-            </Button>
             <Button
               onClick={handleReset}
               variant="contained"
@@ -152,6 +143,14 @@ const Users = () => {
               size="medium"
             >
               Reset
+            </Button>
+            <Button
+              onClick={handleClick}
+              variant="contained"
+              color="secondary"
+              size="medium"
+            >
+              Search
             </Button>
           </CardActions>
         </Card>
