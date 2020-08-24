@@ -81,6 +81,7 @@ export default function About() {
 
   let aboutList = null;
   let forEdit = null;
+
   useEffect(async () => {
     const ref = db.collection("users").doc(auth.currentUser.uid);
     const collection = await ref.get();

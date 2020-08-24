@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-start",
   },
   button: {
-    width: 100,
+    width: 120,
     height: 30,
   },
 }));
@@ -75,7 +75,7 @@ function Friend(props) {
             variant="contained"
             color="secondary"
           >
-            Remove
+            Unfollow
           </Button>
         </List>
       </Card>
