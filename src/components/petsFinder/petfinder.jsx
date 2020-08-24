@@ -100,7 +100,9 @@ const Petfinder = () => {
     newSearchResult.splice(index, 1);
     setSearchResult(newSearchResult);
   };
-
+  const handleReset = () => {
+    setShowPets(searchArr);
+  };
   const handleFilterAge = () => {};
   const handleFilterBreed = () => {};
   const handleFilterName = () => {};
@@ -150,7 +152,14 @@ const Petfinder = () => {
                   searchResult={searchResult}
                   onBreed={handleFilterBreed}
                 />
-
+                <Button
+                  onClick={handleReset}
+                  variant="contained"
+                  color="primary"
+                  size="medium"
+                >
+                  Reset
+                </Button>
                 <Button
                   onClick={handleClick}
                   variant="contained"

@@ -95,7 +95,7 @@ function User(props) {
                             >
                               {`@${obj.pet}`}
                             </Typography>
-                            {obj.location.city ? ` -${obj.location.city}` : ""}
+                            {obj.location.city ? `  ${obj.location.city}` : ""}
                           </React.Fragment>
                         }
                       />
