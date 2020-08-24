@@ -74,11 +74,11 @@ function Newsfeed() {
   };
 
   const welcomeUser = () => {
-    return (
-      <Alert onClose={handleClose} severity="success">
-        Welcome back!
-      </Alert>
-    );
+    // return (
+    //   <Alert onClose={handleClose} severity="success">
+    //     Welcome back!
+    //   </Alert>
+    // );
   };
 
   const handleSubmit = async (e) => {
@@ -257,9 +257,9 @@ function Newsfeed() {
 
   return (
     <div>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+      {/* <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         {welcomeUser()}
-      </Snackbar>
+      </Snackbar> */}
       <CreatePost
         value={value}
         posttext={postText}
