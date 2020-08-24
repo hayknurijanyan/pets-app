@@ -180,8 +180,8 @@ export default function PetsSelectFiled(props) {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={1}>Male</MenuItem>
-              <MenuItem value={2}>Female</MenuItem>
+              <MenuItem value={"Male"}>Male</MenuItem>
+              <MenuItem value={"Female"}>Female</MenuItem>
             </Select>
           </FormControl>
         </Grid>
