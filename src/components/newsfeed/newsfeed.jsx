@@ -7,6 +7,7 @@ import firebase from "firebase";
 let log = console.log;
 
 function Newsfeed() {
+  const [currentUserId, setCurrentUserId] = useState("");
   const [posts, setPosts] = useState([]);
   const [value, setValue] = useState("");
   const [postText, setPostText] = useState(true);
@@ -26,6 +27,7 @@ function Newsfeed() {
         const dbUserData = (
           await db.collection("users").doc(user.uid).get()
         ).data();
+        setCurrentUserId(user.uid);
         setUserData(dbUserData);
         console.log(dbUserData);
       } else {
@@ -193,6 +195,12 @@ function Newsfeed() {
     let value = e.target.value;
     console.log(value);
     // setPostEditedValue(value);
+  };
+
+  const handleCheckUser = (el) => {
+    if (el.id === currentUserId) {
+      return true;
+    } else return false;
   };
 
   const handleLike = (el) => {

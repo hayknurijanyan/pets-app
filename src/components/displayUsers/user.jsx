@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import uniqid from "uniqid";
 import PropTypes from "prop-types";
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-start",
   },
   button: {
-    width: 100,
+    width: 120,
     height: 30,
   },
 }));
@@ -40,7 +40,7 @@ function User(props) {
   const classes = useStyles();
 
   const handleFollowClick = (obj) => {
-    // console.log(obj);
+    console.log(obj);
     const friendName = `${obj.firstName} ${obj.lastName}`;
     const friendEmail = obj.email;
     // console.log(friendEmail);
@@ -61,7 +61,7 @@ function User(props) {
           });
         });
     } else {
-      alert("enter value");
+      alert("user not found");
     }
   };
 
@@ -104,7 +104,7 @@ function User(props) {
                       onClick={() => handleFollowClick(obj)}
                       className={classes.button}
                       variant="contained"
-                      color="primary"
+                      color="info"
                     >
                       Follow
                     </Button>

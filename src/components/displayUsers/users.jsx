@@ -139,7 +139,7 @@ const Users = () => {
             <Button
               onClick={handleReset}
               variant="contained"
-              color="primary"
+              color="secondary"
               size="medium"
             >
               Reset
@@ -147,7 +147,7 @@ const Users = () => {
             <Button
               onClick={handleClick}
               variant="contained"
-              color="secondary"
+              color="primary"
               size="medium"
             >
               Search

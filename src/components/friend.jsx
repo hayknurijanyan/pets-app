@@ -71,6 +71,7 @@ function Friend(props) {
             />
           </ListItem>
           <Button
+            onClick={props.onUnfollow}
             className={classes.button}
             variant="contained"
             color="secondary"

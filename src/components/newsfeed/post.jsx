@@ -80,7 +80,7 @@ export default function Post(props) {
   const [expanded, setExpanded] = React.useState(false);
   let color = "";
   color = props.color === true ? "secondary" : "none";
-
+  console.log("-------user-------", props.isUser);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };

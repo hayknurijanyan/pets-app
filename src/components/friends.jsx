@@ -44,13 +44,48 @@ function Friends() {
     fetchMyData();
   }, []);
 
+  const handleUnfollow = (el, email) => {
+    const friendEmail = el.email;
+    const friendName = el.name;
+
+    let friendsArray = [...friendList];
+    friendsArray = friendList.filter((e) => e.email !== email);
+
+    setFriendList(friendsArray);
+
+    const user = firebase.auth().currentUser;
+    if (user) {
+      db.collection("users")
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            db.collection("users")
+              .doc(doc.id)
+              .update({
+                friends: firebase.firestore.FieldValue.arrayRemove({
+                  name: friendName,
+                  email: friendEmail,
+                }),
+              });
+          });
+        });
+    } else {
+      alert("user not found");
+    }
+  };
+
   const isLogged = useSelector((state) => state.isLogged);
   const dispatch = useDispatch();
 
   return (
     <div className={classes.main}>
       {friendList.map((el) => (
-        <Friend key={el.email} name={el.name} email={el.email} />
+        <Friend
+          key={el.email}
+          name={el.name}
+          email={el.email}
+          onUnfollow={() => handleUnfollow(el, el.email)}
+        />
       ))}
     </div>
   );

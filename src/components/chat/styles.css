@@ -16,7 +16,7 @@ body {
 }
 .chat-area {
   padding: 20px;
-  height: 300px;
+  height: 800px;
   overflow-y: scroll;
 }
 .avatar {
@@ -41,7 +41,9 @@ body {
   margin-left: auto;
   background-color: #4caf50;
 }
-
+.name-color {
+  color: rgb(224, 223, 223);
+}
 .form-control {
   width: 60%;
 }
