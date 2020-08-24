@@ -4,8 +4,9 @@ import { Button } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core/styles";
-import firebase, { storage } from "firebase";
+import firebase, { storage, auth } from "firebase";
 import { getStoredState } from "redux-persist";
+import { db } from "../../firebase";
 
 const useStyles = makeStyles((theme) => ({
   deleteButton: {
@@ -18,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ImageDrop() {
   const classes = useStyles();
   const [files, setFiles] = useState([]);
-  const [url, setUrl] = useState([]);
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
@@ -42,11 +42,15 @@ export default function ImageDrop() {
         const uploadTask = referance.child(`images/${user.uid}/${file.name}`);
         await uploadTask.put(file);
         const newUrl = await uploadTask.getDownloadURL();
-        setUrl([...url, newUrl]);
+        await db
+          .collection("users")
+          .doc(auth().currentUser.uid)
+          .update({
+            photos: firebase.firestore.FieldValue.arrayUnion(newUrl),
+          });
       });
     }
     setFiles([]);
-    setUrl([]);
   }
   function handleDelete(url) {
     setFiles(files.filter((file) => file.preview !== url));
@@ -78,7 +82,6 @@ export default function ImageDrop() {
               display: "flex",
               flexDirection: "column",
               alignContent: "center",
-              // flexWrap: "wrap",
             }}
           >
             <img
@@ -103,7 +106,7 @@ export default function ImageDrop() {
       ))}
     </div>
   );
-  console.log(url, "==================================");
+
   return (
     <div
       style={{

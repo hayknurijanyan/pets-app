@@ -20,94 +20,8 @@ import UpLoad from "../upLoadingFiles/upLoad";
 import firebase, { storage } from "firebase";
 import { useEffect } from "react";
 import noImage from "../../images/noImage.png";
-
-const tileData = [
-  {
-    img: "https://coverfiles.alphacoders.com/927/92705.jpg",
-    cols: 2,
-    title: "Image name",
-  },
-  {
-    img:
-      "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
-    cols: 1,
-    title: "Image name",
-  },
-  {
-    img:
-      "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
-    cols: 1,
-    title: "Image name",
-  },
-  {
-    img: "https://coverfiles.alphacoders.com/927/92705.jpg",
-    cols: 1,
-    title: "Image name",
-  },
-  {
-    img:
-      "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
-    cols: 1,
-    title: "Image name",
-  },
-  {
-    img:
-      "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
-    cols: 1,
-    title: "Image name",
-  },
-  {
-    img: "https://coverfiles.alphacoders.com/927/92705.jpg",
-    cols: 2,
-    title: "Image name",
-  },
-  {
-    img:
-      "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
-    cols: 1,
-    title: "Image name",
-  },
-  {
-    img:
-      "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
-    cols: 1,
-    title: "Image name",
-  },
-  {
-    img: "https://coverfiles.alphacoders.com/927/92705.jpg",
-    cols: 1,
-    title: "Image name",
-  },
-  {
-    img:
-      "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
-    cols: 1,
-    title: "Image name",
-  },
-  {
-    img:
-      "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
-    cols: 2,
-    title: "Image name",
-  },
-  {
-    img: "https://coverfiles.alphacoders.com/927/92705.jpg",
-    cols: 1,
-    title: "Image name",
-  },
-  {
-    img:
-      "https://storage.googleapis.com/petbacker/images/blog/2017/dog-and-cat-cover.jpg",
-    cols: 1,
-    title: "Image name",
-  },
-  {
-    img:
-      "https://www.pethealthnetwork.com/sites/default/files/articles/dogs-cats-birds-and-bunnies-one-house-fb-167580013_0.jpg",
-    cols: 1,
-    title: "Image",
-  },
-];
+import useCurrentUserData from "../customHooks/useCurrentUserData";
+import Loader from "../loader";
 
 const useStyles = makeStyles({
   root: {
@@ -142,6 +56,8 @@ export default function ImageGridList() {
   const classes = useStyles();
   let toRender = null;
   let grid = null;
+  const urls = useCurrentUserData().photos;
+
   function toSlide(index) {
     setImgIndex(index);
     setIsSlider("slider");
@@ -152,73 +68,112 @@ export default function ImageGridList() {
   function toDrop() {
     setIsSlider("drop");
   }
-  // const tileData = Object.keys(images).length?
-  // useEffect(() => {
-  //   const user = firebase.auth().currentUser;
-  //   const images = storage().ref(user.uid);
-  //   storage()
-  //     .ref(`images/${images}`)
-  //     .once("value")
-  //     .then((snapshot) => {
-  //       setValue({ value: snapshot.val() });
-  //       console.log(images);
-  //     })
-  //     .catch((error) => console.error(error));
-  // });
-  if (Object.keys(images).length) {
-    grid = (
-      <div>
-        <Card className={classes.root}>
-          <CardHeader
-            action={
-              <CardActions>
-                <Button size="small" variant="outlined" color="primary">
-                  Edit
-                </Button>
-                <Button
-                  size="small"
-                  variant="outlined"
+  console.log(urls, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
+  if (urls) {
+    const cols = [2, 1, 1, 1, 1, 1, 2, 1, 1, 1];
+    let col = 0;
+    const tileData = urls.map((url) => {
+      if (col === cols.length) col = 0;
+      return {
+        img: url,
+        cols: cols[col++],
+        title: "image",
+      };
+    });
+    if (urls.length) {
+      grid = (
+        <div>
+          <Card className={classes.root}>
+            <CardHeader
+              action={
+                <CardActions>
+                  <Button size="small" variant="outlined" color="primary">
+                    Edit
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="primary"
+                    onClick={toDrop}
+                  >
+                    Add image
+                  </Button>
+                </CardActions>
+              }
+              title={
+                <Typography
+                  className={classes.title}
                   color="primary"
-                  onClick={toDrop}
+                  variant="h5"
                 >
-                  Add image
-                </Button>
-              </CardActions>
-            }
-            title={
-              <Typography
-                className={classes.title}
-                color="primary"
-                variant="h5"
-              >
-                Photos
-              </Typography>
-            }
-          />
-          <CardContent className={classes.content}>
-            <div className={classes.root}>
-              <GridList cellHeight={160} className={classes.gridList} cols={3}>
-                {tileData.map((tile, index) => (
-                  <GridListTile key={tile.img} cols={tile.cols}>
-                    <img
-                      src={tile.img}
-                      alt={tile.title}
-                      onClick={() => toSlide(index)}
-                    />
-                  </GridListTile>
-                ))}
-              </GridList>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
+                  Photos
+                </Typography>
+              }
+            />
+            <CardContent className={classes.content}>
+              <div className={classes.root}>
+                <GridList
+                  cellHeight={160}
+                  className={classes.gridList}
+                  cols={3}
+                >
+                  {tileData.map((tile, index) => (
+                    <GridListTile key={tile.img} cols={tile.cols}>
+                      <img
+                        src={tile.img}
+                        alt={tile.title}
+                        onClick={() => toSlide(index)}
+                      />
+                    </GridListTile>
+                  ))}
+                </GridList>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      );
+    } else {
+      grid = (
+        <div>
+          <Card className={classes.root}>
+            <CardHeader
+              action={
+                <CardActions>
+                  <Button size="small" variant="outlined" color="primary">
+                    Edit
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="primary"
+                    onClick={toDrop}
+                  >
+                    Add image
+                  </Button>
+                </CardActions>
+              }
+            />
+          </Card>
+          <div className={classes.root}>
+            <img src={noImage}></img>;
+          </div>
+        </div>
+      );
+    }
   } else {
-    grid = <img src={noImage}></img>;
+    const tileData = <Loader />;
   }
+
   if (isSlider === "grid") {
     toRender = grid;
   } else if (isSlider === "slider") {
+    const tileData = urls.map((url) => {
+      return {
+        img: url,
+        cols: 1,
+        title: "image",
+      };
+    });
     toRender = (
       <PhotoSlider
         clickHandler={toSlide}

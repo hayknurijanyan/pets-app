@@ -10,6 +10,7 @@ function useCurrentUserData() {
       if (user) {
         const ref = db.collection("users").doc(user.uid);
         const collection = await ref.get();
+
         setUserData({ ...collection.data() });
       } else {
         log("user data not found");
