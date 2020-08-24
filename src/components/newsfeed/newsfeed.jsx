@@ -35,7 +35,6 @@ function Newsfeed() {
         ).data();
         setCurrentUserId(user.uid);
         setUserData(dbUserData);
-        console.log(dbUserData);
       } else {
         console.log("user not found");
       }

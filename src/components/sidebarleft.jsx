@@ -142,7 +142,7 @@ export default function SidebarLeft() {
             >
               <GroupIcon />
               <Typography className={classes.listText} variant="body1">
-                Friends
+                Following
               </Typography>
             </ListItem>
             <ListItem

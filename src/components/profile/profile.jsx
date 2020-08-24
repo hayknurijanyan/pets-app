@@ -47,7 +47,7 @@ const Profile = () => {
         <Switch>
           <Route path="/profile/photos" component={ImageGridList} />
           <Route path="/profile/about" component={About} />
-          <Route path="/profile/friends" component={FriendsCard} />
+          <Route path="/profile/friends" component={Friends} />
           <Route path="/profile/pets" component={PetsCard} />
           <Route path="/profile/" component={About} />
         </Switch>

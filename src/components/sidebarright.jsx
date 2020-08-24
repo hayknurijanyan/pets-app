@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Drawer,
@@ -12,9 +12,10 @@ import {
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import Media from "react-media";
 import ChatBox from "./chat/chatBox";
-import ChatButton from "./chat/chatButton";
+import { useState } from "react";
+import firebase from "firebase";
+import { db } from "../firebase.js";
 
 const drawerWidth = 260;
 
@@ -44,6 +45,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SidebarRight() {
   const classes = useStyles();
+  const [friendList, setFriendList] = useState([]);
+
+  useEffect(() => {
+    async function fetchMyData() {
+      const user = firebase.auth().currentUser;
+      if (user) {
+        const dbUserData = (
+          await db.collection("users").doc(user.uid).get()
+        ).data();
+        let friendsArray = [...dbUserData.friends];
+        setFriendList(friendsArray);
+        console.log(dbUserData.friends);
+      } else {
+        console.log("user not found");
+      }
+    }
+    fetchMyData();
+  }, []);
 
   return (
     <Drawer
@@ -58,25 +77,29 @@ export default function SidebarRight() {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {["Friend 1", "Friend 2", "Friend 3", "Friend 4"].map((text, index) => (
-          <ListItem button key={text}>
+        {friendList.map((el) => (
+          <ListItem button key={el.email}>
             <ListItemIcon>
-              {index % 2 === 0 ? <AccountCircleIcon /> : <AccountCircleIcon />}
+              <AccountCircleIcon />
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary={el.name} />
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button>
+          <ListItemIcon>
+            <MailIcon />
+          </ListItemIcon>
+          <ListItemText primary="Mail" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Inbox" />
+        </ListItem>
       </List>
       <ChatBox />
     </Drawer>
