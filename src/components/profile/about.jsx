@@ -181,7 +181,6 @@ export default function About() {
         });
         break;
       case "petsGender":
-        alert(e.target.name);
         setUserPetInfo({
           name: userPetInfo.name,
           age: userPetInfo.age,
