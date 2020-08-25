@@ -295,17 +295,17 @@ export default function About() {
               <div className={classes.bio}>
                 <Typography
                   className={classes.text}
-                  variant="h6"
+                  variant="body1"
                   color="textSecondary"
                 >
                   {title.title}
                 </Typography>
-                <Typography variant="h4">{title.value}</Typography>
+                <Typography variant="h6">{title.value}</Typography>
               </div>
             ))}
           </CardContent>
           <Typography className={classes.title} color="primary" variant="h5">
-            About pet
+            Pet Info
           </Typography>
           <Divider />
           <CardContent>
@@ -313,12 +313,12 @@ export default function About() {
               <div className={classes.bio}>
                 <Typography
                   className={classes.text}
-                  variant="h6"
+                  variant="body1"
                   color="textSecondary"
                 >
                   {title.title}
                 </Typography>
-                <Typography variant="h4">{title.value}</Typography>
+                <Typography variant="h6">{title.value}</Typography>
               </div>
             ))}
           </CardContent>

@@ -44,6 +44,12 @@ const useStyles = makeStyles((theme) => ({
     height: 30,
     marginRight: 20,
   },
+  buttonDisabled: {
+    width: 120,
+    height: 30,
+    marginRight: 20,
+    display: "none",
+  },
   inline: {
     display: "flex",
     flexDirection: "column",
@@ -142,10 +148,17 @@ function User(props) {
                       />
                     </ListItem>
                     <Button
-                      disabled={obj.email === userData.email}
+                      // disabled={obj.email === userData.email}
                       onClick={() => handleFollowClick(obj)}
-                      className={classes.button}
+                      className={
+                        obj.email === userData.email
+                          ? classes.buttonDisabled
+                          : classes.button
+                      }
                       variant="contained"
+
+                      // color="primary"
+
                       // color={obj.email === currentFollow.email ? "primary" : ""}
                     >
                       Follow
