@@ -36,7 +36,7 @@ export default function PostSnackBar(props) {
   return (
     <div style={{ marginTop: 50 }}>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success">
+        <Alert onClose={handleClose} color="primary">
           This is a success message!
         </Alert>
       </Snackbar>

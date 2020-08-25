@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
 function Friends() {
   const [friendList, setFriendList] = useState([]);
   let friendsCount = friendList.length;
-  console.log(friendsCount);
   const classes = useStyles();
 
   useEffect(() => {
@@ -51,7 +50,6 @@ function Friends() {
         ).data();
         let friendsArray = [...dbUserData.friends];
         setFriendList(friendsArray);
-        console.log(dbUserData.friends);
       } else {
         console.log("user not found");
       }

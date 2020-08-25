@@ -13,6 +13,7 @@ function Alert(props) {
 
 function Newsfeed() {
   const [currentUserId, setCurrentUserId] = useState("");
+  const [UserID, setUserID] = useState("");
   const [posts, setPosts] = useState([]);
   const [value, setValue] = useState("");
   const [postText, setPostText] = useState(true);
@@ -93,13 +94,13 @@ function Newsfeed() {
 
     let postsArray = [...posts];
     let newId = Number(new Date()); //date id
-
     const newPost = value;
 
     if (!value && !fileUrl) {
       setPostText(false);
     } else {
       postsArray.unshift({
+        userID: currentUserId,
         id: newId,
         date: dateTime,
         name: fullname,
@@ -158,7 +159,7 @@ function Newsfeed() {
     if (commentValue) {
       el.postComments.unshift({
         content: commentValue,
-        userID: "id to be added",
+        userID: currentUserId,
         name: fullname,
       });
       let newComment = [el.postComments];
@@ -175,7 +176,7 @@ function Newsfeed() {
               .update({
                 postComments: firebase.firestore.FieldValue.arrayUnion({
                   content: commentValue,
-                  userID: "to be added",
+                  userID: currentUserId,
                   name: fullname,
                 }),
               });
@@ -215,21 +216,53 @@ function Newsfeed() {
     setFileUrl("");
   };
 
-  const handleSaveEdit = (id) => {
-    console.log("edit-id", id);
-    console.log(fileUrl);
-    setValue(value);
-  };
-  const handlePostEditedValue = (e) => {
-    let value = e.target.value;
-    console.log(value);
-    // setPostEditedValue(value);
+  const handleCommentDelete = (comments) => {
+    console.log("comment delete button clicked");
+
+    // for (let i = 0; i <= comments.length; i++) {
+    //   if (comments[i].userID === posts.postComments.userID) {
+    //     posts.postComments.filter((el) => el.userID !== comments[i].userID);
+    //   }
+    //   console.log(posts.postComments);
+    // }
+
+    // let commentsArray = [...comments];
+    // commentsArray = posts.postComments.filter(
+    //   (e) => e.content !== comments.content
+    // );
+    // setPosts(commentsArray);
+    // let postsDB = db.collection("posts").where("id", "==", id);
+    // postsDB
+    //   .get()
+    //   .then(function (querySnapshot) {
+    //     querySnapshot.forEach(function (doc) {
+    //       doc.ref.delete();
+    //     });
+    //   })
+    //   .catch(function (error) {
+    //     // The document probably doesn't exist.
+    //     console.error("Error deleting document: ", error);
+    //   });
   };
 
-  const handleCheckUser = (el) => {
-    if (el.id === currentUserId) {
-      return true;
-    } else return false;
+  const handleSaveEdit = (el) => {
+    el.content = postEditedValue;
+
+    db.collection("posts")
+      .where("id", "==", el.id)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          db.collection("posts")
+            .doc(doc.id)
+            .update({ content: postEditedValue });
+        });
+      });
+    setPostEditedValue("");
+  };
+
+  const handlePostEditChange = (newValue, el) => {
+    setPostEditedValue(newValue);
   };
 
   const handleLike = (el) => {
@@ -271,12 +304,13 @@ function Newsfeed() {
       {posts.map((el) => (
         <Post
           key={el.id}
-          id={el.id}
+          id={el.userID}
+          currentUserId={currentUserId}
           name={el.name}
           value={el.content}
           onDelete={() => handleDelete(el.id)}
-          postEditedValue={() => handlePostEditedValue(el)}
-          onSaveEdit={() => handleSaveEdit(el.id)}
+          onPostEditChange={(newValue) => handlePostEditChange(newValue, el)}
+          onSaveEdit={() => handleSaveEdit(el)}
           date={el.date}
           text={el.content}
           likeCount={el.likes}
@@ -288,6 +322,7 @@ function Newsfeed() {
           addComment={() => handleCommentSubmit(el)}
           onCommentChange={handleCommentChange}
           commentValue={commentValue}
+          onCommentDelete={() => handleCommentDelete(el.postComments)}
         />
       ))}
     </div>

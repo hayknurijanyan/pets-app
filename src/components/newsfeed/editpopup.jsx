@@ -59,6 +59,7 @@ export default function EditPopup(props) {
         onClose={handleClose}
       >
         <EditPost
+          onPostEditChange={(newValue) => props.onPostEditChange(newValue)}
           postImg={props.postImg}
           onEdit={props.onEdit}
           handleClose={handleClose}
