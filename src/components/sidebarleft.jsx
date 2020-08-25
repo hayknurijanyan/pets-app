@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Drawer, Button } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
@@ -23,7 +23,8 @@ import GroupIcon from "@material-ui/icons/Group";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import firebase from "firebase";
+import firebase, { auth } from "firebase";
+import { db } from "../firebase";
 
 const drawerWidth = 260;
 
@@ -73,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SidebarLeft() {
+  const [avatarUrl, setAvatarUrl] = useState("");
   const classes = useStyles();
   const handleLogout = () => {
     firebase
@@ -81,6 +83,16 @@ export default function SidebarLeft() {
       // .then(() => alert("logout succsess"))
       .catch((e) => e.message);
   };
+
+  useEffect(() => {
+    const fetchData = async function () {
+      const ref = db.collection("users").doc(auth().currentUser.uid);
+      const collection = await ref.get();
+      const data = collection.data();
+      setAvatarUrl(data.avatar);
+    };
+    fetchData();
+  });
 
   return (
     <div className={classes.root}>
@@ -113,7 +125,7 @@ export default function SidebarLeft() {
           <List>
             <ListItem button component={Link} to="profile">
               <ListItemIcon>
-                <ImageAvatar />
+                <ImageAvatar imageUrl={avatarUrl} />
               </ListItemIcon>
               <Typography variant="h6">My Account</Typography>
             </ListItem>

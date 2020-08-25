@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ImageDrop() {
+export default function ImageDrop(props) {
   const classes = useStyles();
   const [files, setFiles] = useState([]);
 
@@ -51,6 +51,7 @@ export default function ImageDrop() {
       });
     }
     setFiles([]);
+    props.backToList();
   }
   function handleDelete(url) {
     setFiles(files.filter((file) => file.preview !== url));
@@ -62,7 +63,7 @@ export default function ImageDrop() {
         marginBottom: "20px",
         display: "flex",
         flexDirection: "row",
-        alignContent: "center",
+        alignContent: "flex-end",
         flexWrap: "wrap",
         justifyContent: "space-around",
       }}
@@ -71,9 +72,11 @@ export default function ImageDrop() {
         <div
           key={file.name}
           style={{
+            width: "120px",
+            height: "120px",
             display: "flex",
             flexDirection: "row",
-            alignContent: "center",
+            alignContent: "flex-end",
             flexWrap: "wrap",
           }}
         >
@@ -87,10 +90,11 @@ export default function ImageDrop() {
             <img
               src={file.preview}
               style={{
-                width: "150px",
-                height: "150px",
+                maxWidth: "100px",
+                maxHeight: "100px",
                 borderRadius: "3px",
                 marginBottom: "3px",
+                objectFit: "contain",
               }}
               alt="picture"
             />
