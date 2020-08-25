@@ -67,7 +67,7 @@ export default function About() {
     city: "",
     country: "",
   });
-  const [gender, setGender] = useState("r");
+  const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
