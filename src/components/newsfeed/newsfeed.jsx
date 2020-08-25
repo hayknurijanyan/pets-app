@@ -74,11 +74,11 @@ function Newsfeed() {
   };
 
   const welcomeUser = () => {
-    return (
-      <Alert onClose={handleClose} severity="success">
-        Welcome back!
-      </Alert>
-    );
+    // return (
+    //   <Alert onClose={handleClose} severity="success">
+    //     Welcome back!
+    //   </Alert>
+    // );
   };
 
   const handleSubmit = async (e) => {

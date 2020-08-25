@@ -12,8 +12,11 @@ import {
   Typography,
   Button,
 } from "@material-ui/core";
+import useCurrentUserData from "../customHooks/useCurrentUserData";
+import useAllUsersData from "../customHooks/useAllUsersData";
 import { db, storage } from "../../firebase";
 import firebase from "firebase";
+let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,12 +66,15 @@ function User(props) {
 
   const { result } = props;
   const classes = useStyles();
+  const [btnColor, setBtnColor] = useState("info");
+  const [currentFollow, setCurrentFollow] = useState("info");
 
   const handleFollowClick = (obj) => {
-    console.log(obj);
+    setCurrentFollow(obj);
+    // console.log(obj);
+    setBtnColor("primary");
     const friendName = `${obj.firstName} ${obj.lastName}`;
     const friendEmail = obj.email;
-    // console.log(friendEmail);
     const user = firebase.auth().currentUser;
     if (user) {
       db.collection("users")
@@ -89,7 +95,8 @@ function User(props) {
       alert("user not found");
     }
   };
-
+  const userData = useCurrentUserData();
+  const s = useAllUsersData();
   return (
     <div className={classes.root}>
       {result.length
@@ -135,10 +142,11 @@ function User(props) {
                       />
                     </ListItem>
                     <Button
+                      disabled={obj.email === userData.email}
                       onClick={() => handleFollowClick(obj)}
                       className={classes.button}
                       variant="contained"
-                      color="info"
+                      // color={obj.email === currentFollow.email ? "primary" : ""}
                     >
                       Follow
                     </Button>

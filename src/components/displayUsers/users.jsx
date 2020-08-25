@@ -96,6 +96,7 @@ const Users = () => {
   };
   const handleReset = () => {
     setShowArr(searchArr);
+    setSearchVal("");
   };
 
   const handleClose = (event, reason) => {

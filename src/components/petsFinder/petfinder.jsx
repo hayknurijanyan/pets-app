@@ -75,8 +75,6 @@ const Petfinder = () => {
     fetchData();
   }, []);
 
-  // log("searchArr", searchArr);
-
   const handleChange = (e) => {
     setSearchVal(e.target.value);
   };
@@ -88,27 +86,54 @@ const Petfinder = () => {
         const sVal = searchVal.toLowerCase().trim();
         const newArr = [...searchArr];
         const myArr = newArr.filter((animal) => animal.pet.includes(sVal));
-        setSearchResult(myArr);
         setShowPets(myArr);
-      } else if (petGender && !petBreed) {
-        const sVal = searchVal.toLowerCase().trim();
-        const newArr = [...searchArr];
-        const myArr = newArr.filter(
-          (animal) =>
-            animal.pet.includes(sVal) &&
-            animal.userPetInfo.petsGender === petGender
-        );
-        setSearchResult(myArr);
+        // } else if (petGender && !petBreed) {
+        //   const sVal = searchVal.toLowerCase().trim();
+        //   const newArr = [...searchArr];
+        //   const myArr = newArr.filter((animal) => animal.pet.includes(sVal));
+        //   const resultArr = myArr.filter(
+        //     (animal) => animal.userPetInfo.petsGender === petGender
+        //   );
+        //   setShowPets(resultArr);
+        // } else if (!petGender && petBreed) {
+        //   const sVal = searchVal.toLowerCase().trim();
+        //   const newArr = [...searchArr];
+        //   const myArr = newArr.filter((animal) => animal.pet.includes(sVal));
+        //   const resultArr = myArr.filter(
+        //     (animal) => animal.userPetInfo.breed === petBreed
+        //   );
+        //   setShowPets(resultArr);
+        //   log("aaaaaaaa", myArr);
+        // }
       }
+
+      // if (petBreed) {
+      //   setOpen(false);
+      //   const newArr = [...searchArr];
+      //   const resultArr = newArr.filter(
+      //     (animal) => animal.userPetInfo.breed === petBreed
+      //   );
+      //   setShowPets(resultArr);
+      // } else if (petBreed && petGender) {
+      //   setOpen(false);
+      //   const newArr = [...searchArr];
+      //   const resultArr = newArr.filter(
+      //     (animal) => animal.userPetInfo.breed === petBreed
+      //   );
+      //   const fnArr = resultArr.filter(
+      //     (animal) => animal.userPetInfo.petsGender === petGender
+      //   );
+      //   log("fnArr", fnArr);
+      //   setShowPets(fnArr);
+      // }
     }
   };
-  const handleDeleteClick = (index) => {
-    const newSearchResult = [...searchResult];
-    newSearchResult.splice(index, 1);
-    setSearchResult(newSearchResult);
-  };
+
   const handleReset = () => {
     setShowPets(searchArr);
+    setPetGender("");
+    setPetBreed("");
+    setSearchVal("");
   };
   const handleFilterAge = () => {};
   const handleFilterBreed = () => {};
@@ -123,11 +148,19 @@ const Petfinder = () => {
   };
 
   const checkSearchVal = () => {
-    if (!searchVal) {
+    if (!searchVal && !petBreed && !petGender) {
       return (
         <Alert onClose={handleClose} severity="error">
-          Please write something to search!
+          Please write or select something to search!
         </Alert>
+      );
+    } else if (!searchVal && !petBreed) {
+      return (
+        <>
+          <Alert onClose={handleClose} severity="error">
+            Please select breed or type something!
+          </Alert>
+        </>
       );
     }
   };
@@ -163,21 +196,21 @@ const Petfinder = () => {
             </div>
             <div>
               <CardActions className={classes.button}>
-                <FilterBreed
+                {/* <FilterBreed
                   onHandlePetBreed={setPetBreed}
-                  searchResult={searchResult}
+                  showPets={showPets}
                   petBreed={petBreed}
+                  searchVal={searchVal}
                   filterBy={"Breed"}
-                  searchResult={searchResult}
                   onAge={handleFilterAge}
                 />
                 <FilterGender
                   onHandlePetGender={setPetGender}
                   petGender={petGender}
-                  filterBy={"Breed"}
+                  filterBy={"Gender"}
                   searchResult={searchResult}
                   onBreed={handleFilterBreed}
-                />
+                /> */}
                 <Button
                   onClick={handleReset}
                   variant="contained"
@@ -199,7 +232,7 @@ const Petfinder = () => {
           </CardContent>
         </Card>
 
-        <Pet handleDeleteClick={handleDeleteClick} result={showPets} />
+        <Pet result={showPets} />
         {/* <EveryPet result={searchResult} /> */}
       </div>
     </>

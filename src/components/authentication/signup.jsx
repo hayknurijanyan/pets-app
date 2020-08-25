@@ -23,6 +23,7 @@ import {
   Box,
   Divider,
 } from "@material-ui/core";
+import AlertFn from "./alert";
 let log = console.log;
 
 function Alert(props) {
@@ -92,6 +93,7 @@ function SignUp() {
   const [petGender, setPetGender] = useState("");
   const [age, setAge] = useState(0);
   const [bio, setBio] = useState("");
+  const [btnDisable, setBtnDisable] = useState(false);
   const [location, setLocation] = useState({
     country: "",
     city: "",
@@ -148,6 +150,13 @@ function SignUp() {
   };
 
   const handleSignUp = () => {
+    if (!firstName || !lastName || !pet || !petGender || !breed || !petName) {
+      setError({ message: "Please fill all the fields!" });
+      checkError(error);
+      setOpen(true);
+      return;
+    }
+
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -318,14 +327,14 @@ function SignUp() {
                 />
               </Grid>
 
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
                   }
                   label="I want to receive promotions and updates via email."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               fullWidth
@@ -333,6 +342,7 @@ function SignUp() {
               color="primary"
               className={classes.submit}
               onClick={() => handleSignUp()}
+              disabled={btnDisable}
             >
               Sign Up
             </Button>
