@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -7,12 +7,15 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { Toolbar, Grid, Divider } from "@material-ui/core";
+import { Toolbar, Grid, Divider, IconButton } from "@material-ui/core";
 import ImageAvatar from "./avatar";
 import Popup from "../popup";
 import Message from "../message";
 import image from "../../images/dg1.jpg";
 import { Link } from "react-router-dom";
+import { db } from "../../firebase";
+import { auth } from "firebase";
+import AvatarChoose from "./avatarChoose";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,8 +48,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MediaCard() {
   const classes = useStyles();
-
-  return (
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [chooseAvatar, setChooseAvatar] = useState({ open: false });
+  const [name, setName] = useState("");
+  useEffect(() => {
+    const fetchData = async function () {
+      const ref = db.collection("users").doc(auth().currentUser.uid);
+      const collection = await ref.get();
+      const data = collection.data();
+      setAvatarUrl(data.avatar);
+      setName(`${data.firstName}  ${data.lastName}`);
+    };
+    fetchData();
+  });
+  function toChoose() {
+    setChooseAvatar({ open: !chooseAvatar.open });
+  }
+  const account = (
     <Card className={classes.root}>
       <Toolbar />
       <CardMedia
@@ -56,9 +74,11 @@ export default function MediaCard() {
       />
       <CardContent>
         <div className={classes.avatar}>
-          <ImageAvatar />
+          <IconButton onClick={toChoose}>
+            <ImageAvatar imageUrl={avatarUrl} />
+          </IconButton>
           <Typography gutterBottom variant="h5" component="h2">
-            Albert Einstein
+            {name}
             <Typography variant="body2" color="textSecondary" component="p">
               <div className={classes.popups}>
                 <Popup />
@@ -84,16 +104,7 @@ export default function MediaCard() {
             >
               About
             </Button>
-            <Button
-              className={classes.button}
-              variant="contained"
-              size="medium"
-              color="primary"
-              component={Link}
-              to="/profile/pets"
-            >
-              Pets
-            </Button>
+
             <Button
               className={classes.button}
               variant="contained"
@@ -118,5 +129,13 @@ export default function MediaCard() {
         </Grid>
       </CardContent>
     </Card>
+  );
+
+  return (
+    <>
+      <AvatarChoose form={{ ...chooseAvatar }} backToAccount={toChoose} />
+
+      {account}
+    </>
   );
 }

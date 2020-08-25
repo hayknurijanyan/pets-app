@@ -17,11 +17,12 @@ import { catdog } from "../../images/catdog.png";
 import PhotoSlider from "./photoSlider";
 import ImageDrop from "./imageDrop";
 import UpLoad from "../upLoadingFiles/upLoad";
-import firebase, { storage } from "firebase";
+
 import { useEffect } from "react";
 import noImage from "../../images/noImage.png";
 import useCurrentUserData from "../customHooks/useCurrentUserData";
 import Loader from "../loader";
+import { db, auth, storage } from "../../firebase";
 
 const useStyles = makeStyles({
   root: {
@@ -29,6 +30,15 @@ const useStyles = makeStyles({
     marginTop: 20,
     maxWidth: 720,
     marginBottom: 30,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  cardHeader: {
+    width: "100%",
+    display: "flex",
+    msFlexDirection: "row",
+    justifyContent: "space-between",
   },
   content: {
     display: "flex",
@@ -62,13 +72,53 @@ export default function ImageGridList() {
     setImgIndex(index);
     setIsSlider("slider");
   }
+  function deleteImage(url) {
+    let newImgArray;
+    const del = async (url) => {
+      const ref = db.collection("users").doc(auth.currentUser.uid);
+      let collection = await ref.get();
+      let imgArray = await collection.data().photos;
+
+      newImgArray = imgArray.filter((elem) => elem !== url);
+      return url;
+    };
+    del(url)
+      .then((url) => {
+        console.log(url, "users url");
+        db.collection("users").doc(auth.currentUser.uid).update({
+          photos: newImgArray,
+        });
+        return url;
+      })
+      .then((url) => {
+        console.log(url, "storage url");
+        var storageRef = storage.ref();
+        var desertRef = storageRef.child(`images/${auth.currentUser.uid}`);
+        var imageRef = desertRef.child(`${url}`);
+        imageRef.delete().then(() => console.log("deleted sacsessfully"));
+      });
+    // .then((url) => {
+    //   var storageRef = storage().ref();
+    //   var desertRef = storageRef.child(`images/${auth.currentUser.uid}`);
+    //   var imageRef = desertRef.child(`${url}`);
+    //   imageRef
+    //     .delete()
+    //     .then(function () {
+    //       console.log(
+    //         storageRef.child(`images/${auth.currentUser.uid}/${url}`)
+    //       );
+    //     })
+    //     .catch(function (error) {
+    //       // Uh-oh, an error occurred!
+    //     });
+    // });
+  }
   function backToList() {
     setIsSlider("grid");
   }
   function toDrop() {
     setIsSlider("drop");
   }
-  console.log(urls, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
   if (urls) {
     const cols = [2, 1, 1, 1, 1, 1, 2, 1, 1, 1];
     let col = 0;
@@ -85,11 +135,12 @@ export default function ImageGridList() {
         <div>
           <Card className={classes.root}>
             <CardHeader
+              className={classes.cardHeader}
               action={
                 <CardActions>
-                  <Button size="small" variant="outlined" color="primary">
+                  {/* <Button size="small" variant="outlined" color="primary">
                     Edit
-                  </Button>
+                  </Button> */}
                   <Button
                     size="small"
                     variant="outlined"
@@ -134,14 +185,14 @@ export default function ImageGridList() {
       );
     } else {
       grid = (
-        <div>
+        <div className={classes.root}>
           <Card className={classes.root}>
             <CardHeader
               action={
                 <CardActions>
-                  <Button size="small" variant="outlined" color="primary">
+                  {/* <Button size="small" variant="outlined" color="primary">
                     Edit
-                  </Button>
+                  </Button> */}
                   <Button
                     size="small"
                     variant="outlined"
@@ -176,6 +227,7 @@ export default function ImageGridList() {
     });
     toRender = (
       <PhotoSlider
+        onDelete={deleteImage}
         clickHandler={toSlide}
         images={tileData}
         backClickHandler={backToList}
@@ -183,19 +235,8 @@ export default function ImageGridList() {
       />
     );
   } else if (isSlider === "drop") {
-    toRender = <ImageDrop />;
+    toRender = <ImageDrop backToList={() => backToList()} />;
   }
 
-  return (
-    <div
-      style={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "row",
-        alignContent: "center",
-      }}
-    >
-      {toRender}
-    </div>
-  );
+  return <div className={classes.root}>{toRender}</div>;
 }

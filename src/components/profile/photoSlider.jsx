@@ -86,13 +86,15 @@ function PhotoSlider(props) {
         <Button onClick={handleClose} color="primary">
           Close
         </Button>
+        <Button
+          onClick={() => props.onDelete(props.images[index].img)}
+          color="secondary"
+        >
+          Delete
+        </Button>
       </DialogActions>
     </Dialog>
   );
 }
-
-// PhotoSlider.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
 
 export default PhotoSlider;

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function ImageAvatarSmall() {
+export function ImageAvatarSmall(props) {
   const classes = useStyles();
 
   return (
@@ -29,13 +29,13 @@ export function ImageAvatarSmall() {
         component={Link}
         to="/profile"
         alt="Albert Einstein"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRp2JhPKPKlf3S80BQXaCDuK0bsOgVgK8mc5g&usqp=CAU"
+        src={props.imageUrl}
         className={classes.small}
       />
     </div>
   );
 }
-export default function ImageAvatar() {
+export default function ImageAvatar(props) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -43,7 +43,7 @@ export default function ImageAvatar() {
         component={Link}
         to="/profile"
         alt="Albert Einstein"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRp2JhPKPKlf3S80BQXaCDuK0bsOgVgK8mc5g&usqp=CAU"
+        src={props.imageUrl}
         className={classes.large}
       />
     </div>
