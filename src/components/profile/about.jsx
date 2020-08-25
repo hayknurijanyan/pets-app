@@ -81,8 +81,9 @@ export default function About() {
 
   let aboutList = null;
   let forEdit = null;
+
   useEffect(() => {
-    async function fetchData() {
+    async function fetchMyData() {
       const ref = db.collection("users").doc(auth.currentUser.uid);
       const collection = await ref.get();
       const data = collection.data();
@@ -101,7 +102,7 @@ export default function About() {
       setNumber(data.contactNumber);
       setUserPetInfo({ ...data.userPetInfo });
     }
-    fetchData();
+    fetchMyData();
   }, []);
   function editHandler() {
     setEdit(!edit);

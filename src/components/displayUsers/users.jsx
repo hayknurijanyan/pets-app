@@ -11,6 +11,8 @@ import UpLoad from "../upLoadingFiles/upLoad";
 import FilterGender from "./filterGender";
 import { Router, Switch as Switched, Route, Redirect } from "react-router-dom";
 import filterFunction from "./filterFunction";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 import {
   Typography,
   InputLabel,
@@ -20,6 +22,10 @@ import {
 import ChatBox from "../chat/chatBox";
 import ChatMain from "../chat/chatMain";
 let log = console.log;
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles({
   root: {
@@ -55,6 +61,7 @@ const Users = () => {
   const [searchArr, setSearchArr] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [userName, setUserName] = useState([]);
+  const [open, setOpen] = useState(false);
 
   // const [petBreed, setPetBreed] = useState("");
   const [showArr, setShowArr] = useState([]);
@@ -76,17 +83,37 @@ const Users = () => {
     setSearchVal(e.target.value);
   };
   const handleClick = () => {
+    setOpen(true);
     if (searchVal) {
+      setOpen(false);
       const sVal = searchVal.trim();
       const newArr = [...searchArr];
       const myArr = newArr.filter(
         (man) => man.firstName.includes(sVal) || man.lastName.includes(sVal)
       );
       setShowArr(myArr);
-    } else alert("write something");
+    }
   };
   const handleReset = () => {
     setShowArr(searchArr);
+    setSearchVal("");
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const checkSearchVal = () => {
+    if (!searchVal) {
+      return (
+        <Alert onClose={handleClose} severity="error">
+          Please write something to search!
+        </Alert>
+      );
+    }
   };
 
   const handleFilterAge = () => {};
@@ -98,6 +125,9 @@ const Users = () => {
     <>
       <div>
         <Toolbar />
+        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+          {checkSearchVal()}
+        </Snackbar>
         <Card className={classes.root}>
           <CardContent className={classes.content}>
             <FormControl
@@ -136,22 +166,21 @@ const Users = () => {
               searchResult={searchResult}
               onBreed={handleFilterBreed}
             /> */}
-
             <Button
-              onClick={handleClick}
+              onClick={handleReset}
               variant="contained"
               color="secondary"
               size="medium"
             >
-              Search
+              Reset
             </Button>
             <Button
-              onClick={handleReset}
+              onClick={handleClick}
               variant="contained"
               color="primary"
               size="medium"
             >
-              Reset
+              Search
             </Button>
           </CardActions>
         </Card>

@@ -1,13 +1,14 @@
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
-import { db, auth, storage } from "../../firebase";
+import { db } from "../../firebase";
 import * as firebase from "firebase";
 import PetsSelectFiled from "./petsSelectField";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserAction, userDataAction } from "../../actions";
 import SetDefaultPictureUrl from "./setDefaultPictureUrl";
-import { MenuItem, Select, FormControl, InputLabel } from "@material-ui/core";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 import {
   Avatar,
   Button,
@@ -22,8 +23,12 @@ import {
   Box,
   Divider,
 } from "@material-ui/core";
-
+import AlertFn from "./alert";
 let log = console.log;
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 function Copyright() {
   return (
@@ -74,6 +79,8 @@ const useStyles = makeStyles((theme) => ({
 
 function SignUp() {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
@@ -86,12 +93,11 @@ function SignUp() {
   const [petGender, setPetGender] = useState("");
   const [age, setAge] = useState(0);
   const [bio, setBio] = useState("");
-  const [open, setOpen] = useState(false);
+  const [btnDisable, setBtnDisable] = useState(false);
   const [location, setLocation] = useState({
     country: "",
     city: "",
   });
-
   const [contactNumber, setContactNumber] = useState("");
   const [maleFemale, setMaleFemale] = useState("");
   const [profession, setProfession] = useState("");
@@ -128,7 +134,6 @@ function SignUp() {
     firebase
       .auth()
       .signOut()
-      // .then(() => alert("logout succsess"))
       .catch((e) => e.message);
   };
   const handleEmail = (e) => {
@@ -145,6 +150,13 @@ function SignUp() {
   };
 
   const handleSignUp = () => {
+    if (!firstName || !lastName || !pet || !petGender || !breed || !petName) {
+      setError({ message: "Please fill all the fields!" });
+      checkError(error);
+      setOpen(true);
+      return;
+    }
+
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -189,7 +201,9 @@ function SignUp() {
                   userId: data.user.uid,
                 }),
               })
-              .catch((err) => log(err));
+              .catch((err) => {
+                log(err);
+              });
           });
         const fetchUserData = async () => {
           const user = firebase.auth().currentUser;
@@ -199,11 +213,33 @@ function SignUp() {
         };
         fetchUserData();
       })
-      .catch((err) => log(err));
+      .catch((err) => {
+        setError(err);
+        checkError(error);
+        setOpen(true);
+      });
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const checkError = (err) => {
+    return (
+      <Alert onClose={handleClose} severity="error">
+        {err.message}
+      </Alert>
+    );
   };
 
   return (
     <Grid container component="main" className={classes.root}>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        {checkError(error)}
+      </Snackbar>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -291,14 +327,14 @@ function SignUp() {
                 />
               </Grid>
 
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
                   }
                   label="I want to receive promotions and updates via email."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               fullWidth
@@ -306,6 +342,7 @@ function SignUp() {
               color="primary"
               className={classes.submit}
               onClick={() => handleSignUp()}
+              disabled={btnDisable}
             >
               Sign Up
             </Button>

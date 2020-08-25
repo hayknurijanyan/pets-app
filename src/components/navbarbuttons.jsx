@@ -88,10 +88,6 @@ export function AccountIconButton(props) {
           <Typography className={classes.text}>Account</Typography>
         </MenuItem>
         <MenuItem className={classes.menuItem} onClick={handleClose}>
-          <SettingsIcon />
-          <Typography className={classes.text}>Settings</Typography>
-        </MenuItem>
-        <MenuItem className={classes.menuItem} onClick={handleClose}>
           <ColorLensIcon />
           <Typography className={classes.text}>Theme</Typography>
         </MenuItem>

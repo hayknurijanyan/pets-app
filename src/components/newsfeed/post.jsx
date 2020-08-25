@@ -78,9 +78,23 @@ const useStyles = makeStyles((theme) => ({
 export default function Post(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+
+  // const check = () => {
+  //   if (props.currentUserId !== props.id) {
+  //     return "none";
+  //   } else {
+  //     <EditPopup
+  //       onPostEditChange={props.onPostEditChange}
+  //       postImg={props.postImage}
+  //       onDelete={props.onDelete}
+  //       onEdit={props.onSaveEdit}
+  //       value={props.value}
+  //       onPostEditChange={(newValue) => props.onPostEditChange(newValue)}
+  //     />;
+  //   }
+  // };
   let color = "";
   color = props.color === true ? "secondary" : "none";
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -100,13 +114,18 @@ export default function Post(props) {
             </ImageAvatar>
           }
           action={
-            <EditPopup
-              postImg={props.postImage}
-              onDelete={props.onDelete}
-              onEdit={props.onSaveEdit}
-              value={props.value}
-              postEditedValue={props.postEditedValue}
-            />
+            props.currentUserId === props.id && (
+              <EditPopup
+                onPostEditChange={props.onPostEditChange}
+                postImg={props.postImage}
+                onDelete={props.onDelete}
+                onEdit={props.onSaveEdit}
+                value={props.value}
+                onPostEditChange={(newValue) =>
+                  props.onPostEditChange(newValue)
+                }
+              />
+            )
           }
           title={
             <Typography
@@ -181,6 +200,7 @@ export default function Post(props) {
           </div>
           {props.postComments.map((el) => (
             <Comment
+              onCommentDelete={props.onCommentDelete}
               key={el.id}
               content={el.content}
               name={el.name}

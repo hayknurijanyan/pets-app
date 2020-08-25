@@ -82,7 +82,6 @@ export default function SidebarLeft() {
       .signOut()
       // .then(() => alert("logout succsess"))
       .catch((e) => e.message);
-    // window.location.reload(false);
   };
 
   useEffect(() => {
@@ -154,7 +153,7 @@ export default function SidebarLeft() {
             >
               <GroupIcon />
               <Typography className={classes.listText} variant="body1">
-                Friends
+                Following
               </Typography>
             </ListItem>
             <ListItem

@@ -35,20 +35,20 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   button: {
-    margin: 10,
+    marginTop: 5,
+    marginBottom: 20,
+    paddingLeft: 40,
+    paddingRight: 40,
   },
-  input: {
-    marginTop: 50,
-  },
+  input: {},
   chatArea: {
     display: "flex",
     flexDirection: "column-reverse",
-    maxHeight: 500,
+    height: "100%",
     overflow: "auto",
+    marginBottom: 0,
   },
-  inputArea: {
-    marginBottom: "50px",
-  },
+  inputArea: {},
 }));
 
 export default function ChatMain() {
@@ -137,70 +137,69 @@ export default function ChatMain() {
 
   return (
     <>
-      <Card>
-        <CardContent className={classes.chatArea}>
-          <div className="chat-area" ref={myRef}>
-            {/* loading indicator */}
-            {loadingChats ? <Loader /> : ""}
-            {/* chat area */}
-            {chats.slice(chats.length - 150, chats.length).map((chat) => {
-              return (
-                <>
-                  <p
-                    key={chat.timestamp}
-                    className={
-                      "chat-bubble " +
-                      (user.uid === chat.uid ? "current-user" : "")
-                    }
-                  >
-                    <span className="avatar">
-                      <ListItemAvatar>
-                        <Avatar
-                          alt={`${chat.firstName[0]}`}
-                          src={
-                            `${chat.avatar}` || `/static/images/avatar/1.jpg`
-                          }
-                        />
-                      </ListItemAvatar>
-                    </span>
-
-                    <br />
-                    <span className="content">{chat.content}</span>
-                    <br />
-                    <span className="chat-time float-right">
-                      {formatTime(chat.timestamp)}
-                    </span>
-                  </p>
-                </>
-              );
-            })}
-          </div>
-        </CardContent>
+      <Card className={classes.chatArea}>
+        {/* <CardContent className={classes.chatArea}> */}
+        <div className="chat-area" ref={myRef}>
+          {/* loading indicator */}
+          {loadingChats ? <Loader /> : ""}
+          {/* chat area */}
+          {chats.slice(chats.length - 150, chats.length).map((chat) => {
+            return (
+              <div>
+                <p
+                  key={chat.timestamp}
+                  className={
+                    "chat-bubble " +
+                    (user.uid === chat.uid ? "current-user" : "")
+                  }
+                >
+                  {/* <span className="avatar">
+                    <ListItemAvatar>
+                      <Avatar
+                        alt={`${chat.firstName[0]}`}
+                        src={`${chat.avatar}` || `/static/images/avatar/1.jpg`}
+                      />
+                    </ListItemAvatar>
+                  </span> */}
+                  <span className="name-color">{`${chat.firstName} ${chat.lastName}`}</span>
+                  <br />
+                  <span className="content">{chat.content}</span>
+                  <br />
+                  <span className="chat-time float-right">
+                    {formatTime(chat.timestamp)}
+                  </span>
+                </p>
+              </div>
+            );
+          })}
+        </div>
+        {/* </CardContent> */}
       </Card>
       <Card className={classes.inputArea}>
-        <TextField
-          value={content}
-          className={classes.input}
-          value={content}
-          onChange={handleChange}
-          variant="outlined"
-          fullWidth
-          placeholder="Enter your message"
-          id="msg"
-          label="Enter your message"
-        />
-        <label htmlFor="raised-button-file"></label>
-        <Button
-          disabled={content ? false : true}
-          onClick={onSend}
-          variant="contained"
-          color="primary"
-          size="large"
-          className={classes.button}
-          disabled={content ? false : true}
-        >
-          Send
-        </Button>
+        <CardContent>
+          <TextField
+            value={content}
+            className={classes.input}
+            value={content}
+            onChange={handleChange}
+            variant="outlined"
+            fullWidth
+            placeholder="Enter your message"
+            id="msg"
+          />
+          <label htmlFor="raised-button-file"></label>
+          <Button
+            disabled={content ? false : true}
+            onClick={onSend}
+            variant="contained"
+            color="primary"
+            size="large"
+            className={classes.button}
+            disabled={content ? false : true}
+          >
+            Send
+          </Button>
+        </CardContent>
       </Card>
     </>
   );

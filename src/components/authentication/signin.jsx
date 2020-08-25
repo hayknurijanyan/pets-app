@@ -17,8 +17,15 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { db, auth } from "../../firebase";
+import { db } from "../../firebase";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 let log = console.log;
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -70,11 +77,13 @@ function SignIn() {
   const [user, setUser] = useState(null);
   const isUser = useSelector((state) => state.isUser); // ստեղ արդեն ունես isUser փոփոխականը որը կարաս get անես app ի ցանկացած մասից useSelector ով
   const dispatch = useDispatch();
-
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         dispatch(isUserAction(user));
+        setUser(user);
       } else {
         log("redux not done");
       }
@@ -92,7 +101,7 @@ function SignIn() {
     firebase
       .auth()
       .signOut()
-      .then(() => alert("logout succsess"))
+      // .then(() => alert("logout succsess"))
       .catch((e) => e.message);
   };
 
@@ -108,14 +117,34 @@ function SignIn() {
           dispatch(userDataAction({ ...collection.data() }));
         };
         fetchUserData();
-        alert("welcome back");
       })
+      .catch((err) => {
+        setError(err);
+        checkError(error);
+        setOpen(true);
+      });
+  };
 
-      .catch((err) => alert(err));
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const checkError = (err) => {
+    return (
+      <Alert onClose={handleClose} severity="error">
+        {err.message}
+      </Alert>
+    );
   };
 
   return (
     <Grid container component="main" className={classes.root}>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        {checkError(error)}
+      </Snackbar>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>

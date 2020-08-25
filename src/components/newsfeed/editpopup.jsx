@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import EditPost from "./editpost";
 import { makeStyles } from "@material-ui/core/styles";
+import useCurrentUserData from "../customHooks/useCurrentUserData";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -18,11 +19,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function EditPopup(props) {
+  const userData = useCurrentUserData();
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -58,6 +59,7 @@ export default function EditPopup(props) {
         onClose={handleClose}
       >
         <EditPost
+          onPostEditChange={(newValue) => props.onPostEditChange(newValue)}
           postImg={props.postImg}
           onEdit={props.onEdit}
           handleClose={handleClose}

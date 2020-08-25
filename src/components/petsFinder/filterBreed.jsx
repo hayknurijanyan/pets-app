@@ -26,15 +26,7 @@ export default function FilterBreed(props) {
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([]);
   const [userPet, setUserPet] = useState("");
-  const { filterBy, petBreed, onHandlePetBreed, searchResult } = props;
-
-  useEffect(() => {
-    const newArray = [];
-    searchResult.forEach((obj) => {
-      newArray.push(obj.userPetInfo.breed);
-      setList(newArray);
-    });
-  }, []);
+  const { filterBy, petBreed, onHandlePetBreed, showPets, searchVal } = props;
 
   const [state, setState] = useState({
     breed: "",
@@ -55,31 +47,34 @@ export default function FilterBreed(props) {
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor={`petBreed-native-helper`}>{filterBy}</InputLabel>
         <Select
-          value={props.petBreed}
+          value={petBreed}
           onChange={handleChange}
           inputProps={{
             name: "breed",
             id: "petBreed-native-helper",
           }}
         >
-          <MenuItem aria-label="None" value="" />
-          {list.map((animal) => {
+          {showPets.map((obj) => {
             return (
-              <MenuItem key={uniqid()} value={animal}>
-                {animal}
+              <MenuItem
+                key={uniqid()}
+                aria-label={obj.userPetInfo.breed}
+                value={obj.userPetInfo.breed}
+              >
+                {obj.userPetInfo.breed}
               </MenuItem>
             );
           })}
         </Select>
-        <FormHelperText>Filter by {filterBy}</FormHelperText>
+        <FormHelperText>Filter by Breed</FormHelperText>
       </FormControl>
     </div>
   );
 }
 
 FilterBreed.propTypes = {
-  filterBy: PropTypes.string.isRequired,
+  filterBy: PropTypes.string,
   petBreed: PropTypes.string,
-  onHandlePetBreed: PropTypes.func.isRequired,
-  searchResult: PropTypes.array,
+  onHandlePetBreed: PropTypes.func,
+  showPets: PropTypes.array,
 };

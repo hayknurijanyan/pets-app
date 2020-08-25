@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import uniqid from "uniqid";
 import PropTypes from "prop-types";
@@ -12,14 +12,22 @@ import {
   Typography,
   Button,
 } from "@material-ui/core";
+import useCurrentUserData from "../customHooks/useCurrentUserData";
+import useAllUsersData from "../customHooks/useAllUsersData";
 import { db, storage } from "../../firebase";
 import firebase from "firebase";
+let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
   container: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    width: "100%",
   },
 
   main: {
@@ -28,22 +36,45 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 10,
     marginLeft: 5,
     justifyContent: "flex-start",
+    minWidth: 400,
+    minHeight: 140,
   },
   button: {
-    width: 100,
+    width: 120,
     height: 30,
+    marginRight: 20,
+  },
+  inline: {
+    display: "flex",
+    flexDirection: "column",
   },
 }));
 
 function User(props) {
+  console.log(props.result);
+
+  // const checkFollowing = () => {
+
+  //   let found = false;
+  //   for (let i = 0; i < firnds.length; i++) {
+  //     if (friends[i].email == "Magenic") {
+  //       found = true;
+  //       break;
+  //     }
+  //   }
+  // };
+
   const { result } = props;
   const classes = useStyles();
+  const [btnColor, setBtnColor] = useState("info");
+  const [currentFollow, setCurrentFollow] = useState("info");
 
   const handleFollowClick = (obj) => {
+    setCurrentFollow(obj);
     // console.log(obj);
+    setBtnColor("primary");
     const friendName = `${obj.firstName} ${obj.lastName}`;
     const friendEmail = obj.email;
-    // console.log(friendEmail);
     const user = firebase.auth().currentUser;
     if (user) {
       db.collection("users")
@@ -61,12 +92,13 @@ function User(props) {
           });
         });
     } else {
-      alert("enter value");
+      alert("user not found");
     }
   };
-
+  const userData = useCurrentUserData();
+  const s = useAllUsersData();
   return (
-    <>
+    <div className={classes.root}>
       {result.length
         ? result.map((obj) => {
             return (
@@ -91,20 +123,30 @@ function User(props) {
                               component="span"
                               variant="body2"
                               className={classes.inline}
+                              color="textSecondary"
+                            >
+                              {obj.location.city
+                                ? `  ${obj.location.city}`
+                                : ""}
+                            </Typography>
+                            <Typography
+                              component="span"
+                              variant="body2"
+                              className={classes.inline}
                               color="secondary"
                             >
                               {`@${obj.pet}`}
                             </Typography>
-                            {obj.location.city ? ` -${obj.location.city}` : ""}
                           </React.Fragment>
                         }
                       />
                     </ListItem>
                     <Button
+                      disabled={obj.email === userData.email}
                       onClick={() => handleFollowClick(obj)}
                       className={classes.button}
                       variant="contained"
-                      color="primary"
+                      // color={obj.email === currentFollow.email ? "primary" : ""}
                     >
                       Follow
                     </Button>
@@ -114,7 +156,7 @@ function User(props) {
             );
           })
         : ""}
-    </>
+    </div>
   );
 }
 

@@ -16,6 +16,7 @@ import {
   ListItemText,
   Typography,
   Button,
+  CardContent,
 } from "@material-ui/core";
 import Pet from "./pet.jsx";
 
@@ -24,18 +25,25 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
   },
 
   main: {
     display: "flex",
     flexWrap: "wrap",
     marginTop: 10,
-    marginLeft: 5,
+    minWidth: 400,
+    marginLeft: 20,
     justifyContent: "flex-start",
   },
   button: {
     width: 100,
     height: 30,
+  },
+  buttonArea: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "right",
   },
 }));
 
@@ -43,10 +51,10 @@ function Friend(props) {
   const classes = useStyles();
 
   return (
-    <div>
-      <Card className={classes.main}>
+    <Card className={classes.main}>
+      <CardContent>
         <List className={classes.container}>
-          <ListItem alignItems="flex-start">
+          <ListItem>
             <ListItemAvatar>
               <Avatar
                 alt="Remy Sharp"
@@ -70,16 +78,19 @@ function Friend(props) {
               }
             />
           </ListItem>
-          <Button
-            className={classes.button}
-            variant="contained"
-            color="secondary"
-          >
-            Remove
-          </Button>
         </List>
-      </Card>
-    </div>
+      </CardContent>
+      <CardContent className={classes.buttonArea}>
+        <Button
+          onClick={props.onUnfollow}
+          className={classes.button}
+          variant="contained"
+          color="secondary"
+        >
+          Unfollow
+        </Button>
+      </CardContent>
+    </Card>
   );
 }
 

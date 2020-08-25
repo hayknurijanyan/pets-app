@@ -11,6 +11,7 @@ import { Typography, Button } from "@material-ui/core";
 import ImageAvatar from "./avatar";
 import EditPopover from "../newsfeed/editpopup";
 import Friend from "../friend";
+import Friends from "../friends";
 
 const useStyles = makeStyles({
   root: {
@@ -55,16 +56,8 @@ export default function FriendsCard() {
             </Typography>
           }
         />
-        <CardContent className={classes.content}>
-          <Friend />
-          <Friend />
-          <Friend />
-          <Friend />
-          <Friend />
-          <Friend />
-          <Friend />
-          <Friend />
-          <Friend />
+        <CardContent>
+          <Friends />
         </CardContent>
       </Card>
     </div>

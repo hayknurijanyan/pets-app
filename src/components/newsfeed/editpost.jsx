@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 export default function EditPost(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [commentValue, setCommentValue] = useState(props.value);
+  const [editValue, setEditValue] = useState(props.value);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -42,7 +42,11 @@ export default function EditPost(props) {
   };
   const handleChange = (e) => {
     let newValue = e.target.value;
-    setCommentValue(newValue);
+    setEditValue(newValue);
+    props.onPostEditChange(newValue);
+  };
+  const onEdit = () => {
+    console.log(editValue);
   };
 
   return (
@@ -57,7 +61,7 @@ export default function EditPost(props) {
         <DialogContent className={classes.content}>
           <TextField
             onChange={handleChange}
-            value={commentValue}
+            value={editValue}
             autoFocus
             margin="dense"
             id="name"
@@ -76,10 +80,12 @@ export default function EditPost(props) {
               Cancel
             </Button>
           </div>
-          <div onClick={props.handleClose} color="primary">
-            <Button onClick={props.onEdit} color="primary">
-              Save Changes
-            </Button>
+          <div onClick={props.handleClose}>
+            <div onClick={handleClose} color="primary">
+              <Button onClick={props.onEdit} color="primary">
+                Save Changes
+              </Button>
+            </div>
           </div>
         </DialogActions>
       </Dialog>
