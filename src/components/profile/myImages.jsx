@@ -24,16 +24,21 @@ import useCurrentUserData from "../customHooks/useCurrentUserData";
 import Loader from "../loader";
 
 const useStyles = makeStyles({
+  main: {
+    minWidth: 800,
+  },
   root: {
-    minWidth: 275,
+    minWidth: 350,
     marginTop: 20,
+    marginLeft: 50,
+    marginRight: 50,
     maxWidth: 720,
     marginBottom: 30,
   },
   content: {
     display: "flex",
     flexDirection: "row",
-    marginLeft: 30,
+    marginLeft: 20,
     marginTop: 5,
   },
   bullet: {
@@ -82,7 +87,7 @@ export default function ImageGridList() {
     });
     if (urls.length) {
       grid = (
-        <div>
+        <div className={classes.main}>
           <Card className={classes.root}>
             <CardHeader
               action={

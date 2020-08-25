@@ -14,6 +14,11 @@ import PetsCard from "./petscard";
 
 let log = console.log;
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
+  },
   card: {
     margin: 10,
     width: "45 rem",
@@ -40,7 +45,7 @@ const Profile = () => {
 
   return (
     <Router>
-      <div>
+      <div className={classes.root}>
         <Toolbar />
         <Account />
         <Card className={classes.card}></Card>

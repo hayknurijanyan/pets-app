@@ -16,6 +16,7 @@ import ChatBox from "./chat/chatBox";
 import { useState } from "react";
 import firebase from "firebase";
 import { db } from "../firebase.js";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const drawerWidth = 260;
 
@@ -99,6 +100,12 @@ export default function SidebarRight() {
             <InboxIcon />
           </ListItemIcon>
           <ListItemText primary="Inbox" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <DeleteIcon />
+          </ListItemIcon>
+          <ListItemText primary="Trash" />
         </ListItem>
       </List>
       <ChatBox />
