@@ -46,11 +46,10 @@ export default function FilterGender(props) {
             id: "gender-native-helper",
           }}
         >
-          {/* <MenuItem aria-label="None" value="" /> */}
           <MenuItem value={"male"}>male</MenuItem>
           <MenuItem value={"female"}>female</MenuItem>
         </Select>
-        <FormHelperText>Filter by gender</FormHelperText>
+        <FormHelperText>Filter by {filterBy}</FormHelperText>
       </FormControl>
     </div>
   );

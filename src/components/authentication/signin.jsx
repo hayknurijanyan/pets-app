@@ -101,7 +101,7 @@ function SignIn() {
     firebase
       .auth()
       .signOut()
-      .then(() => alert("logout succsess"))
+      // .then(() => alert("logout succsess"))
       .catch((e) => e.message);
   };
 

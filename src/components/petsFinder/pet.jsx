@@ -109,15 +109,6 @@ export default function Pet(props) {
                             m={1}
                             bgcolor="background.paper"
                           >
-                            {/* <Button
-                            variant="contained"
-                            color="secondary"
-                            className={classes.button}
-                            startIcon={<DeleteIcon />}
-                            onClick={() => props.handleDeleteClick(index)}
-                          >
-                            Delete
-                          </Button> */}
                             <Button variant="contained" color="primary">
                               Contact
                             </Button>

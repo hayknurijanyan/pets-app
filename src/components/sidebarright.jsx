@@ -56,7 +56,7 @@ export default function SidebarRight() {
         ).data();
         let friendsArray = [...dbUserData.friends];
         setFriendList(friendsArray);
-        console.log(dbUserData.friends);
+        // console.log(dbUserData.friends);
       } else {
         console.log("user not found");
       }
