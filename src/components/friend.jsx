@@ -30,9 +30,11 @@ const useStyles = makeStyles((theme) => ({
 
   main: {
     display: "flex",
-    flexWrap: "wrap",
+    flexDirection: "row",
+    // flexWrap: "wrap",
     marginTop: 10,
-    minWidth: 400,
+    maxWidth: 350,
+    maxHeight: 150,
     marginLeft: 20,
     justifyContent: "flex-start",
   },
@@ -73,7 +75,7 @@ function Friend(props) {
                   >
                     @dog
                   </Typography>
-                  {" — Yerevan"}
+                  {`  Yerevan  `}
                 </React.Fragment>
               }
             />

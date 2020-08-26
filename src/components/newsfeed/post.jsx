@@ -126,8 +126,14 @@ export default function Post(props) {
               component={Link}
               to="/profile/"
               aria-label="recipe"
+<<<<<<< HEAD
               className={classes.avatar}
               imageUrl={props.avatar}
+=======
+              className={classes.large}
+              src={props.userAvatar}
+              // imageUrl={avatarUrl}
+>>>>>>> c469a2b6c664c6c9931f4852e63693ed07d6e8fd
             />
           }
           action={
