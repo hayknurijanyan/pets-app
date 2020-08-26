@@ -24,36 +24,53 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
 }));
-const Profile = () => {
+const XalxiProfile = (props) => {
   const classes = useStyles();
-  const user = firebase.auth().currentUser;
+  const [userData, setUserData] = useState({});
+  const [bio, setBio] = useState("");
+  const [fName, setFName] = useState("");
+  const [lName, setLName] = useState("");
+  const [profession, setProfession] = useState("");
+  const [location, setLocation] = useState({
+    city: "",
+    country: "",
+  });
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
+  const [userPetInfo, setUserPetInfo] = useState({
+    age: "age",
+    behavior: "asd",
+    breed: "asd",
+    name: "asd",
+    petsGender: "asd",
+  });
+  let data = null;
+  useEffect(() => {
+    async function fetchMyData() {
+      const ref = db.collection("users").doc(props.userId);
+      const collection = await ref.get();
+      data = collection.data();
 
-  if (user) {
-    log("currnetuser", user);
-  } else {
-    log("asd");
-  }
+      setBio(data.bio);
+      setFName(data.firstName);
+      setLName(data.lastName);
+      setProfession(data.profession);
+      setLocation({
+        city: data.location.city,
+        country: data.location.country,
+      });
+      setGender(data.maleFemale);
+      setAge(data.age);
+      setEmail(data.email);
+      setNumber(data.contactNumber);
+      setUserPetInfo({ ...data.userPetInfo });
+    }
+    fetchMyData();
+  }, []);
 
-  const isUser = useSelector((state) => state);
-  log("user redux", isUser);
-  log("state", isUser);
-
-  return (
-    <Router>
-      <div>
-        <Toolbar />
-        <Account />
-        <Card className={classes.card}></Card>
-        <Switch>
-          <Route path="/profile/photos" component={ImageGridList} />
-          <Route path="/profile/about" component={About} />
-          <Route path="/profile/friends" component={FriendsCard} />
-          <Route path="/profile/pets" component={PetsCard} />
-          <Route path="/profile/" component={About} />
-        </Switch>
-      </div>
-    </Router>
-  );
+  return <div>{(fName, lName, age, gender, profession, number, email)}</div>;
 };
 
-export default Profile;
+export default XalxiProfile;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -19,6 +19,8 @@ import { Link } from "react-router-dom";
 import ImageAvatar from "../profile/avatar";
 import EditPopup from "./editpopup";
 import Comment from "./comment";
+import { db } from "../../firebase";
+import { auth } from "firebase";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -78,7 +80,16 @@ const useStyles = makeStyles((theme) => ({
 export default function Post(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-
+  // const [avatarUrl, setAvatarUrl] = React.useState("");
+  // useEffect(() => {
+  //   const fetchData = async function (props) {
+  //     const ref = db.collection("users").doc(auth().props.id);
+  //     const collection = await ref.get();
+  //     const data = collection.data();
+  //     setAvatarUrl(data.avatar);
+  //   };
+  //   fetchData(props);
+  // });
   // const check = () => {
   //   if (props.currentUserId !== props.id) {
   //     return "none";
@@ -109,9 +120,8 @@ export default function Post(props) {
               to="/profile/"
               aria-label="recipe"
               className={classes.avatar}
-            >
-              H
-            </ImageAvatar>
+              // imageUrl={avatarUrl}
+            />
           }
           action={
             props.currentUserId === props.id && (

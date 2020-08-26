@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
@@ -14,6 +14,8 @@ import { useSelector, useDispatch } from "react-redux";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import MuiAlert from "@material-ui/lab/Alert";
+import { db } from "../../firebase";
+import { auth } from "firebase";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -80,6 +82,16 @@ function CreatePost(props) {
   const dispatch = useDispatch();
   const [fileUrl, setFileUrl] = useState("");
   const [users, setUsers] = useState([]);
+  const [avatarUrl, setAvatarUrl] = useState("");
+  useEffect(() => {
+    const fetchData = async function () {
+      const ref = db.collection("users").doc(auth().currentUser.uid);
+      const collection = await ref.get();
+      const data = collection.data();
+      setAvatarUrl(data.avatar);
+    };
+    fetchData();
+  });
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -114,7 +126,7 @@ function CreatePost(props) {
       <Card className={classes.card}>
         <CardContent>
           <div className={classes.main}>
-            <ImageAvatar>H</ImageAvatar>
+            <ImageAvatar imageUrl={avatarUrl} />
             <TextField
               value={props.value}
               onChange={props.onChange}
