@@ -70,6 +70,7 @@ export function AccountIconButton(props) {
         <AccountCircleIcon variant="outlined" fontSize="medium" />
       </IconButton>
       <Menu
+        onClick={handleClose}
         id="menu-appbar"
         anchorEl={anchorEl}
         anchorOrigin={{
