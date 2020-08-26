@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    width: "100%",
+    width: 350,
   },
 
   main: {
@@ -36,11 +36,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 10,
     marginLeft: 5,
     justifyContent: "flex-start",
-    minWidth: 400,
+    minWidth: 350,
     minHeight: 140,
   },
   button: {
-    width: 120,
+    width: 130,
     height: 30,
     marginRight: 20,
   },
