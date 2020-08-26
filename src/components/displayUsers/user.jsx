@@ -57,29 +57,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function User(props) {
-  const { result } = props;
+  const { result, emailArray, userData, setEmailArray } = props;
   const classes = useStyles();
   const [btnColor, setBtnColor] = useState("info");
-  const [emailArray, setEmailArray] = useState([]);
-  const [userData, setUserData] = useState({});
+  // const [emailArray, setEmailArray] = useState([]);
+  // const [userData, setUserData] = useState({});
 
-  useEffect(() => {
-    const ref = db.collection("users").doc(auth.currentUser.uid);
-    let collection = ref
-      .get()
-      .then((doc) => {
-        const newArray = [...doc.data().friends];
-        setUserData({ ...doc.data() });
-        const result = [];
-        newArray.forEach((obj) => {
-          result.push(obj.email);
-        });
-        setEmailArray(result);
-      })
-      .catch((error) => {
-        console.log("Error getting document:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   const ref = db.collection("users").doc(auth.currentUser.uid);
+  //   let collection = ref
+  //     .get()
+  //     .then((doc) => {
+  //       const newArray = [...doc.data().friends];
+  //       setUserData({ ...doc.data() });
+  //       const result = [];
+  //       newArray.forEach((obj) => {
+  //         result.push(obj.email);
+  //       });
+  //       setEmailArray(result);
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error getting document:", error);
+  //     });
+  // }, []);
+  // log("emailArray", emailArray);
 
   const handleFollowClick = (obj) => {
     const friendName = `${obj.firstName} ${obj.lastName}`;
@@ -99,9 +100,8 @@ function User(props) {
                 }),
               });
           });
-        });
-      const fetchData = async () => {
-        try {
+        })
+        .then(async () => {
           const ref = db.collection("users").doc(user.uid);
           const collection = await ref.get();
           const newArray = [...collection.data().friends];
@@ -110,11 +110,10 @@ function User(props) {
             result.push(obj.email);
           });
           setEmailArray(result);
-        } catch {
-          log("something went wrong");
-        }
-      };
-      fetchData();
+        })
+        .catch((err) => {
+          log(err.message);
+        });
     }
   };
 
@@ -170,10 +169,10 @@ function User(props) {
                           : classes.buttonDisplayNone
                       }
                       variant="contained"
-                      // color={
-                      //   emailArray.includes(obj.email) ? "primary" : "info"
-                      // }
-                      disabled={emailArray.includes(obj.email)}
+                      color={
+                        emailArray.includes(obj.email) ? "primary" : "info"
+                      }
+                      // disabled={emailArray.includes(obj.email)}
                     >
                       Follow
                     </Button>

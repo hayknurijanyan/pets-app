@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../../firebase";
+import { db, auth } from "../../firebase";
+import firebase from "firebase";
 import { Toolbar, Switch } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -62,9 +63,11 @@ const Users = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [userName, setUserName] = useState([]);
   const [open, setOpen] = useState(false);
-
+  const [userData, setUserData] = useState({});
+  const [emailArray, setEmailArray] = useState([]);
   // const [petBreed, setPetBreed] = useState("");
   const [showArr, setShowArr] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       const newArray = [];
@@ -76,6 +79,24 @@ const Users = () => {
       setShowArr(newArray);
     };
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const ref = db.collection("users").doc(auth.currentUser.uid);
+    let collection = ref
+      .get()
+      .then((doc) => {
+        const newArray = [...doc.data().friends];
+        setUserData({ ...doc.data() });
+        const result = [];
+        newArray.forEach((obj) => {
+          result.push(obj.email);
+        });
+        setEmailArray(result);
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
+      });
   }, []);
 
   const handleChange = (e) => {
@@ -184,7 +205,12 @@ const Users = () => {
             </Button>
           </CardActions>
         </Card>
-        <User result={showArr} />
+        <User
+          emailArray={emailArray}
+          userData={userData}
+          result={showArr}
+          setEmailArray={setEmailArray}
+        />
         {/* <EveryPet result={searchResult} /> */}
       </div>
     </>
