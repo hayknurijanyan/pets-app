@@ -10,11 +10,11 @@ import {
   TextField,
   Button,
 } from "@material-ui/core";
-import { Avatar, IconButton, Typography, Collapse } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { red } from "@material-ui/core/colors";
+import { Avatar, IconButton, Typography, Collapse } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import ImageAvatar from "../profile/avatar";
 import EditPopup from "./editpopup";
@@ -75,6 +75,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#fafafa",
     // borderRadius: 5,
   },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
+  textArea: {
+    marginLeft: 10,
+  },
 }));
 
 export default function Post(props) {
@@ -115,7 +122,7 @@ export default function Post(props) {
       <Card className={classes.root}>
         <CardHeader
           avatar={
-            <ImageAvatar
+            <Avatar
               component={Link}
               to="/profile/"
               aria-label="recipe"
@@ -150,7 +157,12 @@ export default function Post(props) {
           subheader={String(props.date)}
         />
         <CardContent>
-          <Typography variant="body1" color="black" component="p">
+          <Typography
+            className={classes.textArea}
+            variant="body1"
+            color="black"
+            component="p"
+          >
             {props.text}
           </Typography>
         </CardContent>
@@ -210,11 +222,11 @@ export default function Post(props) {
           </div>
           {props.postComments.map((el) => (
             <Comment
-              onCommentDelete={props.onCommentDelete}
+              onCommentDelete={() => props.onCommentDelete(el.commentID)}
               key={el.id}
               content={el.content}
               name={el.name}
-              // onCommentDelete={(el) => props.handleCommentDelete(el)}
+              userAvatar={el.userAvatar}
             />
           ))}
         </Collapse>

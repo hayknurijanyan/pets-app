@@ -63,7 +63,9 @@ export default function EditComment(props) {
           handleClose={handleClose}
           value={props.value}
         />
-        <MenuItem onClick={props.onCommentDelete}>Delete</MenuItem>
+        <div onClick={handleClose}>
+          <MenuItem onClick={props.onCommentDelete}>Delete</MenuItem>
+        </div>
       </Menu>
     </div>
   );

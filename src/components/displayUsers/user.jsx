@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import useCurrentUserData from "../customHooks/useCurrentUserData";
 import useAllUsersData from "../customHooks/useAllUsersData";
-import { db, storage } from "../../firebase";
+import { db, auth } from "../../firebase";
 import firebase from "firebase";
 let log = console.log;
 
@@ -44,6 +44,12 @@ const useStyles = makeStyles((theme) => ({
     height: 30,
     marginRight: 20,
   },
+  buttonDisplayNone: {
+    display: "none",
+    width: 120,
+    height: 30,
+    marginRight: 20,
+  },
   inline: {
     display: "flex",
     flexDirection: "column",
@@ -51,30 +57,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function User(props) {
-  console.log(props.result);
-
-  // const checkFollowing = () => {
-
-  //   let found = false;
-  //   for (let i = 0; i < firnds.length; i++) {
-  //     if (friends[i].email == "Magenic") {
-  //       found = true;
-  //       break;
-  //     }
-  //   }
-  // };
-
-  const { result } = props;
+  const { result, emailArray, userData, setEmailArray } = props;
   const classes = useStyles();
   const [btnColor, setBtnColor] = useState("info");
-  const [currentFollow, setCurrentFollow] = useState("info");
+  // const [emailArray, setEmailArray] = useState([]);
+  // const [userData, setUserData] = useState({});
+
+  // useEffect(() => {
+  //   const ref = db.collection("users").doc(auth.currentUser.uid);
+  //   let collection = ref
+  //     .get()
+  //     .then((doc) => {
+  //       const newArray = [...doc.data().friends];
+  //       setUserData({ ...doc.data() });
+  //       const result = [];
+  //       newArray.forEach((obj) => {
+  //         result.push(obj.email);
+  //       });
+  //       setEmailArray(result);
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error getting document:", error);
+  //     });
+  // }, []);
+  // log("emailArray", emailArray);
 
   const handleFollowClick = (obj) => {
-    setCurrentFollow(obj);
-    // console.log(obj);
-    setBtnColor("primary");
     const friendName = `${obj.firstName} ${obj.lastName}`;
     const friendEmail = obj.email;
+
     const user = firebase.auth().currentUser;
     if (user) {
       db.collection("users")
@@ -90,13 +101,23 @@ function User(props) {
                 }),
               });
           });
+        })
+        .then(async () => {
+          const ref = db.collection("users").doc(user.uid);
+          const collection = await ref.get();
+          const newArray = [...collection.data().friends];
+          const result = [];
+          newArray.forEach((obj) => {
+            result.push(obj.email);
+          });
+          setEmailArray(result);
+        })
+        .catch((err) => {
+          log(err.message);
         });
-    } else {
-      alert("user not found");
     }
   };
-  const userData = useCurrentUserData();
-  const s = useAllUsersData();
+
   return (
     <div className={classes.root}>
       {result.length
@@ -142,13 +163,19 @@ function User(props) {
                       />
                     </ListItem>
                     <Button
-                      disabled={obj.email === userData.email}
                       onClick={() => handleFollowClick(obj)}
-                      className={classes.button}
+                      className={
+                        obj.email !== userData.email
+                          ? classes.button
+                          : classes.buttonDisplayNone
+                      }
                       variant="contained"
-                      // color={obj.email === currentFollow.email ? "primary" : ""}
+                      color={
+                        emailArray.includes(obj.email) ? "primary" : "info"
+                      }
+                      // disabled={emailArray.includes(obj.email)}
                     >
-                      Follow
+                      {emailArray.includes(obj.email) ? "Following" : "Follow"}
                     </Button>
                   </List>
                 </Card>

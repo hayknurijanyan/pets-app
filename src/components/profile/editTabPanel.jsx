@@ -55,8 +55,8 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 200,
   },
   tab: {
-    backgroundColor: "#009688",
-    color: "white",
+    // backgroundColor: "#4caf50",
+    // color: "white",
   },
   fab: {
     position: "absolute",
@@ -70,9 +70,9 @@ const useStyles = makeStyles((theme) => ({
   },
   fabGreen: {
     color: theme.palette.common.white,
-    backgroundColor: green[500],
+    // backgroundColor: green[500],
     "&:hover": {
-      backgroundColor: green[600],
+      // backgroundColor: green[600],
     },
   },
 }));
@@ -118,13 +118,20 @@ export default function EditTabPanel(props) {
         <Tabs
           value={value}
           onChange={handleChange}
+          color="primary"
           indicatorColor="secondary"
           textColor="secondary"
           variant="fullWidth"
           aria-label="action tabs example"
         >
-          <Tab label="Your info" {...a11yProps(0)} className={classes.tab} />
           <Tab
+            color="primary"
+            label="Your info"
+            {...a11yProps(0)}
+            className={classes.tab}
+          />
+          <Tab
+            color="primary"
             label="Your pets info"
             {...a11yProps(1)}
             className={classes.tab}
