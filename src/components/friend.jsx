@@ -19,6 +19,7 @@ import {
   CardContent,
 } from "@material-ui/core";
 import Pet from "./pet.jsx";
+import useCurrentUserData from "./customHooks/useCurrentUserData.jsx";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -26,14 +27,17 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    width: 180,
   },
 
   main: {
     display: "flex",
-    flexWrap: "wrap",
-    marginTop: 10,
-    minWidth: 400,
-    marginLeft: 20,
+    flexDirection: "row",
+    // flexWrap: "wrap",
+    marginTop: 20,
+    width: "20 rem",
+    maxHeight: 150,
+    marginLeft: 50,
     justifyContent: "flex-start",
   },
   button: {
@@ -43,7 +47,8 @@ const useStyles = makeStyles((theme) => ({
   buttonArea: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "right",
+    justifyContent: "flex-start",
+    width: "2 rem",
   },
 }));
 
@@ -70,10 +75,7 @@ function Friend(props) {
                     variant="body2"
                     className={classes.inline}
                     color="secondary"
-                  >
-                    @dog
-                  </Typography>
-                  {" — Yerevan"}
+                  ></Typography>
                 </React.Fragment>
               }
             />

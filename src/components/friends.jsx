@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
 import firebase from "firebase";
 import { Card, Typography, Toolbar } from "@material-ui/core";
+import Loader from "./loader.jsx";
 
 let log = console.log;
 
@@ -39,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 function Friends() {
   const [friendList, setFriendList] = useState([]);
   let friendsCount = friendList.length;
+
   const classes = useStyles();
 
   useEffect(() => {
@@ -89,6 +91,7 @@ function Friends() {
 
   const isLogged = useSelector((state) => state.isLogged);
   const dispatch = useDispatch();
+
   if (friendsCount === 0) {
     return (
       <div className={classes.typography}>

@@ -12,6 +12,7 @@ import ImageAvatar from "./avatar";
 import EditPopover from "../newsfeed/editpopup";
 import Friend from "../friend";
 import Friends from "../friends";
+import XalxiProfile from "./xalxiProfile/xalxiProfile";
 
 const useStyles = makeStyles({
   root: {
