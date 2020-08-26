@@ -16,6 +16,7 @@ import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Link } from "react-router-dom";
 import firebase from "firebase";
+import { MenuIconButton } from "./menuIcon";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,34 +61,29 @@ function Navbar() {
             <PetsOutlinedIcon />
           </div>
           {user && (
-            <div className={classes.icons}>
-              <IconButton color="inherit" component={Link} to="newsfeed">
-                <ListAltIcon />
-              </IconButton>
-              <IconButton color="inherit" component={Link} to="friends">
-                <GroupIcon />
-              </IconButton>
-              <IconButton color="inherit" component={Link} to="petfinder">
-                <PetsOutlinedIcon />
-              </IconButton>
-              <IconButton color="inherit" component={Link} to="users">
-                <AccountBoxIcon />
-              </IconButton>
-              <IconButton color="inherit" component={Link} to="services">
-                <BusinessCenterIcon />
-              </IconButton>
-            </div>
+            <>
+              <div className={classes.icons}>
+                <IconButton color="inherit" component={Link} to="newsfeed">
+                  <ListAltIcon />
+                </IconButton>
+                <IconButton color="inherit" component={Link} to="friends">
+                  <GroupIcon />
+                </IconButton>
+                <IconButton color="inherit" component={Link} to="petfinder">
+                  <PetsOutlinedIcon />
+                </IconButton>
+                <IconButton color="inherit" component={Link} to="users">
+                  <AccountBoxIcon />
+                </IconButton>
+                <IconButton color="inherit" component={Link} to="services">
+                  <BusinessCenterIcon />
+                </IconButton>
+              </div>
+              <div>
+                <MenuIconButton />
+              </div>
+            </>
           )}
-          <div>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
-          </div>
         </Toolbar>
       </AppBar>
     </div>

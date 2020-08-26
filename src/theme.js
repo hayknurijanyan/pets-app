@@ -19,4 +19,16 @@ const theme = createMuiTheme({
   },
 });
 
+const theme2 = createMuiTheme({
+  palette: {
+    primary: {
+      main: deepPurple[500],
+      contrastText: grey[50],
+    },
+    secondary: {
+      main: pink[400],
+    },
+  },
+});
+
 export default theme;

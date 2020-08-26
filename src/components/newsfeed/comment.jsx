@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { CardContent, Typography } from "@material-ui/core";
 import EditComment from "./editcomment";
 import ImageAvatar from "../profile/avatar";
+import { Avatar } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   comment: {
@@ -16,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
   name: { marginLeft: 2, marginBottom: 5 },
   avatar: {
     display: "flex",
+    alignItems: "center",
+    marginRight: 2,
   },
   commentText: {
     display: "flex",
@@ -32,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 50,
   },
   main: { display: "flex" },
+  large: {
+    // width: theme.spacing(7),
+    // height: theme.spacing(7),
+  },
 }));
 
 export default function Comment(props) {
@@ -46,7 +54,13 @@ export default function Comment(props) {
     <div>
       <div className={classes.comment}>
         <div className={classes.avatar}>
-          <ImageAvatar />
+          <Avatar
+            component={Link}
+            to="/profile"
+            // alt="Albert Einstein"
+            src={props.userAvatar}
+            className={classes.large}
+          />
         </div>
         <div>
           <CardContent className={classes.commentLine}>
