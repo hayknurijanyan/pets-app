@@ -5,6 +5,8 @@ import { db, storage } from "../../firebase";
 import firebase from "firebase";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import uniqid from "uniqid";
+
 let log = console.log;
 
 function Alert(props) {
@@ -85,6 +87,7 @@ function Newsfeed() {
     const name = userData.firstName;
     const surname = userData.lastName;
     const fullname = `${name} ${surname}`;
+    const myAvatar = userData.avatar;
 
     let today = new Date();
     let hours = today.getHours();
@@ -100,6 +103,8 @@ function Newsfeed() {
       setPostText(false);
     } else {
       postsArray.unshift({
+        postLikes: [],
+        userAvatar: myAvatar,
         userID: currentUserId,
         id: newId,
         date: dateTime,
@@ -119,6 +124,8 @@ function Newsfeed() {
       const user = firebase.auth().currentUser;
       if (user) {
         db.collection("posts").add({
+          postLikes: [],
+          userAvatar: myAvatar,
           postImg: fileUrl,
           userID: user.uid,
           id: newId,
@@ -155,12 +162,16 @@ function Newsfeed() {
     const name = userData.firstName;
     const surname = userData.lastName;
     const fullname = `${name} ${surname}`;
+    const myAvatar = userData.avatar;
+    const commentID = uniqid();
     // console.log("--------", commentValue.content);
     if (commentValue) {
       el.postComments.unshift({
         content: commentValue,
         userID: currentUserId,
         name: fullname,
+        userAvatar: myAvatar,
+        commentID,
       });
       let newComment = [el.postComments];
       setPostComments(newComment);
@@ -178,6 +189,8 @@ function Newsfeed() {
                   content: commentValue,
                   userID: currentUserId,
                   name: fullname,
+                  userAvatar: myAvatar,
+                  commentID,
                 }),
               });
           });
@@ -216,33 +229,38 @@ function Newsfeed() {
     setFileUrl("");
   };
 
-  const handleCommentDelete = (comments) => {
-    console.log("comment delete button clicked");
+  const handleCommentDelete = (id, comments, el, postId) => {
+    let newPost = [...posts];
 
-    // for (let i = 0; i <= comments.length; i++) {
-    //   if (comments[i].userID === posts.postComments.userID) {
-    //     posts.postComments.filter((el) => el.userID !== comments[i].userID);
-    //   }
-    //   console.log(posts.postComments);
-    // }
+    for (let i = 0; i < newPost.length; i++) {
+      if (newPost[i].id === postId) {
+        let newComments = comments.filter((el) => el.commentID !== id);
+        let removeComment = comments.filter((el) => el.commentID === id);
+        newPost[i].postComments = newComments;
 
-    // let commentsArray = [...comments];
-    // commentsArray = posts.postComments.filter(
-    //   (e) => e.content !== comments.content
-    // );
-    // setPosts(commentsArray);
-    // let postsDB = db.collection("posts").where("id", "==", id);
-    // postsDB
-    //   .get()
-    //   .then(function (querySnapshot) {
-    //     querySnapshot.forEach(function (doc) {
-    //       doc.ref.delete();
-    //     });
-    //   })
-    //   .catch(function (error) {
-    //     // The document probably doesn't exist.
-    //     console.error("Error deleting document: ", error);
-    //   });
+        db.collection("posts")
+          .where("id", "==", el.id)
+          .get()
+          .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+              db.collection("posts")
+                .doc(doc.id)
+                .update({
+                  postComments: firebase.firestore.FieldValue.arrayRemove({
+                    content: removeComment[0].content,
+                    userID: removeComment[0].userID,
+                    name: removeComment[0].name,
+                    userAvatar: removeComment[0].userAvatar,
+                    commentID: removeComment[0].commentID,
+                  }),
+                });
+            });
+          });
+      } else {
+        console.log("comment not found");
+      }
+      setPosts(newPost);
+    }
   };
 
   const handleSaveEdit = (el) => {
@@ -266,6 +284,33 @@ function Newsfeed() {
   };
 
   const handleLike = (el) => {
+    // if (!el.liked) {
+    //   el.liked = true;
+    //   el.postLikes.unshift({
+    //     userID: currentUserId,
+    //   });
+    //   let postsArray = [...posts];
+    //   setPosts(postsArray);
+    //   db.collection("posts")
+    //     .where("id", "==", el.id)
+    //     .get()
+    //     .then(function (querySnapshot) {
+    //       querySnapshot.forEach(function (doc) {
+    //         db.collection("posts")
+    //           .doc(doc.id)
+    //           .update({
+    //             postLikes: firebase.firestore.FieldValue.arrayUnion({
+    //               userID: currentUserId,
+    //             }),
+    //           });
+    //       });
+    //     });
+    // } else {
+    //   el.liked = false;
+    //   let postsArray = [...posts];
+    //   setPosts(postsArray);
+    // }
+    //------------------------
     if (el.liked) {
       el.likes -= 1;
       el.liked = false;
@@ -306,6 +351,7 @@ function Newsfeed() {
           key={el.id}
           id={el.userID}
           currentUserId={currentUserId}
+          userAvatar={el.userAvatar}
           name={el.name}
           value={el.content}
           onDelete={() => handleDelete(el.id)}
@@ -322,7 +368,9 @@ function Newsfeed() {
           addComment={() => handleCommentSubmit(el)}
           onCommentChange={handleCommentChange}
           commentValue={commentValue}
-          onCommentDelete={() => handleCommentDelete(el.postComments)}
+          onCommentDelete={(commentID) =>
+            handleCommentDelete(commentID, el.postComments, el, el.id)
+          }
         />
       ))}
     </div>

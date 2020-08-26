@@ -13,6 +13,7 @@ import ColorLensIcon from "@material-ui/icons/ColorLens";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import firebase from "firebase";
 import { Link } from "react-router-dom";
+import MenuIcon from "@material-ui/icons/Menu";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function AccountIconButton(props) {
+export function MenuIconButton(props) {
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -55,19 +56,19 @@ export function AccountIconButton(props) {
       .signOut()
       // .then(() => alert("logout succsess"))
       .catch((e) => e.message);
-    // window.location.reload(false);
+    window.location.reload(false);
   };
 
   return (
     <div>
       <IconButton
-        aria-label="account of current user"
         aria-controls="menu-appbar"
         aria-haspopup="true"
         onClick={handleMenu}
         color="inherit"
       >
-        <AccountCircleIcon variant="outlined" fontSize="medium" />
+        <MenuIcon />
+        {/* <Menu variant="outlined" fontSize="medium" /> */}
       </IconButton>
       <Menu
         id="menu-appbar"
@@ -101,100 +102,6 @@ export function AccountIconButton(props) {
           <ExitToAppIcon color="secondary" />
           <Typography className={classes.text}>Log out</Typography>
         </MenuItem>
-      </Menu>
-    </div>
-  );
-}
-
-export function EmailIconButton(props) {
-  const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <div>
-      <IconButton
-        aria-label="account of current user"
-        aria-controls="menu-appbar"
-        aria-haspopup="true"
-        onClick={handleMenu}
-        color="inherit"
-      >
-        <EmailIcon variant="outlined" fontSize="medium" />
-      </IconButton>
-      <Menu
-        id="menu-appbar"
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        open={open}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>Inbox</MenuItem>
-        <MenuItem onClick={handleClose}>Send Message</MenuItem>
-      </Menu>
-    </div>
-  );
-}
-
-export function NotificationIconButton(props) {
-  const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <div>
-      <IconButton
-        aria-label="account of current user"
-        aria-controls="menu-appbar"
-        aria-haspopup="true"
-        onClick={handleMenu}
-        color="inherit"
-      >
-        <NotificationsIcon variant="outlined" fontSize="medium" />
-      </IconButton>
-      <Menu
-        id="menu-appbar"
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        open={open}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>Show All</MenuItem>
-        <MenuItem onClick={handleClose}>Clear All</MenuItem>
       </Menu>
     </div>
   );

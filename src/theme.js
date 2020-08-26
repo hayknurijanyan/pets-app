@@ -5,6 +5,7 @@ import grey from "@material-ui/core/colors/grey";
 import pink from "@material-ui/core/colors/pink";
 import red from "@material-ui/core/colors/red";
 import teal from "@material-ui/core/colors/teal";
+import deepPurple from "@material-ui/core/colors/deepPurple";
 
 const theme = createMuiTheme({
   palette: {
@@ -14,6 +15,18 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: red[400],
+    },
+  },
+});
+
+const theme2 = createMuiTheme({
+  palette: {
+    primary: {
+      main: deepPurple[500],
+      contrastText: grey[50],
+    },
+    secondary: {
+      main: pink[400],
     },
   },
 });

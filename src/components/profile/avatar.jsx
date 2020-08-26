@@ -42,7 +42,7 @@ export default function ImageAvatar(props) {
       <Avatar
         component={Link}
         to="/profile"
-        alt="Albert Einstein"
+        // alt="Albert Einstein"
         src={props.imageUrl}
         className={classes.large}
       />

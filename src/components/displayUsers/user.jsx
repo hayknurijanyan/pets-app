@@ -85,6 +85,7 @@ function User(props) {
   const handleFollowClick = (obj) => {
     const friendName = `${obj.firstName} ${obj.lastName}`;
     const friendEmail = obj.email;
+
     const user = firebase.auth().currentUser;
     if (user) {
       db.collection("users")
@@ -174,7 +175,7 @@ function User(props) {
                       }
                       // disabled={emailArray.includes(obj.email)}
                     >
-                      Follow
+                      {emailArray.includes(obj.email) ? "Following" : "Follow"}
                     </Button>
                   </List>
                 </Card>
