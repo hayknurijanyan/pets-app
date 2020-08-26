@@ -127,7 +127,7 @@ export default function Post(props) {
               to="/profile/"
               aria-label="recipe"
               className={classes.avatar}
-              // imageUrl={avatarUrl}
+              imageUrl={props.avatar}
             />
           }
           action={
