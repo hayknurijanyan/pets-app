@@ -74,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SidebarLeft() {
+  let userId = "asd212323434khsdbf";
   const [avatarUrl, setAvatarUrl] = useState("");
   const classes = useStyles();
   const handleLogout = () => {
@@ -188,6 +189,17 @@ export default function SidebarLeft() {
               <BusinessCenterIcon />
               <Typography className={classes.listText} variant="body1">
                 Services
+              </Typography>
+            </ListItem>
+            <ListItem
+              className={classes.listItem}
+              button
+              component={Link}
+              to={`random/${userId}`}
+            >
+              <BusinessCenterIcon />
+              <Typography className={classes.listText} variant="body1">
+                Random
               </Typography>
             </ListItem>
             {/* )

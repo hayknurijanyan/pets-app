@@ -8,6 +8,7 @@ import {
   Switch,
   Route,
   Redirect,
+  useRouteMatch,
 } from "react-router-dom";
 import Profile from "./components/profile/profile";
 import Friends from "./components/friends";
@@ -28,6 +29,7 @@ import { Hidden } from "@material-ui/core";
 import ChatButton from "./components/chat/chatButton";
 import ChatBox from "./components/chat/chatBox";
 import FriendsCard from "./components/profile/friendscard";
+import XalxiProfile from "./components/profile/xalxiProfile/xalxiAbout";
 
 let log = console.log;
 
@@ -47,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
+  // let match = useRouteMatch();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -91,12 +94,13 @@ function App() {
             <Route path="/friends" component={Friends} />
             <Route path="/users" component={Users} />
             <Route path="/newsfeed" component={Newsfeed} />
-            <Route path="/profile" component={Profile} />
+            <Route path="/profile/" component={Profile} />
             <Route path="/services" component={Services} />
             <Route path="/petfinder" component={Petfinder} />
             <Route path="/notfound" component={NotFound} />
+            <Route path="random/:id" component={NotFound} />
             {/* <Route path="/logout" component={Logout} /> */}
-            <Route path="/" component={Newsfeed} />
+            <Route exact path="/" component={Newsfeed} />
             {/* <Redirect to='notfound'/> */}
           </Switch>
         </main>
@@ -107,6 +111,10 @@ function App() {
       </div>
     </Router>
   );
+  //  isUser.user === undefined ? (
+  //   <Loader />
+  // ) : (
+  //   log("asd")
 }
 
 export default App;
