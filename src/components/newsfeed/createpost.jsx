@@ -84,6 +84,7 @@ function CreatePost(props) {
   const [fileUrl, setFileUrl] = useState("");
   const [users, setUsers] = useState([]);
   const [avatarUrl, setAvatarUrl] = useState("");
+
   useEffect(() => {
     async function fetchMyData() {
       const user = firebase.auth().currentUser;
