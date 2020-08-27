@@ -19,6 +19,7 @@ import {
   CardContent,
 } from "@material-ui/core";
 import Pet from "./pet.jsx";
+import useCurrentUserData from "./customHooks/useCurrentUserData.jsx";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    width: 450,
   },
 
   main: {
@@ -33,9 +35,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     // flexWrap: "wrap",
     marginTop: 10,
-    maxWidth: 350,
+    width: "100%",
     maxHeight: 150,
-    marginLeft: 20,
+    marginLeft: 30,
+    marginRight: 30,
     justifyContent: "flex-start",
   },
   button: {
@@ -45,7 +48,8 @@ const useStyles = makeStyles((theme) => ({
   buttonArea: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "right",
+    justifyContent: "flex-end",
+    width: "2 rem",
   },
 }));
 
@@ -58,10 +62,7 @@ function Friend(props) {
         <List className={classes.container}>
           <ListItem>
             <ListItemAvatar>
-              <Avatar
-                alt="Remy Sharp"
-                src="https://www.zone4homes.com/themes/fo/img/avatar.png"
-              />
+              <Avatar alt="Remy Sharp" src={props.avatar} />
             </ListItemAvatar>
             <ListItemText
               primary={props.name}
@@ -72,10 +73,7 @@ function Friend(props) {
                     variant="body2"
                     className={classes.inline}
                     color="secondary"
-                  >
-                    @dog
-                  </Typography>
-                  {`  Yerevan  `}
+                  ></Typography>
                 </React.Fragment>
               }
             />

@@ -82,6 +82,7 @@ export default function SidebarLeft() {
       .signOut()
       // .then(() => alert("logout succsess"))
       .catch((e) => e.message);
+    // window.location.reload(false);
   };
 
   useEffect(() => {

@@ -85,6 +85,7 @@ function User(props) {
   const handleFollowClick = (obj) => {
     const friendName = `${obj.firstName} ${obj.lastName}`;
     const friendEmail = obj.email;
+    const friendAvatar = obj.avatar;
 
     const user = firebase.auth().currentUser;
     if (user) {
@@ -98,6 +99,7 @@ function User(props) {
                 friends: firebase.firestore.FieldValue.arrayUnion({
                   name: friendName,
                   email: friendEmail,
+                  avatar: friendAvatar,
                 }),
               });
           });

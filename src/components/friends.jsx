@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
 import firebase from "firebase";
 import { Card, Typography, Toolbar } from "@material-ui/core";
+import Loader from "./loader.jsx";
 
 let log = console.log;
 
@@ -17,7 +18,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
   },
   root: {
-    minHeight: 650,
+    minHeight: 600,
+    height: "100%",
+    paddingBottom: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   header: {
     margin: 30,
@@ -32,13 +37,15 @@ const useStyles = makeStyles((theme) => ({
   main: {
     display: "flex",
     flexWrap: "wrap",
-    marginTop: 80,
+    marginTop: 10,
   },
 }));
 
 function Friends() {
   const [friendList, setFriendList] = useState([]);
+  const [userData, setUserData] = useState();
   let friendsCount = friendList.length;
+
   const classes = useStyles();
 
   useEffect(() => {
@@ -48,6 +55,7 @@ function Friends() {
         const dbUserData = (
           await db.collection("users").doc(user.uid).get()
         ).data();
+        setUserData(dbUserData);
         let friendsArray = [...dbUserData.friends];
         setFriendList(friendsArray);
       } else {
@@ -89,6 +97,14 @@ function Friends() {
 
   const isLogged = useSelector((state) => state.isLogged);
   const dispatch = useDispatch();
+  if (userData === undefined) {
+    return (
+      <>
+        <Loader />
+      </>
+    );
+  }
+
   if (friendsCount === 0) {
     return (
       <div className={classes.typography}>
@@ -112,6 +128,7 @@ function Friends() {
                 key={el.email}
                 name={el.name}
                 email={el.email}
+                avatar={el.avatar}
                 onUnfollow={() => handleUnfollow(el, el.email)}
               />
             ))}

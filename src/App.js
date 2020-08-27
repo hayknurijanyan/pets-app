@@ -108,10 +108,6 @@ function App() {
       </div>
     </Router>
   );
-  //  isUser.user === undefined ? (
-  //   <Loader />
-  // ) : (
-  //   log("asd")
 }
 
 export default App;

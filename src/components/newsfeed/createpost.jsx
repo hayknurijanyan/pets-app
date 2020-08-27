@@ -16,6 +16,7 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import MuiAlert from "@material-ui/lab/Alert";
 import { db } from "../../firebase";
 import { auth } from "firebase";
+import firebase from "firebase";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -83,14 +84,21 @@ function CreatePost(props) {
   const [fileUrl, setFileUrl] = useState("");
   const [users, setUsers] = useState([]);
   const [avatarUrl, setAvatarUrl] = useState("");
+
   useEffect(() => {
-    const fetchData = async function () {
-      const ref = db.collection("users").doc(auth().currentUser.uid);
-      const collection = await ref.get();
-      const data = collection.data();
-      setAvatarUrl(data.avatar);
-    };
-    fetchData();
+    async function fetchMyData() {
+      const user = firebase.auth().currentUser;
+      if (user) {
+        const dbUserData = (
+          await db.collection("users").doc(user.uid).get()
+        ).data();
+
+        setAvatarUrl(dbUserData.avatar);
+      } else {
+        console.log("user not found");
+      }
+    }
+    fetchMyData();
   });
 
   const handleClose = (event, reason) => {

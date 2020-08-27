@@ -20,7 +20,7 @@ import AvatarChoose from "./avatarChoose";
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: "auto",
-    width: "50rem",
+    width: "98%",
     marginTop: 10,
     borderRadius: 20,
   },
