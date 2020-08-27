@@ -11,12 +11,13 @@ import {
 } from "@material-ui/core";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { Avatar } from "@material-ui/core";
 import ChatBox from "./chat/chatBox";
 import { useState } from "react";
 import firebase from "firebase";
 import { db } from "../firebase.js";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 260;
 
@@ -81,7 +82,14 @@ export default function SidebarRight() {
         {friendList.map((el) => (
           <ListItem button key={el.email}>
             <ListItemIcon>
-              <AccountCircleIcon />
+              <Avatar
+                component={Link}
+                to="/profile/"
+                aria-label="recipe"
+                // className={classes.large}
+                src={el.avatar}
+                // imageUrl={avatarUrl}
+              />
             </ListItemIcon>
             <ListItemText primary={el.name} />
           </ListItem>

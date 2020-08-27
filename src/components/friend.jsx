@@ -62,10 +62,7 @@ function Friend(props) {
         <List className={classes.container}>
           <ListItem>
             <ListItemAvatar>
-              <Avatar
-                alt="Remy Sharp"
-                src="https://www.zone4homes.com/themes/fo/img/avatar.png"
-              />
+              <Avatar alt="Remy Sharp" src={props.avatar} />
             </ListItemAvatar>
             <ListItemText
               primary={props.name}

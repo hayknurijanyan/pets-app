@@ -55,7 +55,7 @@ function Friends() {
         const dbUserData = (
           await db.collection("users").doc(user.uid).get()
         ).data();
-
+        setUserData(dbUserData);
         let friendsArray = [...dbUserData.friends];
         setFriendList(friendsArray);
       } else {
@@ -97,6 +97,13 @@ function Friends() {
 
   const isLogged = useSelector((state) => state.isLogged);
   const dispatch = useDispatch();
+  if (userData === undefined) {
+    return (
+      <>
+        <Loader />
+      </>
+    );
+  }
 
   if (friendsCount === 0) {
     return (
@@ -121,6 +128,7 @@ function Friends() {
                 key={el.email}
                 name={el.name}
                 email={el.email}
+                avatar={el.avatar}
                 onUnfollow={() => handleUnfollow(el, el.email)}
               />
             ))}
