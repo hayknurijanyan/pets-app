@@ -15,11 +15,6 @@ import XalxiProfile from "./xalxiProfile/xalxiProfile";
 
 let log = console.log;
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column",
-  },
   card: {
     margin: 10,
     width: "45 rem",
@@ -41,12 +36,11 @@ const Profile = () => {
   }
 
   const isUser = useSelector((state) => state);
-  log("user redux", isUser);
-  log("state", isUser);
+  log("user redux", isUser.themeSelect);
 
   return (
     <Router>
-      <div className={classes.root}>
+      <div>
         <Toolbar />
         <Account />
         <Card className={classes.card}></Card>
