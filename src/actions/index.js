@@ -1,34 +1,6 @@
 import { AUTH_STATE_CHANGE } from "../reducers/isUser";
 import { PERSIST_USER_DATA } from "../reducers/userData";
 
-//// theme select actions
-export const darkSelectActionOne = (theme) => {
-  return {
-    type: "DARK_SELECT_ONE",
-    payload: theme,
-  };
-};
-export const darkSelectActionTwo = (theme) => {
-  return {
-    type: "DARK_SELECT_TWO",
-    payload: theme,
-  };
-};
-
-export const themeSelectActionOne = (theme) => {
-  return {
-    type: "THEME_SELECT_ONE",
-    payload: theme,
-  };
-};
-
-export const themeSelectActionTwo = (theme) => {
-  return {
-    type: "THEME_SELECT_TWO",
-    payload: theme,
-  };
-};
-
 /// isUserAction
 
 export const isUserAction = (user) => {
