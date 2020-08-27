@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -13,15 +13,8 @@ import ColorLensIcon from "@material-ui/icons/ColorLens";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import firebase from "firebase";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { theme2, theme1, dark1, dark2 } from "../theme";
-import {
-  themeSelectActionOne,
-  themeSelectActionTwo,
-  darkSelectActionOne,
-  darkSelectActionTwo,
-} from "../actions";
-import storage from "local-storage-fallback";
+import ThemeContext from "../context/themeContext";
 import Brightness4RoundedIcon from "@material-ui/icons/Brightness4Rounded";
 let log = console.log;
 
@@ -44,11 +37,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function getInitialTheme() {
-  const savedTheme = storage.getItem("theme");
-  return savedTheme ? JSON.parse(savedTheme) : theme1;
-}
-
 export function AccountIconButton(props) {
   const classes = useStyles();
   const [auth, setAuth] = useState(true);
@@ -56,16 +44,11 @@ export function AccountIconButton(props) {
   const [anchorDark, setAnchorDark] = useState(null);
   const [themeState, setThemeState] = useState(true);
   const [themeDark, setThemeDark] = useState(true);
-  const [themeRedux, setThemeRedux] = useState(getInitialTheme);
+
   const open = Boolean(anchorEl);
-  const dispatch = useDispatch();
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
-  useEffect(() => {
-    storage.setItem("theme", JSON.stringify(themeRedux));
-  }, [themeRedux]);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -83,23 +66,24 @@ export function AccountIconButton(props) {
       .catch((e) => e.message);
     // window.location.reload(false);
   };
+  const setThemeContext = useContext(ThemeContext);
 
   const handleThemeChange = () => {
     if (themeState) {
-      dispatch(themeSelectActionTwo(theme2));
+      setThemeContext(theme2);
       setThemeState(!themeState);
     } else {
-      dispatch(themeSelectActionOne(themeRedux));
+      setThemeContext(theme1);
       setThemeState(!themeState);
     }
   };
 
   const handleDarkChange = () => {
     if (themeDark) {
-      dispatch(darkSelectActionTwo(dark2));
+      setThemeContext(dark1);
       setThemeDark(!themeDark);
     } else {
-      dispatch(darkSelectActionOne(dark1));
+      setThemeContext(dark2);
       setThemeDark(!themeDark);
     }
   };
