@@ -28,6 +28,7 @@ import { Hidden } from "@material-ui/core";
 import ChatButton from "./components/chat/chatButton";
 import ChatBox from "./components/chat/chatBox";
 import FriendsCard from "./components/profile/friendscard";
+import XalxiProfile from "./components/profile/xalxiProfile/xalxiProfile";
 
 let log = console.log;
 
@@ -91,7 +92,7 @@ function App() {
             <Route path="/friends" component={Friends} />
             <Route path="/users" component={Users} />
             <Route path="/newsfeed" component={Newsfeed} />
-            <Route path="/profile" component={Profile} />
+            <Route path="/profile" component={XalxiProfile} />
             <Route path="/services" component={Services} />
             <Route path="/petfinder" component={Petfinder} />
             <Route path="/notfound" component={NotFound} />

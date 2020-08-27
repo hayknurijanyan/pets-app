@@ -61,7 +61,8 @@ const useStyles = makeStyles((theme) => ({
   //   }
 }));
 
-export default function XalxiProfile(props) {
+export default function XalxiAbout(props) {
+  console.log(props.petInfo);
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);

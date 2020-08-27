@@ -75,6 +75,7 @@ const XalxiProfile = (props) => {
     name: "asd",
     petsGender: "asd",
   });
+  console.log(content, "aaaaaaaaaaaa");
   const petInfoHardcode = {
     name: "Jako",
     age: 5,
@@ -142,7 +143,10 @@ const XalxiProfile = (props) => {
   switch (content) {
     case "about":
       toRender = (
-        <XalxiAbout petInfo={petInfoHardcode} userInfo={userInfoHardcode} />
+        <XalxiAbout
+          petInfo={{ ...petInfoHardcode }}
+          userInfo={{ ...userInfoHardcode }}
+        />
       );
       break;
     case "photos":
