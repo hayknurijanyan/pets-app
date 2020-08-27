@@ -140,17 +140,17 @@ export function AccountIconButton(props) {
           <AccountCircleIcon />
           <Typography className={classes.text}>Account</Typography>
         </MenuItem>
-        <MenuItem fullWidth className={classes.menuItem} onClick={handleClose}>
+        <MenuItem
+          fullWidth
+          className={classes.menuItem}
+          onClick={handleThemeChange}
+        >
           <ColorLensIcon color="primary" />
-          <Typography onClick={handleThemeChange} className={classes.text}>
-            Theme
-          </Typography>
+          <Typography className={classes.text}>Theme</Typography>
         </MenuItem>
-        <MenuItem className={classes.menuItem} onClick={handleDarkClose}>
+        <MenuItem className={classes.menuItem} onClick={handleDarkChange}>
           <Brightness4RoundedIcon color="primary" />
-          <Typography onClick={handleDarkChange} className={classes.text}>
-            Dark Mode
-          </Typography>
+          <Typography className={classes.text}>Dark Mode</Typography>
         </MenuItem>
 
         <MenuItem className={classes.menuItem} onClick={handleLogout}>
