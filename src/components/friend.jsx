@@ -27,17 +27,18 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    width: 180,
+    width: 450,
   },
 
   main: {
     display: "flex",
     flexDirection: "row",
     // flexWrap: "wrap",
-    marginTop: 20,
-    width: "20 rem",
+    marginTop: 10,
+    width: "100%",
     maxHeight: 150,
-    marginLeft: 50,
+    marginLeft: 30,
+    marginRight: 30,
     justifyContent: "flex-start",
   },
   button: {
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   buttonArea: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "flex-end",
     width: "2 rem",
   },
 }));

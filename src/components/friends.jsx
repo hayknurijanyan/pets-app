@@ -18,7 +18,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
   },
   root: {
-    minHeight: 650,
+    minHeight: 600,
+    height: "100%",
+    paddingBottom: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   header: {
     margin: 30,
@@ -33,12 +37,13 @@ const useStyles = makeStyles((theme) => ({
   main: {
     display: "flex",
     flexWrap: "wrap",
-    marginTop: 80,
+    marginTop: 10,
   },
 }));
 
 function Friends() {
   const [friendList, setFriendList] = useState([]);
+  const [userData, setUserData] = useState();
   let friendsCount = friendList.length;
 
   const classes = useStyles();
@@ -50,6 +55,7 @@ function Friends() {
         const dbUserData = (
           await db.collection("users").doc(user.uid).get()
         ).data();
+
         let friendsArray = [...dbUserData.friends];
         setFriendList(friendsArray);
       } else {

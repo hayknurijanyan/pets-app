@@ -16,7 +16,6 @@ import XalxiProfile from "./xalxiProfile/xalxiProfile";
 let log = console.log;
 const useStyles = makeStyles((theme) => ({
   card: {
-    margin: 10,
     width: "45 rem",
     display: "none",
     flexWrap: "wrap",
