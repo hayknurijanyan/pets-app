@@ -18,7 +18,7 @@ import firebase from "firebase";
 import { db } from "../firebase.js";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Link } from "react-router-dom";
-
+import ChatContainer from "./chatSingle/chatContainer";
 const drawerWidth = 260;
 
 const useStyles = makeStyles((theme) => ({
@@ -117,6 +117,7 @@ export default function SidebarRight() {
         </ListItem>
       </List>
       <ChatBox />
+      <ChatContainer />
     </Drawer>
   );
 }

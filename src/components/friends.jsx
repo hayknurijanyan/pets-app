@@ -68,6 +68,8 @@ function Friends() {
   const handleUnfollow = (el, email) => {
     const friendEmail = el.email;
     const friendName = el.name;
+    const friendAvatar = el.avatar;
+    const friendUid = el.uid;
 
     let friendsArray = [...friendList];
     friendsArray = friendList.filter((e) => e.email !== email);
@@ -86,6 +88,8 @@ function Friends() {
                 friends: firebase.firestore.FieldValue.arrayRemove({
                   name: friendName,
                   email: friendEmail,
+                  avatar: friendAvatar,
+                  uid: friendUid,
                 }),
               });
           });
