@@ -73,6 +73,8 @@ export default function SingleChatMain(props) {
       setReadError(null);
       setLoadingChats(true);
       const chatArea = myRef.current;
+      const chats1 = [];
+
       try {
         firebase
           .database()
@@ -80,14 +82,13 @@ export default function SingleChatMain(props) {
           .child(`${user.uid}${friendUid}`) // draw aa=> mine bb => his  aabb
           .child("message")
           .on("value", (snapshot) => {
-            let chats = [];
             snapshot.forEach((snap) => {
-              chats.push(snap.val());
+              chats1.push(snap.val());
             });
-            chats.sort(function (a, b) {
+            chats1.sort(function (a, b) {
               return a.timestamp - b.timestamp;
             });
-            setChats(chats);
+            setChats(chats1);
             chatArea.scrollBy(0, chatArea.scrollHeight);
             setLoadingChats(false);
           });
@@ -97,14 +98,14 @@ export default function SingleChatMain(props) {
           .child(`${friendUid}${user.uid}`) // draw hisId myId
           .child("message")
           .on("value", (snapshot) => {
-            let chats = [];
+            const chats2 = [...chats1];
             snapshot.forEach((snap) => {
-              chats.push(snap.val());
+              chats2.push(snap.val());
             });
-            chats.sort(function (a, b) {
+            chats2.sort(function (a, b) {
               return a.timestamp - b.timestamp;
             });
-            setChats(chats);
+            setChats(chats2);
             chatArea.scrollBy(0, chatArea.scrollHeight);
             setLoadingChats(false);
           });
@@ -139,7 +140,6 @@ export default function SingleChatMain(props) {
   const onSend = async (e) => {
     e.preventDefault();
     setWriteError(null);
-    const user = firebase.auth().currentUser;
     const chatArea = myRef.current;
     try {
       await firebase
