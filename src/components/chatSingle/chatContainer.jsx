@@ -23,6 +23,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
+import { useSelector } from "react-redux";
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
@@ -49,11 +50,12 @@ export default function ChatContainer() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [friendList, setFriendList] = useState([]);
-
+  const [user, setUser] = useState({});
   useEffect(() => {
     async function fetchMyData() {
       const user = firebase.auth().currentUser;
       if (user) {
+        setUser(user);
         const dbUserData = (
           await db.collection("users").doc(user.uid).get()
         ).data();
@@ -106,22 +108,30 @@ export default function ChatContainer() {
           </Toolbar>
         </AppBar>
         <List>
-          {friendList.map((el) => (
-            <ListItem button key={el.email}>
-              <ListItemIcon>
-                <Avatar
-                  component={Link}
-                  to="/profile/"
-                  aria-label="recipe"
-                  // className={classes.large}
-                  src={el.avatar}
-                  // imageUrl={avatarUrl}
-                />
-              </ListItemIcon>
-              <ListItemText primary={el.name} />
-              <ChatBoxOpen email={el.email} fullName={el.name} uid={el.uid} />
-            </ListItem>
-          ))}
+          {friendList.map((el) =>
+            el.uid === user.uid ? null : (
+              <div>
+                <ListItem button key={el.email}>
+                  <ListItemIcon>
+                    <Avatar
+                      component={Link}
+                      to="/profile/"
+                      aria-label="recipe"
+                      // className={classes.large}
+                      src={el.avatar}
+                      // imageUrl={avatarUrl}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary={el.name} />
+                  <ChatBoxOpen
+                    email={el.email}
+                    fullName={el.name}
+                    uid={el.uid}
+                  />
+                </ListItem>
+              </div>
+            )
+          )}
         </List>
       </Dialog>
     </div>
