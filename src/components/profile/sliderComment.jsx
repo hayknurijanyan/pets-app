@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { CardContent, Typography } from "@material-ui/core";
-import EditComment from "./editcomment";
 import ImageAvatar from "../profile/avatar";
 import { Avatar } from "@material-ui/core";
 import { Link } from "react-router-dom";
@@ -14,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 50,
     minHeight: 40,
     overflow: "wrap",
+    marginLeft: 30,
   },
   name: { marginLeft: 2, marginBottom: 5 },
   avatar: {
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   commentLine: {
     backgroundColor: "#fafafa",
-    borderRadius: 30,
+    borderRadius: 20,
   },
   main: { display: "flex" },
   large: {
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Comment(props) {
+export default function SliderComment(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -69,16 +69,13 @@ export default function Comment(props) {
               color="TextSecondary"
               variant="body2"
             >
-              {props.name}
+              Name
             </Typography>
 
             <Typography className={classes.commentText} variant="body1">
-              {props.content}
+              This is Comment
             </Typography>
           </CardContent>
-        </div>
-        <div>
-          <EditComment onCommentDelete={props.onCommentDelete} />
         </div>
       </div>
     </div>
