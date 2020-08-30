@@ -25,7 +25,6 @@ import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import firebase, { auth } from "firebase";
 import { db } from "../firebase";
-import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 
 const drawerWidth = 260;
 
@@ -75,7 +74,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SidebarLeft() {
-  let userId = "asdasd";
   const [avatarUrl, setAvatarUrl] = useState("");
   const classes = useStyles();
   const handleLogout = () => {
@@ -190,17 +188,6 @@ export default function SidebarLeft() {
               <BusinessCenterIcon />
               <Typography className={classes.listText} variant="body1">
                 Services
-              </Typography>
-            </ListItem>
-            <ListItem
-              className={classes.listItem}
-              button
-              component={Link}
-              to={`/${userId}`}
-            >
-              <AssignmentIndIcon />
-              <Typography className={classes.listText} variant="body1">
-                Profile
               </Typography>
             </ListItem>
             {/* )
