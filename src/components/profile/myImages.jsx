@@ -70,7 +70,6 @@ export default function ImageGridList() {
   let toRender = null;
   let grid = null;
   const urls = useCurrentUserData().photos;
-
   function toSlide(index) {
     setImgIndex(index);
     setIsSlider("slider");
@@ -81,14 +80,15 @@ export default function ImageGridList() {
   function toDrop() {
     setIsSlider("drop");
   }
-  console.log(urls, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
   if (urls) {
     const cols = [2, 1, 1, 1, 1, 1, 2, 1, 1, 1];
     let col = 0;
     const tileData = urls.map((url) => {
       if (col === cols.length) col = 0;
       return {
-        img: url,
+        img: url.url,
+        likes: url.likes,
+        comments: url.comments,
         cols: cols[col++],
         title: "image",
       };
@@ -182,7 +182,9 @@ export default function ImageGridList() {
   } else if (isSlider === "slider") {
     const tileData = urls.map((url) => {
       return {
-        img: url,
+        img: url.url,
+        likes: url.likes,
+        comments: url.comments,
         cols: 1,
         title: "image",
       };
@@ -196,7 +198,7 @@ export default function ImageGridList() {
       />
     );
   } else if (isSlider === "drop") {
-    toRender = <ImageDrop />;
+    toRender = <ImageDrop backToList={backToList} />;
   }
 
   return (

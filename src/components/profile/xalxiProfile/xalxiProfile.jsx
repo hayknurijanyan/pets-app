@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Toolbar,
   Card,
@@ -23,6 +23,8 @@ import ImageAvatar from "../avatar";
 import Message from "../../message";
 import XalxiAbout from "./xalxiAbout";
 import XalxiImages from "./xalxiImages";
+import XalxiFriends from "./xalxiFriends";
+import { db } from "../../../firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,26 +58,9 @@ const useStyles = makeStyles((theme) => ({
 const XalxiProfile = (props) => {
   const classes = useStyles();
   const [content, setContent] = useState("about");
-  const [bio, setBio] = useState("asd");
-  const [fName, setFName] = useState("asd");
-  const [lName, setLName] = useState("asd");
-  const [profession, setProfession] = useState("asd");
-  const [location, setLocation] = useState({
-    city: "asd",
-    country: "asd",
-  });
-  const [gender, setGender] = useState("asd");
-  const [age, setAge] = useState("asd");
-  const [email, setEmail] = useState("asd");
-  const [number, setNumber] = useState("asd");
-  const [userPetInfo, setUserPetInfo] = useState({
-    age: "age",
-    behavior: "asd",
-    breed: "asd",
-    name: "asd",
-    petsGender: "asd",
-  });
-  console.log(content, "aaaaaaaaaaaa");
+  const [userData, setUserData] = useState({});
+  const userId = "6Qwqbg4PP9exnVSZRK6QuRLwy6d2";
+  let data = null;
   const petInfoHardcode = {
     name: "Jako",
     age: 5,
@@ -107,7 +92,6 @@ const XalxiProfile = (props) => {
     "https://coverfiles.alphacoders.com/927/92705.jpg",
   ];
   let toRender = null;
-  let data = null;
   function toFriends() {
     setContent("friends");
   }
@@ -117,28 +101,17 @@ const XalxiProfile = (props) => {
   function toAbout() {
     setContent("about");
   }
-  // useEffect(() => {
-  //   async function fetchMyData() {
-  //     const ref = db.collection("users").doc(props.userId);
-  //     const collection = await ref.get();
-  //     data = collection.data();
+  useEffect(() => {
+    async function fetchMyData() {
+      const ref = db.collection("users").doc(userId);
+      const collection = await ref.get();
+      data = { ...collection.data() };
 
-  //     setBio(data.bio);
-  //     setFName(data.firstName);
-  //     setLName(data.lastName);
-  //     setProfession(data.profession);
-  //     setLocation({
-  //       city: data.location.city,
-  //       country: data.location.country,
-  //     });
-  //     setGender(data.maleFemale);
-  //     setAge(data.age);
-  //     setEmail(data.email);
-  //     setNumber(data.contactNumber);
-  //     setUserPetInfo({ ...data.userPetInfo });
-  //   }
-  //   fetchMyData();
-  // }, []);
+      fetchMyData();
+    }
+  }, []);
+  setUserData(data);
+  console.log(userData, "cccccccccccccccccccccccccccc");
   const avatarUrl = "https://coverfiles.alphacoders.com/927/92705.jpg";
   switch (content) {
     case "about":
@@ -153,7 +126,7 @@ const XalxiProfile = (props) => {
       toRender = <XalxiImages images={imageHardcode} />;
       break;
     case "friends":
-      toRender = <div>friends</div>;
+      toRender = <XalxiFriends />;
       break;
   }
 
@@ -171,7 +144,7 @@ const XalxiProfile = (props) => {
             <ImageAvatar imageUrl={avatarUrl} />
 
             <Typography gutterBottom variant="h5" component="h2">
-              {fName}
+              {userData.firstName}
             </Typography>
           </div>
           <Grid container className={classes.buttons}>
