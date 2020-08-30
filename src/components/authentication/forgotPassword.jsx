@@ -70,53 +70,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignIn() {
+function ForgotPassword() {
   const classes = useStyles();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
-  const isUser = useSelector((state) => state.isUser); // ստեղ արդեն ունես isUser փոփոխականը որը կարաս get անես app ի ցանկացած մասից useSelector ով
-  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [successOpen, setSuccessOpen] = useState(false);
   const [error, setError] = useState("");
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        dispatch(isUserAction(user));
-        setUser(user);
-      } else {
-        log("redux not done");
-      }
-    });
-  }, []);
+  const [success, setSuccess] = useState("");
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-  };
 
-  const handleLogout = () => {
-    firebase
-      .auth()
-      .signOut()
-      // .then(() => alert("logout succsess"))
-      .catch((e) => e.message);
-  };
-
-  const handleSignIn = async () => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
+  const handleResetSend = async () => {
+    const auth = firebase.auth();
+    auth
+      .sendPasswordResetEmail(email)
       .then(() => {
-        const fetchUserData = async () => {
-          const user = firebase.auth().currentUser;
-          const ref = db.collection("users").doc(user.uid);
-          const collection = await ref.get();
-          dispatch(userDataAction({ ...collection.data() }));
-        };
-        fetchUserData();
+        setSuccess({ message: "The Email has been sent!" });
+        checkSuccess(success);
+        setSuccessOpen(true);
+        setEmail("");
       })
       .catch((err) => {
         setError(err);
@@ -130,6 +105,7 @@ function SignIn() {
       return;
     }
     setOpen(false);
+    setSuccessOpen(false);
   };
 
   const checkError = (err) => {
@@ -139,11 +115,25 @@ function SignIn() {
       </Alert>
     );
   };
+  const checkSuccess = (succ) => {
+    return (
+      <Alert onClose={handleClose} severity="success">
+        {succ.message}
+      </Alert>
+    );
+  };
 
   return (
     <Grid container component="main" className={classes.root}>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         {checkError(error)}
+      </Snackbar>
+      <Snackbar
+        open={successOpen}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        {checkSuccess(success)}
       </Snackbar>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
@@ -153,12 +143,13 @@ function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Forgot Password?
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
+              value={email}
               variant="outlined"
-              margin="normal" /// value // Mosh form
+              margin="normal"
               required
               fullWidth
               id="email"
@@ -168,41 +159,20 @@ function SignIn() {
               autoFocus
               onChange={handleEmail}
             />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="pass word"
-              label="password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={handlePassword}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
 
             <Button
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={handleSignIn}
+              onClick={handleResetSend}
             >
-              Sign In
+              Send request
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="ForgotPassword" variant="body2">
-                  {"Forgot password?"}
-                </Link>
-              </Grid>
+            <Grid container justify="flex-end">
               <Grid item>
-                <Link href="signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="signin" variant="body2">
+                  {"Back to Sign in"}
                 </Link>
               </Grid>
             </Grid>
@@ -216,4 +186,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default ForgotPassword;

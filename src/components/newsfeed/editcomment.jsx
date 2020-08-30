@@ -58,10 +58,10 @@ export default function EditComment(props) {
         onClose={handleClose}
       >
         <EditPost
-          postImg={props.postImg}
-          onEdit={props.onEdit}
-          handleClose={handleClose}
-          value={props.value}
+        // postImg={props.postImg}
+        // onEdit={props.onEdit}
+        // handleClose={handleClose}
+        // value={props.value}
         />
         <div onClick={handleClose}>
           <MenuItem onClick={props.onCommentDelete}>Delete</MenuItem>
