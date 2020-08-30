@@ -11,9 +11,13 @@ import { Typography, Button } from "@material-ui/core";
 import { db, auth } from "../../firebase";
 import Loader from "../loader";
 import EditTabPanel from "./editTabPanel";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 let log = console.log;
-
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
@@ -56,6 +60,8 @@ const useStyles = makeStyles({
 });
 
 export default function About() {
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
   const [edit, setEdit] = useState(true);
   const classes = { ...useStyles() };
   const [userData, setUserData] = useState({});
@@ -107,6 +113,20 @@ export default function About() {
   function editHandler() {
     setEdit(!edit);
   }
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const checkError = (err) => {
+    return (
+      <Alert onClose={handleClose} severity="success">
+        {err.message}
+      </Alert>
+    );
+  };
   function handlerSubmit() {
     db.collection("users")
       .doc(auth.currentUser.uid)
@@ -121,6 +141,11 @@ export default function About() {
         email,
         contactNumber: number,
         userPetInfo: { ...userPetInfo },
+      })
+      .then(() => {
+        setError({ message: "Changes saved" });
+        checkError(error);
+        setOpen(true);
       })
       .then(() => {
         const fetchUser = async () => {
@@ -349,7 +374,12 @@ export default function About() {
   }
 
   return userData !== null ? (
-    <div className={classes.bio}>{aboutList}</div>
+    <div className={classes.bio}>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        {checkError(error)}
+      </Snackbar>
+      {aboutList}
+    </div>
   ) : (
     <div className={classes.loader}>
       <Loader />

@@ -11,14 +11,14 @@ import Loader from "../loader";
 import { db } from "../../firebase";
 import { auth } from "firebase";
 
-export default function AvatarChoose(props) {
+export default function CoverImageChoose(props) {
   const [open, setOpen] = useState(props.form);
 
   const urls = useCurrentUserData().photos;
 
-  function setAvatarImage(url) {
+  function setCoverImage(url) {
     db.collection("users").doc(auth().currentUser.uid).update({
-      avatar: url,
+      coverPhoto: url,
     });
 
     props.backToAccount();
@@ -37,6 +37,7 @@ export default function AvatarChoose(props) {
     divStyle: {
       width: "100%",
     },
+
     content: {
       width: "100%",
       display: "flex",
@@ -54,7 +55,7 @@ export default function AvatarChoose(props) {
     return (
       <Dialog className={classes.divStyle} open={props.form.open}>
         <DialogTitle id="max-width-dialog-title">
-          Choose image for avatar
+          Choose image for cover photo
         </DialogTitle>
         <DialogContent className={classes.content}>
           <div>
@@ -70,7 +71,7 @@ export default function AvatarChoose(props) {
                   <ImageAvatar imageUrl={photo.url} />
                   <Button
                     color="primary"
-                    onClick={() => setAvatarImage(photo.url)}
+                    onClick={() => setCoverImage(photo.url)}
                   >
                     Select
                   </Button>

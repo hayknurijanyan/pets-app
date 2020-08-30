@@ -18,7 +18,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import NotFound from "./components/notfound";
 import Users from "./components/displayUsers/users";
 import firebase from "firebase";
-
 import { useDispatch, useSelector } from "react-redux";
 import { isUserAction, authStateChangeAction } from "./actions";
 import Loader from "./components/loader";
@@ -28,8 +27,8 @@ import SidebarLeft from "./components/sidebarleft";
 import { Hidden } from "@material-ui/core";
 import ChatButton from "./components/chat/chatButton";
 import ChatBox from "./components/chat/chatBox";
+import ForgotPassword from "./components/authentication/forgotPassword";
 import FriendsCard from "./components/profile/friendscard";
-import XalxiProfile from "./components/profile/xalxiProfile/xalxiAbout";
 
 let log = console.log;
 
@@ -57,14 +56,8 @@ function App() {
       dispatch(authStateChangeAction(user));
     });
   }, []);
-  // const user = firebase.auth().currentUser;
-  // if (user) {
-  //   log("currentuser", user);
-  // } else {
-  //   log("user not loged");
-  // }
+
   const user = useSelector((state) => state.user);
-  // log("user isUser state", isUser);
 
   const classes = useStyles();
 
@@ -78,6 +71,7 @@ function App() {
       <Switch>
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
+        <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/" component={SignIn} />
         {/* <Redirect to='notfound'/> */}
       </Switch>
@@ -111,10 +105,6 @@ function App() {
       </div>
     </Router>
   );
-  //  isUser.user === undefined ? (
-  //   <Loader />
-  // ) : (
-  //   log("asd")
 }
 
 export default App;

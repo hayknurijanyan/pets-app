@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Button } from "@material-ui/core";
+import { Button, Snackbar } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase, { storage, auth } from "firebase";
 import { getStoredState } from "redux-persist";
 import { db } from "../../firebase";
+import MuiAlert from "@material-ui/lab/Alert";
+
+let log = console.log;
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   deleteButton: {
@@ -19,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
 export default function ImageDrop(props) {
   const classes = useStyles();
   const [files, setFiles] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [success, setSuccess] = useState("");
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
@@ -34,6 +42,19 @@ export default function ImageDrop(props) {
       );
     },
   });
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+  const checkSuccessMessage = (suc) => {
+    return (
+      <Alert onClose={handleClose} severity="success">
+        {suc.message}
+      </Alert>
+    );
+  };
   function uploadHandler() {
     const user = firebase.auth().currentUser;
     if (user) {
@@ -41,7 +62,12 @@ export default function ImageDrop(props) {
         const referance = storage().ref();
         const uploadTask = referance.child(`images/${user.uid}/${file.name}`);
         await uploadTask.put(file);
-        const newUrl = await uploadTask.getDownloadURL();
+        const newImage = await uploadTask.getDownloadURL();
+        const newUrl = {
+          url: newImage,
+          likes: [],
+          comments: [],
+        };
         await db
           .collection("users")
           .doc(auth().currentUser.uid)
@@ -49,9 +75,12 @@ export default function ImageDrop(props) {
             photos: firebase.firestore.FieldValue.arrayUnion(newUrl),
           });
       });
+      setSuccess({ message: "images saved" });
+      checkSuccessMessage(success);
+      setOpen(true);
     }
     setFiles([]);
-    props.backToList();
+    const timeout = setTimeout(() => props.backToList(), 3000);
   }
   function handleDelete(url) {
     setFiles(files.filter((file) => file.preview !== url));
@@ -124,6 +153,9 @@ export default function ImageDrop(props) {
         minHeight: "150px",
       }}
     >
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        {checkSuccessMessage(success)}
+      </Snackbar>
       <div
         style={{
           marginTop: "20px",

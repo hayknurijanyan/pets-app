@@ -68,6 +68,10 @@ export default function SidebarRight() {
     fetchMyData();
   }, []);
 
+  const handleSingleChat = () => {
+    return <ChatContainer />;
+  };
+
   return (
     <Drawer
       className={classes.drawer}
@@ -105,7 +109,7 @@ export default function SidebarRight() {
       <List>
         <ListItem button>
           <ListItemIcon>
-            <MailIcon />
+            <MailIcon onClick={handleSingleChat} />
           </ListItemIcon>
           <ListItemText primary="Mail" />
         </ListItem>
