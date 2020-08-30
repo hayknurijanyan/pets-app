@@ -62,50 +62,41 @@ export default function SingleChatMain(props) {
   const [loadingChats, setLoadingChats] = useState(false);
   const [content, setContent] = useState("");
   const [user, setUser] = useState([]);
+  const [chatName, setChatName] = useState("");
 
   const myRef = React.createRef();
   const userData = useCurrentUserData();
 
   useEffect(() => {
+    let chatNameString;
+    const user = firebase.auth().currentUser;
+    user ? setUser(user) : log("user not found");
+    if (user.uid < friendUid) {
+      chatNameString = user.uid + friendUid;
+      setChatName(chatNameString);
+    } else {
+      chatNameString = friendUid + user.uid;
+      setChatName(chatNameString);
+    }
     const fetchData = async () => {
-      const user = firebase.auth().currentUser;
-      user ? setUser(user) : log("user not found");
       setReadError(null);
       setLoadingChats(true);
       const chatArea = myRef.current;
-      const chats1 = [];
-
       try {
         firebase
           .database()
           .ref("singleChat")
-          .child(`${user.uid}${friendUid}`) // draw aa=> mine bb => his  aabb
+          .child(chatNameString) // draw aa=> mine bb => his  aabb
           .child("message")
           .on("value", (snapshot) => {
+            let chat = [];
             snapshot.forEach((snap) => {
-              chats1.push(snap.val());
+              chat.push(snap.val());
             });
-            chats1.sort(function (a, b) {
+            chat.sort(function (a, b) {
               return a.timestamp - b.timestamp;
             });
-            setChats(chats1);
-            chatArea.scrollBy(0, chatArea.scrollHeight);
-            setLoadingChats(false);
-          });
-        firebase
-          .database()
-          .ref("singleChat")
-          .child(`${friendUid}${user.uid}`) // draw hisId myId
-          .child("message")
-          .on("value", (snapshot) => {
-            const chats2 = [...chats1];
-            snapshot.forEach((snap) => {
-              chats2.push(snap.val());
-            });
-            chats2.sort(function (a, b) {
-              return a.timestamp - b.timestamp;
-            });
-            setChats(chats2);
+            setChats(chat);
             chatArea.scrollBy(0, chatArea.scrollHeight);
             setLoadingChats(false);
           });
@@ -145,7 +136,7 @@ export default function SingleChatMain(props) {
       await firebase
         .database()
         .ref("singleChat")
-        .child(`${friendUid}${user.uid}`)
+        .child(chatName)
         .child("message")
         .push({
           content: content,

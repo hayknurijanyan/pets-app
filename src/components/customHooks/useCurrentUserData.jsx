@@ -18,7 +18,7 @@ function useCurrentUserData() {
     };
     fetchUserData();
   }, []);
-  console.log(userData, "hook");
+
   return userData;
 }
 
