@@ -19,6 +19,7 @@ import Adopter from "./adopter";
 import Trainer from "./trainer";
 import FoodDelivery from "./foodDelivery";
 import HomeCare from "./homecare";
+import ContactUs from "./contactUs";
 
 function Copyright() {
   return (
@@ -98,9 +99,7 @@ function Services() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
-                    Contact Us
-                  </Button>
+                  <ContactUs />
                 </Grid>
               </Grid>
             </div>

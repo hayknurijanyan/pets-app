@@ -284,32 +284,77 @@ function Newsfeed() {
   };
 
   const handleLike = (el) => {
-    // if (!el.liked) {
-    //   el.liked = true;
-    //   el.postLikes.unshift({
-    //     userID: currentUserId,
-    //   });
-    //   let postsArray = [...posts];
-    //   setPosts(postsArray);
-    //   db.collection("posts")
-    //     .where("id", "==", el.id)
-    //     .get()
-    //     .then(function (querySnapshot) {
-    //       querySnapshot.forEach(function (doc) {
-    //         db.collection("posts")
-    //           .doc(doc.id)
-    //           .update({
-    //             postLikes: firebase.firestore.FieldValue.arrayUnion({
-    //               userID: currentUserId,
-    //             }),
-    //           });
+    //   let postsArray = [];
+    //   console.log(el.postLikes.length);
+    //   if (el.postLikes.length === 0) {
+    //     db.collection("posts")
+    //       .where("id", "==", el.id)
+    //       .get()
+    //       .then(function (querySnapshot) {
+    //         querySnapshot.forEach(function (doc) {
+    //           db.collection("posts")
+    //             .doc(doc.id)
+    //             .update({
+    //               postLikes: firebase.firestore.FieldValue.arrayUnion({
+    //                 userID: currentUserId,
+    //               }),
+    //             });
+    //         });
     //       });
-    //     });
+    //     el.liked = true;
+    //     console.log("post liked 1st if", postsArray, el);
+    //   } else {
+    //     for (let i = 0; i < el.postLikes.length; i++) {
+    //       if (el.postLikes[i].userID === currentUserId) {
+    //         db.collection("posts")
+    //           .where("id", "==", el.id)
+    //           .get()
+    //           .then(function (querySnapshot) {
+    //             querySnapshot.forEach(function (doc) {
+    //               db.collection("posts")
+    //                 .doc(doc.id)
+    //                 .update({
+    //                   postLikes: firebase.firestore.FieldValue.arrayRemove({
+    //                     userID: currentUserId,
+    //                   }),
+    //                 });
+    //             });
+    //           });
+    //         el.liked = false;
+    //         console.log("post unliked 2nd else", el.postLikes);
+    //         break;
+    //         // }} else {
+    //         //   // let postsArray = [...posts];
+    //         //   // setPosts(postsArray);
+    //         //   db.collection("posts")
+    //         //     .where("id", "==", el.id)
+    //         //     .get()
+    //         //     .then(function (querySnapshot) {
+    //         //       querySnapshot.forEach(function (doc) {
+    //         //         db.collection("posts")
+    //         //           .doc(doc.id)
+    //         //           .update({
+    //         //             postLikes: firebase.firestore.FieldValue.arrayUnion({
+    //         //               userID: currentUserId,
+    //         //             }),
+    //         //           });
+    //         //       });
+    //         //     });
+    //         //   el.liked = true;
+    //         //   postsArray = [...posts];
+    //         //   setPosts(postsArray);
+    //         //   console.log("post liked 3rd else", el.postLikes);
+    //         // }
+    //       }
+    //     }
+    //   }
+    // };
+
     // } else {
     //   el.liked = false;
     //   let postsArray = [...posts];
     //   setPosts(postsArray);
-    // }
+    // }}
     //------------------------
     if (el.liked) {
       el.likes -= 1;
@@ -331,7 +376,6 @@ function Newsfeed() {
         });
       });
   };
-
   return (
     <div>
       {/* <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>

@@ -7,6 +7,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
+import Call from "./call";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -61,11 +62,11 @@ export default function FoodDelivery() {
           </Typography>
         </CardContent>
         <CardActions>
+          <Call />
           <Button size="small" color="primary">
-            Call
-          </Button>
-          <Button size="small" color="primary">
-            View
+            <Link href="https://www.petsense.com/collections/dog-food/Dry-Food">
+              View
+            </Link>
           </Button>
         </CardActions>
       </Card>
