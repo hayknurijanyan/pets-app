@@ -43,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Friends() {
   const [friendList, setFriendList] = useState([]);
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState({});
+
   let friendsCount = friendList.length;
 
   const classes = useStyles();
@@ -68,10 +69,11 @@ function Friends() {
   const handleUnfollow = (el, email) => {
     const friendEmail = el.email;
     const friendName = el.name;
+    const friendAvatar = el.avatar;
+    const friendUid = el.uid;
 
     let friendsArray = [...friendList];
     friendsArray = friendList.filter((e) => e.email !== email);
-
     setFriendList(friendsArray);
 
     const user = firebase.auth().currentUser;
@@ -86,6 +88,8 @@ function Friends() {
                 friends: firebase.firestore.FieldValue.arrayRemove({
                   name: friendName,
                   email: friendEmail,
+                  avatar: friendAvatar,
+                  uid: friendUid,
                 }),
               });
           });
@@ -123,15 +127,17 @@ function Friends() {
             Following {friendsCount}
           </Typography>
           <div className={classes.main}>
-            {friendList.map((el) => (
-              <Friend
-                key={el.email}
-                name={el.name}
-                email={el.email}
-                avatar={el.avatar}
-                onUnfollow={() => handleUnfollow(el, el.email)}
-              />
-            ))}
+            {friendList.map((el) =>
+              el.uid === userData.userId.id ? null : (
+                <Friend
+                  key={el.email}
+                  name={el.name}
+                  email={el.email}
+                  avatar={el.avatar}
+                  onUnfollow={() => handleUnfollow(el, el.email)}
+                />
+              )
+            )}
           </div>
         </Card>
       </div>

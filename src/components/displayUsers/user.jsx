@@ -86,6 +86,7 @@ function User(props) {
     const friendName = `${obj.firstName} ${obj.lastName}`;
     const friendEmail = obj.email;
     const friendAvatar = obj.avatar;
+    const friendUid = obj.userId.id;
 
     const user = firebase.auth().currentUser;
     if (user) {
@@ -100,6 +101,7 @@ function User(props) {
                   name: friendName,
                   email: friendEmail,
                   avatar: friendAvatar,
+                  uid: friendUid,
                 }),
               });
           });
