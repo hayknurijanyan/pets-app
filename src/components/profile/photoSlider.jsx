@@ -258,9 +258,7 @@ function PhotoSlider(props) {
     fetch().then(() => {
       if (likes !== null) {
         console.log(likes, "ffffffffff");
-        // const newLikeUrl = likes[index].likes.filter(
-        //   (id) => auth().currentUser.Uid !== id
-        // );
+
         const newLikeUrl = [...likes[index].likes].push(auth().currentUser.uid);
         db.collection("users")
           .doc(auth().currentUser.uid)
@@ -287,12 +285,12 @@ function PhotoSlider(props) {
   const useStyles = makeStyles((theme) => ({
     img: {
       maxWidth: "100%",
-      maxHeight: "auto",
+      maxHeight: "70%",
       objectFit: "contain",
     },
     imgDiv: {
       maxWidth: "70%",
-      height: "100%",
+      maxHeight: "70%",
     },
     divStyle: {
       width: "100%",

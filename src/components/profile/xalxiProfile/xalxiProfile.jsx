@@ -108,8 +108,6 @@ const XalxiProfile = (props) => {
     }
     fetchMyData();
   }, []);
-
-  console.log(userData, "cccccccccccccccccccccccccccc");
   const avatarUrl = "https://coverfiles.alphacoders.com/927/92705.jpg";
   switch (content) {
     case "about":
