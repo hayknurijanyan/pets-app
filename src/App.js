@@ -88,11 +88,11 @@ function App() {
             <Route path="/friends" component={Friends} />
             <Route path="/users" component={Users} />
             <Route path="/newsfeed" component={Newsfeed} />
-            <Route path="/profile/" component={Profile} />
+            <Route path="/profile" component={Profile} />
             <Route path="/services" component={Services} />
             <Route path="/petfinder" component={Petfinder} />
             <Route path="/notfound" component={NotFound} />
-            <Route path="/:id" component={NotFound} />
+            {/* <Route path="/:id" component={NotFound} /> */}
             {/* <Route path="/logout" component={Logout} /> */}
             <Route exact path="/" component={Newsfeed} />
             {/* <Redirect to='notfound'/> */}

@@ -87,8 +87,8 @@ export default function ImageGridList() {
       if (col === cols.length) col = 0;
       return {
         img: url.url,
-        likes: url.likes,
-        comments: url.comments,
+        likes: [url.likes],
+        comments: [...url.comments],
         cols: cols[col++],
         title: "image",
       };
