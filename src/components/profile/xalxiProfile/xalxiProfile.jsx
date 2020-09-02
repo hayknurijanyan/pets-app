@@ -60,7 +60,6 @@ const XalxiProfile = (props) => {
   const [content, setContent] = useState("about");
   const [userData, setUserData] = useState({});
   const userId = "6Qwqbg4PP9exnVSZRK6QuRLwy6d2";
-  let data = null;
   const petInfoHardcode = {
     name: "Jako",
     age: 5,
@@ -105,13 +104,10 @@ const XalxiProfile = (props) => {
     async function fetchMyData() {
       const ref = db.collection("users").doc(userId);
       const collection = await ref.get();
-      data = { ...collection.data() };
-
-      fetchMyData();
+      setUserData({ ...collection.data() });
     }
+    fetchMyData();
   }, []);
-  setUserData(data);
-  console.log(userData, "cccccccccccccccccccccccccccc");
   const avatarUrl = "https://coverfiles.alphacoders.com/927/92705.jpg";
   switch (content) {
     case "about":
@@ -144,7 +140,8 @@ const XalxiProfile = (props) => {
             <ImageAvatar imageUrl={avatarUrl} />
 
             <Typography gutterBottom variant="h5" component="h2">
-              {userData.firstName}
+              {/* {userData.firstName} */}
+              asd
             </Typography>
           </div>
           <Grid container className={classes.buttons}>
