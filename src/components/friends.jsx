@@ -127,17 +127,15 @@ function Friends() {
             Following {friendsCount}
           </Typography>
           <div className={classes.main}>
-            {friendList.map((el) =>
-              el.uid === userData.userId.id ? null : (
-                <Friend
-                  key={el.email}
-                  name={el.name}
-                  email={el.email}
-                  avatar={el.avatar}
-                  onUnfollow={() => handleUnfollow(el, el.email)}
-                />
-              )
-            )}
+            {friendList.map((el) => (
+              <Friend
+                key={el.email}
+                name={el.name}
+                email={el.email}
+                avatar={el.avatar}
+                onUnfollow={() => handleUnfollow(el, el.email)}
+              />
+            ))}
           </div>
         </Card>
       </div>

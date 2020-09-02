@@ -26,8 +26,7 @@ export default function FilterBreed(props) {
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([]);
   const [userPet, setUserPet] = useState("");
-  const { filterBy, petBreed, onHandlePetBreed, showPets, searchVal } = props;
-
+  const { filterBy, petBreed, onHandlePetBreed, breedArr } = props;
   const [state, setState] = useState({
     breed: "",
     name: "hai",
@@ -54,14 +53,10 @@ export default function FilterBreed(props) {
             id: "petBreed-native-helper",
           }}
         >
-          {showPets.map((obj) => {
+          {breedArr.map((val) => {
             return (
-              <MenuItem
-                key={uniqid()}
-                aria-label={obj.userPetInfo.breed}
-                value={obj.userPetInfo.breed}
-              >
-                {obj.userPetInfo.breed}
+              <MenuItem key={uniqid()} aria-label={val} value={val}>
+                {val}
               </MenuItem>
             );
           })}

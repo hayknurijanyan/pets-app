@@ -177,9 +177,7 @@ export default function PetsSelectFiled(props) {
               value={petGender}
               onChange={handlePetGender}
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
+              <MenuItem value={"I don't know"}>I don't know</MenuItem>
               <MenuItem value={"Male"}>Male</MenuItem>
               <MenuItem value={"Female"}>Female</MenuItem>
             </Select>

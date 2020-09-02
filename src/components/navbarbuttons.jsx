@@ -44,6 +44,7 @@ export function AccountIconButton(props) {
   const [anchorDark, setAnchorDark] = useState(null);
   const [themeState, setThemeState] = useState(true);
   const [themeDark, setThemeDark] = useState(true);
+  const setThemeContext = useContext(ThemeContext);
 
   const open = Boolean(anchorEl);
   const handleMenu = (event) => {
@@ -66,7 +67,6 @@ export function AccountIconButton(props) {
       .catch((e) => e.message);
     // window.location.reload(false);
   };
-  const setThemeContext = useContext(ThemeContext);
 
   const handleThemeChange = () => {
     if (themeState) {
@@ -132,6 +132,7 @@ export function AccountIconButton(props) {
           <ColorLensIcon color="primary" />
           <Typography className={classes.text}>Theme</Typography>
         </MenuItem>
+
         <MenuItem className={classes.menuItem} onClick={handleDarkChange}>
           <Brightness4RoundedIcon color="primary" />
           <Typography className={classes.text}>Dark Mode</Typography>

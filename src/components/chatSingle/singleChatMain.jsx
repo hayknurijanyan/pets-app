@@ -69,6 +69,7 @@ export default function SingleChatMain(props) {
 
   useEffect(() => {
     let chatNameString;
+    const chatArea = myRef.current;
     const user = firebase.auth().currentUser;
     user ? setUser(user) : log("user not found");
     if (user.uid < friendUid) {
@@ -81,12 +82,12 @@ export default function SingleChatMain(props) {
     const fetchData = async () => {
       setReadError(null);
       setLoadingChats(true);
-      const chatArea = myRef.current;
+
       try {
         firebase
           .database()
           .ref("singleChat")
-          .child(chatNameString) // draw aa=> mine bb => his  aabb
+          .child(chatNameString)
           .child("message")
           .on("value", (snapshot) => {
             let chat = [];
