@@ -16,6 +16,8 @@ import { Link } from "react-router-dom";
 import { theme2, theme1, dark1, dark2 } from "../theme";
 import ThemeContext from "../context/themeContext";
 import Brightness4RoundedIcon from "@material-ui/icons/Brightness4Rounded";
+import ChatBoxOpen from "./chatSingle/chatBoxOpen";
+import ChatMenuItem from "./chatSingle/chatMenuItem";
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
@@ -186,8 +188,10 @@ export function EmailIconButton(props) {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Inbox</MenuItem>
-        <MenuItem onClick={handleClose}>Send Message</MenuItem>
+        <div onClick={handleClose}>
+          <ChatMenuItem />
+          <MenuItem>Send Message</MenuItem>
+        </div>
       </Menu>
     </div>
   );

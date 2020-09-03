@@ -19,6 +19,8 @@ import { db } from "../firebase.js";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Link } from "react-router-dom";
 import ChatContainer from "./chatSingle/chatContainer";
+import ChatFabIcon from "./chatSingle/chatFabIcon";
+import ChatMailIcon from "./chatSingle/chatMailIcon";
 const drawerWidth = 260;
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     padding: theme.spacing(3),
   },
+  mail: {},
 }));
 
 export default function SidebarRight() {
@@ -84,6 +87,22 @@ export default function SidebarRight() {
       <Toolbar />
       <div className={classes.toolbar} />
       <Divider />
+      <List className={classes.mail}>
+        <ChatMailIcon />
+        <ListItem button>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Inbox" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <DeleteIcon />
+          </ListItemIcon>
+          <ListItemText primary="Trash" />
+        </ListItem>
+      </List>
+      <Divider />
       <List>
         {friendList.map((el) =>
           el.uid === user.uid ? null : (
@@ -105,29 +124,7 @@ export default function SidebarRight() {
           )
         )}
       </List>
-      <Divider />
-      <List>
-        <ListItem button>
-          <ListItemIcon>
-            <MailIcon onClick={handleSingleChat} />
-          </ListItemIcon>
-          <ListItemText primary="Mail" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Inbox" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <DeleteIcon />
-          </ListItemIcon>
-          <ListItemText primary="Trash" />
-        </ListItem>
-      </List>
       <ChatBox />
-      <ChatContainer />
     </Drawer>
   );
 }

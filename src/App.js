@@ -27,6 +27,7 @@ import SidebarLeft from "./components/sidebarleft";
 import { Hidden } from "@material-ui/core";
 import ChatButton from "./components/chat/chatButton";
 import ChatBox from "./components/chat/chatBox";
+import ChatContainer from "./components/chatSingle/chatContainer";
 import ForgotPassword from "./components/authentication/forgotPassword";
 import FriendsCard from "./components/profile/friendscard";
 
@@ -91,14 +92,15 @@ function App() {
             <Route path="/profile/" component={Profile} />
             <Route path="/services" component={Services} />
             <Route path="/petfinder" component={Petfinder} />
-            <Route path="/notfound" component={NotFound} />
-            <Route path="/:id" component={NotFound} />
+            {/* <Route path="/notfound" component={NotFound} />
+            <Route path="/:id" component={NotFound} /> */}
             {/* <Route path="/logout" component={Logout} /> */}
-            <Route exact path="/" component={Newsfeed} />
+            <Route path="/" component={Newsfeed} />
             {/* <Redirect to='notfound'/> */}
           </Switch>
         </main>
         <ChatBox />
+        <ChatContainer />
         <Hidden mdDown>
           <SidebarRight />
         </Hidden>
