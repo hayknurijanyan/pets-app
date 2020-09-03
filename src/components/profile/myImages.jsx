@@ -22,6 +22,7 @@ import { useEffect } from "react";
 import noImage from "../../images/noImage.png";
 import useCurrentUserData from "../customHooks/useCurrentUserData";
 import Loader from "../loader";
+import { db, auth } from "../../firebase";
 
 const useStyles = makeStyles({
   main: {
@@ -31,6 +32,13 @@ const useStyles = makeStyles({
     marginTop: 5,
     margin: "auto",
     width: "120%",
+  },
+  noImage: {
+    marginTop: "30px",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around",
   },
   root: {
     minWidth: 350,
@@ -83,12 +91,26 @@ export default function ImageGridList() {
   function setLike(index, likeOwner) {
     const imagesArray = [...urls];
     const imageLikes = [...imagesArray[index].likes];
+    console.log(imageLikes, likeOwner);
     if (imageLikes.includes(likeOwner)) {
       imageLikes.splice(imageLikes.indexOf(likeOwner), 1);
     } else {
       imageLikes.push(likeOwner);
     }
     console.log(imageLikes);
+    imagesArray[index] = {
+      url: imagesArray[index].url,
+      comments: [...imagesArray[index].comments],
+      likes: [...imageLikes],
+    };
+    console.log(imagesArray, "newImages");
+    db.collection("users")
+      .doc(auth.currentUser.uid)
+      .update({
+        photos: firebase.firestore.FieldValue.arrayUnion({
+          ...imagesArray,
+        }),
+      });
   }
   function toDrop() {
     setIsSlider("drop");
@@ -100,7 +122,7 @@ export default function ImageGridList() {
       if (col === cols.length) col = 0;
       return {
         img: url.url,
-        likes: [url.likes],
+        likes: [...url.likes],
         comments: [...url.comments],
         cols: cols[col++],
         title: "image",
@@ -157,28 +179,18 @@ export default function ImageGridList() {
       );
     } else {
       grid = (
-        <div>
-          <Card className={classes.root}>
-            <CardHeader
-              action={
-                <CardActions>
-                  <Button size="small" variant="outlined" color="primary">
-                    Edit
-                  </Button>
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    color="primary"
-                    onClick={toDrop}
-                  >
-                    Add image
-                  </Button>
-                </CardActions>
-              }
-            />
-          </Card>
-          <div className={classes.root}>
-            <img src={noImage}></img>;
+        <div className={classes.noImage}>
+          <Button
+            size="small"
+            variant="outlined"
+            color="primary"
+            onClick={toDrop}
+          >
+            Add image
+          </Button>
+
+          <div className={classes.noImage}>
+            <img src={noImage}></img>
           </div>
         </div>
       );

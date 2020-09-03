@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -10,10 +10,13 @@ import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import Fab from "@material-ui/core/Fab";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
+import SingleChatMain from "./singleChatMain";
+import ChatContainer from "./chatContainer";
 import firebase from "firebase";
 import { db } from "../../firebase.js";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
+import MailIcon from "@material-ui/icons/Mail";
 import ChatBoxOpen from "./chatBoxOpen";
 import {
   Drawer,
@@ -23,8 +26,6 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
-let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -40,13 +41,19 @@ const useStyles = makeStyles((theme) => ({
     bottom: theme.spacing(3),
     right: theme.spacing(4),
   },
+  // fab: {
+  //   marginRight: "100px",
+  //   position: "fixed",
+  //   bottom: theme.spacing(3),
+  //   right: theme.spacing(4),
+  // },
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ChatContainer(props) {
+export default function ChatMailIcon(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [friendList, setFriendList] = useState([]);
@@ -78,59 +85,18 @@ export default function ChatContainer(props) {
   };
 
   const logSomth = (email) => {
-    log("email", email);
+    console.log("email", email);
   };
 
   return (
     <div>
-      <Dialog
-        fullScreen
-        open={props.open}
-        onClose={props.handleClose}
-        TransitionComponent={props.transition}
-      >
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" className={classes.title}>
-              Chat
-            </Typography>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={props.close}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <List>
-          {friendList.map((el) =>
-            el.uid === user.uid ? null : (
-              <div>
-                <ListItem button key={el.email}>
-                  <ListItemIcon>
-                    <Avatar
-                      component={Link}
-                      to="/profile/"
-                      aria-label="recipe"
-                      // className={classes.large}
-                      src={el.avatar}
-                      // imageUrl={avatarUrl}
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary={el.name} />
-                  <ChatBoxOpen
-                    email={el.email}
-                    fullName={el.name}
-                    uid={el.uid}
-                  />
-                </ListItem>
-              </div>
-            )
-          )}
-        </List>
-      </Dialog>
+      <ListItem button onClick={handleClickOpen}>
+        <ListItemIcon>
+          <MailIcon />
+        </ListItemIcon>
+        <ListItemText primary="Mail" />
+      </ListItem>
+      <ChatContainer transition={Transition} open={open} close={handleClose} />
     </div>
   );
 }

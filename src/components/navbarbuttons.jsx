@@ -16,6 +16,8 @@ import { Link } from "react-router-dom";
 import { theme2, theme1, dark1, dark2 } from "../theme";
 import ThemeContext from "../context/themeContext";
 import Brightness4RoundedIcon from "@material-ui/icons/Brightness4Rounded";
+import ChatBoxOpen from "./chatSingle/chatBoxOpen";
+import ChatMenuItem from "./chatSingle/chatMenuItem";
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +46,7 @@ export function AccountIconButton(props) {
   const [anchorDark, setAnchorDark] = useState(null);
   const [themeState, setThemeState] = useState(true);
   const [themeDark, setThemeDark] = useState(true);
+  const setThemeContext = useContext(ThemeContext);
 
   const open = Boolean(anchorEl);
   const handleMenu = (event) => {
@@ -66,7 +69,6 @@ export function AccountIconButton(props) {
       .catch((e) => e.message);
     // window.location.reload(false);
   };
-  const setThemeContext = useContext(ThemeContext);
 
   const handleThemeChange = () => {
     if (themeState) {
@@ -132,6 +134,7 @@ export function AccountIconButton(props) {
           <ColorLensIcon color="primary" />
           <Typography className={classes.text}>Theme</Typography>
         </MenuItem>
+
         <MenuItem className={classes.menuItem} onClick={handleDarkChange}>
           <Brightness4RoundedIcon color="primary" />
           <Typography className={classes.text}>Dark Mode</Typography>
@@ -186,8 +189,10 @@ export function EmailIconButton(props) {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Inbox</MenuItem>
-        <MenuItem onClick={handleClose}>Send Message</MenuItem>
+        <div onClick={handleClose}>
+          <ChatMenuItem />
+          <MenuItem>Send Message</MenuItem>
+        </div>
       </Menu>
     </div>
   );

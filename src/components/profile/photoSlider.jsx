@@ -12,6 +12,7 @@ import {
   IconButton,
   CardContent,
   TextField,
+  Divider,
 } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
@@ -53,6 +54,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 80,
     marginTop: 0,
   },
+  closeBtn: {
+    marginBottom: "3px",
+  },
   icons: {},
   comments: {
     display: "flex",
@@ -88,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
     height: "500px",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
   },
   likesContent: {
     marginTop: "15px",
@@ -98,12 +102,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
   },
   likesHeader: {
+    marginTop: "3px",
     width: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     paddingRight: "20px",
     paddingLeft: "20px",
+  },
+  likes: {
+    height: "100%",
   },
 }));
 
@@ -129,14 +137,7 @@ function PhotoSlider(props) {
     setOpen({ open: false });
     props.backClickHandler();
   }
-  function setLike() {
-    // db.collection("users")
-    //   .doc(auth().currentUser.uid)
-    //   .update({
-    //     photos: [...newImages],
-    //   });
-  }
-
+  function setLike() {}
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
@@ -159,10 +160,18 @@ function PhotoSlider(props) {
                  likes`}
             </span>
           </div>
-          {props.images[props.index].likes.map((url) => (
-            <LikeRow url={url} />
-          ))}
-          <Button color="primary" onClick={likesComponentOpen}>
+
+          <div className={classes.likes}>
+            <Divider variant="middle" color="secondary" />
+            {props.images[props.index].likes.map((url) => (
+              <LikeRow url={url} />
+            ))}
+          </div>
+          <Button
+            color="primary"
+            onClick={likesComponentOpen}
+            className={classes.closeBtn}
+          >
             Close
           </Button>
         </div>

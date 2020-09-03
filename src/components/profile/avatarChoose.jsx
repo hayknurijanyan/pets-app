@@ -13,7 +13,7 @@ import { auth } from "firebase";
 
 export default function AvatarChoose(props) {
   const [open, setOpen] = useState(props.form);
-
+  let images = null;
   const urls = useCurrentUserData().photos;
 
   function setAvatarImage(url) {
@@ -50,35 +50,41 @@ export default function AvatarChoose(props) {
     },
   }));
   const classes = useStyles();
+
   if (urls) {
+    if (urls.length === 0) {
+      images = "You have no images";
+    } else {
+      images = (
+        <div>
+          {urls.map((photo) => {
+            return (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "spase-between",
+                }}
+              >
+                <ImageAvatar imageUrl={photo.url} />
+                <Button
+                  color="primary"
+                  onClick={() => setAvatarImage(photo.url)}
+                >
+                  Select
+                </Button>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
     return (
       <Dialog className={classes.divStyle} open={props.form.open}>
         <DialogTitle id="max-width-dialog-title">
           Choose image for avatar
         </DialogTitle>
-        <DialogContent className={classes.content}>
-          <div>
-            {urls.map((photo) => {
-              return (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "spase-between",
-                  }}
-                >
-                  <ImageAvatar imageUrl={photo.url} />
-                  <Button
-                    color="primary"
-                    onClick={() => setAvatarImage(photo.url)}
-                  >
-                    Select
-                  </Button>
-                </div>
-              );
-            })}
-          </div>
-        </DialogContent>
+        <DialogContent className={classes.content}>{images}</DialogContent>
         <DialogActions>
           <Button
             color="primary"

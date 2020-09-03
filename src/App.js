@@ -92,10 +92,10 @@ function App() {
             <Route path="/profile" component={Profile} />
             <Route path="/services" component={Services} />
             <Route path="/petfinder" component={Petfinder} />
-            <Route path="/notfound" component={NotFound} />
-            {/* <Route path="/:id" component={NotFound} /> */}
+            {/* <Route path="/notfound" component={NotFound} />
+            <Route path="/:id" component={NotFound} /> */}
             {/* <Route path="/logout" component={Logout} /> */}
-            <Route exact path="/" component={Newsfeed} />
+            <Route path="/" component={Newsfeed} />
             {/* <Redirect to='notfound'/> */}
           </Switch>
         </main>

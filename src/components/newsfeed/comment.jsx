@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   commentLine: {
     backgroundColor: "#fafafa",
-    borderRadius: 50,
+    borderRadius: 30,
   },
   main: { display: "flex" },
   large: {

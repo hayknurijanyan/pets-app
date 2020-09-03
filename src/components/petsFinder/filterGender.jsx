@@ -46,8 +46,9 @@ export default function FilterGender(props) {
             id: "gender-native-helper",
           }}
         >
-          <MenuItem value={"male"}>male</MenuItem>
-          <MenuItem value={"female"}>female</MenuItem>
+          <MenuItem value={"I don't know"}>I don't know</MenuItem>
+          <MenuItem value={"Male"}>Male</MenuItem>
+          <MenuItem value={"Female"}>Female</MenuItem>
         </Select>
         <FormHelperText>Filter by {filterBy}</FormHelperText>
       </FormControl>
