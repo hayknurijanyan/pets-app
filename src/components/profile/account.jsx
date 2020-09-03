@@ -20,7 +20,7 @@ import Message from "../message";
 import image from "../../images/defaultCoverPhoto.jpg";
 import { Link } from "react-router-dom";
 import { db } from "../../firebase";
-import { auth } from "firebase";
+import { auth } from "../../firebase";
 import AvatarChoose from "./avatarChoose";
 import CoverImageChoose from "./chooseCoverImage";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -75,7 +75,7 @@ export default function MediaCard() {
   const [name, setName] = useState("");
   useEffect(() => {
     const fetchData = async function () {
-      const ref = db.collection("users").doc(auth().currentUser.uid);
+      const ref = db.collection("users").doc(auth.currentUser.uid);
       const collection = await ref.get();
       const data = collection.data();
       setAvatarUrl(data.avatar);
@@ -83,7 +83,7 @@ export default function MediaCard() {
       setName(`${data.firstName}  ${data.lastName}`);
     };
     fetchData();
-  });
+  }, []);
   const checkSuccessMessage = (suc) => {
     return (
       <Alert onClose={handleClose} severity="success">

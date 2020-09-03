@@ -28,14 +28,7 @@ const Profile = () => {
   const classes = useStyles();
   const user = firebase.auth().currentUser;
 
-  if (user) {
-    log("currnetuser", user);
-  } else {
-    log("asd");
-  }
-
   const isUser = useSelector((state) => state);
-  log("user redux", isUser.themeSelect);
 
   return (
     <Router>

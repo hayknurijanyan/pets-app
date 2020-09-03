@@ -77,6 +77,19 @@ export default function ImageGridList() {
   function backToList() {
     setIsSlider("grid");
   }
+  function changeIndexHandler(arg) {
+    setImgIndex(arg);
+  }
+  function setLike(index, likeOwner) {
+    const imagesArray = [...urls];
+    const imageLikes = [...imagesArray[index].likes];
+    if (imageLikes.includes(likeOwner)) {
+      imageLikes.splice(imageLikes.indexOf(likeOwner), 1);
+    } else {
+      imageLikes.push(likeOwner);
+    }
+    console.log(imageLikes);
+  }
   function toDrop() {
     setIsSlider("drop");
   }
@@ -100,9 +113,6 @@ export default function ImageGridList() {
             <CardHeader
               action={
                 <CardActions>
-                  <Button size="small" variant="outlined" color="primary">
-                    Edit
-                  </Button>
                   <Button
                     size="small"
                     variant="outlined"
@@ -195,6 +205,8 @@ export default function ImageGridList() {
         images={tileData}
         backClickHandler={backToList}
         index={imgIndex}
+        changeIndex={changeIndexHandler}
+        handlerSetLike={setLike}
       />
     );
   } else if (isSlider === "drop") {
