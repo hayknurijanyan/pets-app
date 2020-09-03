@@ -4,7 +4,6 @@ import { CardContent, Typography } from "@material-ui/core";
 import ImageAvatar from "../profile/avatar";
 import { Avatar } from "@material-ui/core";
 import { Link } from "react-router-dom";
-
 const useStyles = makeStyles((theme) => ({
   comment: {
     display: "flex",
@@ -23,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
   },
   commentText: {
     display: "flex",
-
     overflowWrap: "anywhere",
   },
   addButton: {
@@ -36,20 +34,14 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 20,
   },
   main: { display: "flex" },
-  large: {
-    // width: theme.spacing(7),
-    // height: theme.spacing(7),
-  },
+  large: {},
 }));
-
 export default function SliderComment(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
   return (
     <div>
       <div className={classes.comment}>
@@ -57,7 +49,6 @@ export default function SliderComment(props) {
           <Avatar
             component={Link}
             to="/profile"
-            // alt="Albert Einstein"
             src={props.userAvatar}
             className={classes.large}
           />
@@ -71,7 +62,7 @@ export default function SliderComment(props) {
             >
               Name
             </Typography>
-
+            ​
             <Typography className={classes.commentText} variant="body1">
               This is Comment
             </Typography>

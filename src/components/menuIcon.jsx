@@ -16,7 +16,6 @@ import { Link } from "react-router-dom";
 import { theme2, theme1, dark1, dark2 } from "../theme";
 import ThemeContext from "../context/themeContext";
 import Brightness4RoundedIcon from "@material-ui/icons/Brightness4Rounded";
-
 import MenuIcon from "@material-ui/icons/Menu";
 
 let log = console.log;
@@ -47,6 +46,7 @@ export function MenuIconButton(props) {
   const [anchorDark, setAnchorDark] = useState(null);
   const [themeState, setThemeState] = useState(true);
   const [themeDark, setThemeDark] = useState(true);
+  const setThemeContext = useContext(ThemeContext);
 
   const open = Boolean(anchorEl);
   const handleMenu = (event) => {
@@ -69,8 +69,6 @@ export function MenuIconButton(props) {
       .catch((e) => e.message);
     // window.location.reload(false);
   };
-  const setThemeContext = useContext(ThemeContext);
-
   const handleThemeChange = () => {
     if (themeState) {
       setThemeContext(theme2);
