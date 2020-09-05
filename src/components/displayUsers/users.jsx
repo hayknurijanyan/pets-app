@@ -83,7 +83,7 @@ const Users = () => {
 
   useEffect(() => {
     const ref = db.collection("users").doc(auth.currentUser.uid);
-    let collection = ref
+    ref
       .get()
       .then((doc) => {
         const newArray = [...doc.data().friends];

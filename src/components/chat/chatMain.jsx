@@ -78,7 +78,6 @@ export default function ChatMain() {
             snapshot.forEach((snap) => {
               chats.push(snap.val());
             });
-            log("chats", chats);
             chats.sort(function (a, b) {
               return a.timestamp - b.timestamp;
             });

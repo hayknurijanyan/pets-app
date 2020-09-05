@@ -16,6 +16,9 @@ import useCurrentUserData from "../customHooks/useCurrentUserData";
 import useAllUsersData from "../customHooks/useAllUsersData";
 import { db, auth } from "../../firebase";
 import firebase from "firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { userFriendsAction } from "../../actions";
+
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
@@ -60,27 +63,10 @@ function User(props) {
   const { result, emailArray, userData, setEmailArray } = props;
   const classes = useStyles();
   const [btnColor, setBtnColor] = useState("info");
-  // const [emailArray, setEmailArray] = useState([]);
-  // const [userData, setUserData] = useState({});
+  const [asd, setAsd] = useState([]);
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const ref = db.collection("users").doc(auth.currentUser.uid);
-  //   let collection = ref
-  //     .get()
-  //     .then((doc) => {
-  //       const newArray = [...doc.data().friends];
-  //       setUserData({ ...doc.data() });
-  //       const result = [];
-  //       newArray.forEach((obj) => {
-  //         result.push(obj.email);
-  //       });
-  //       setEmailArray(result);
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error getting document:", error);
-  //     });
-  // }, []);
-  // log("emailArray", emailArray);
+  useEffect(() => {}, [asd]);
 
   const handleFollowClick = (obj) => {
     const friendName = `${obj.firstName} ${obj.lastName}`;
@@ -91,36 +77,30 @@ function User(props) {
     const user = firebase.auth().currentUser;
     if (user) {
       db.collection("users")
-        .get()
-        .then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            db.collection("users")
-              .doc(doc.id)
-              .update({
-                friends: firebase.firestore.FieldValue.arrayUnion({
-                  name: friendName,
-                  email: friendEmail,
-                  avatar: friendAvatar,
-                  uid: friendUid,
-                }),
-              });
-          });
+        .doc(user.uid)
+        .update({
+          friends: firebase.firestore.FieldValue.arrayUnion({
+            name: friendName,
+            email: friendEmail,
+            avatar: friendAvatar,
+            uid: friendUid,
+          }),
         })
         .then(async () => {
           const ref = db.collection("users").doc(user.uid);
           const collection = await ref.get();
+          dispatch(userFriendsAction(collection.data().friends));
           const newArray = [...collection.data().friends];
           const result = [];
           newArray.forEach((obj) => {
             result.push(obj.email);
           });
-          setEmailArray(result);
-        })
-        .catch((err) => {
-          log(err.message);
+          setAsd(result);
         });
     }
   };
+
+  log(asd, "asd");
 
   return (
     <div className={classes.root}>
@@ -175,11 +155,15 @@ function User(props) {
                       }
                       variant="contained"
                       color={
-                        emailArray.includes(obj.email) ? "primary" : "info"
+                        emailArray.includes(obj.email) ||
+                        asd.includes(obj.email)
+                          ? "primary"
+                          : "info"
                       }
-                      // disabled={emailArray.includes(obj.email)}
                     >
-                      {emailArray.includes(obj.email) ? "Following" : "Follow"}
+                      {emailArray.includes(obj.email) || asd.includes(obj.email)
+                        ? "Following"
+                        : "Follow"}
                     </Button>
                   </List>
                 </Card>
