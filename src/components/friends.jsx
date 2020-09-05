@@ -7,6 +7,7 @@ import Friend from "./friend.jsx";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
 import firebase from "firebase";
+import uniqid from "uniqid";
 import { Card, Typography, Toolbar } from "@material-ui/core";
 import Loader from "./loader.jsx";
 
@@ -128,7 +129,7 @@ function Friends() {
           <div className={classes.main}>
             {friendList.map((el) => (
               <Friend
-                key={el.email}
+                key={uniqid()}
                 uid={el.uid}
                 name={el.name}
                 email={el.email}

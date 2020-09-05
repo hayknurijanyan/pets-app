@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { db } from "../../firebase";
 import ImageAvatar, { ImageAvatarSmall } from "./avatar";
 import { useEffect } from "react";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Divider } from "@material-ui/core";
 
 export default function LikeRow(props) {
   const [name, setName] = useState("");
@@ -40,7 +40,7 @@ export default function LikeRow(props) {
         <ImageAvatar imageUrl={avatar} />
         {`${name} ${lastName}`}
       </div>
-      <hr />
+      <Divider variant="middle" color="secondary" />
     </div>
   );
 }

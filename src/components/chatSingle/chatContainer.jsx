@@ -14,6 +14,7 @@ import firebase from "firebase";
 import { db } from "../../firebase.js";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
+import uniqid from "uniqid";
 import ChatBoxOpen from "./chatBoxOpen";
 import {
   Drawer,
@@ -115,13 +116,8 @@ export default function ChatContainer(props) {
         <List>
           {friendList.map((el) =>
             el.uid === user.uid ? null : (
-              <div>
-                <ListItem
-                  className={classes.list}
-                  button
-                  key={el.email}
-                  onClick={ClickOpen}
-                >
+              <div key={uniqid()}>
+                <ListItem button>
                   <ListItemIcon>
                     <Avatar
                       component={Link}
