@@ -63,7 +63,10 @@ export default function Trainer() {
         <CardActions>
           <Call />
           <Button size="small" color="primary">
-            <Link href="https://www.thesprucepets.com/steps-to-train-your-dog-1118273">
+            <Link
+              href="https://www.thesprucepets.com/steps-to-train-your-dog-1118273"
+              target="_blank"
+            >
               View
             </Link>
           </Button>

@@ -63,7 +63,12 @@ export default function Grooming() {
         <CardActions>
           <Call />
           <Button size="small" color="primary">
-            <Link href="https://www.petsense.com/pages/pet-grooming">View</Link>
+            <Link
+              href="https://www.petsense.com/pages/pet-grooming"
+              target="_blank"
+            >
+              View
+            </Link>
           </Button>
         </CardActions>
       </Card>

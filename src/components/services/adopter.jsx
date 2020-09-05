@@ -64,7 +64,9 @@ export default function Adopter() {
         <CardActions>
           <Call />
           <Button size="small" color="primary">
-            <Link href="https://www.adoptapet.com/">View</Link>
+            <Link href="https://www.adoptapet.com/" target="_blank">
+              View
+            </Link>
           </Button>
         </CardActions>
       </Card>

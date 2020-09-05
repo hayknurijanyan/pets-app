@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     flex: 1,
   },
+  list: {
+    // backgroundColor: "yellow",
+  },
   fab: {
     marginRight: "100px",
     position: "fixed",
@@ -49,6 +52,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function ChatContainer(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [opened, setOpened] = React.useState(false);
   const [friendList, setFriendList] = useState([]);
   const [user, setUser] = useState({});
   useEffect(() => {
@@ -71,6 +75,10 @@ export default function ChatContainer(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
+  };
+
+  const ClickOpen = () => {
+    setOpened(true);
   };
 
   const handleClose = () => {
@@ -108,7 +116,12 @@ export default function ChatContainer(props) {
           {friendList.map((el) =>
             el.uid === user.uid ? null : (
               <div>
-                <ListItem button key={el.email}>
+                <ListItem
+                  className={classes.list}
+                  button
+                  key={el.email}
+                  onClick={ClickOpen}
+                >
                   <ListItemIcon>
                     <Avatar
                       component={Link}

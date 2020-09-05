@@ -64,7 +64,10 @@ export default function FoodDelivery() {
         <CardActions>
           <Call />
           <Button size="small" color="primary">
-            <Link href="https://www.petsense.com/collections/dog-food/Dry-Food">
+            <Link
+              href="https://www.petsense.com/collections/dog-food/Dry-Food"
+              target="_blank"
+            >
               View
             </Link>
           </Button>

@@ -67,7 +67,9 @@ function Veterinary() {
         <CardActions>
           <Call />
           <Button size="small" color="primary">
-            <Link href="https://vcahospitals.com/">View</Link>
+            <Link href="https://vcahospitals.com/" target="_blank">
+              View
+            </Link>
           </Button>
         </CardActions>
       </Card>
