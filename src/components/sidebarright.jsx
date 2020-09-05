@@ -30,6 +30,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import ChatMain from "./chat/chatMain";
+import { useSelector } from "react-redux";
 
 let log = console.log;
 const drawerWidth = 260;
@@ -76,6 +77,7 @@ export default function SidebarRight() {
   const [user, setUser] = useState({});
   const [uid, setUid] = useState({});
   const [open, setOpen] = useState(false);
+  const userFriend = useSelector((state) => state.userFriends);
   useEffect(() => {
     async function fetchMyData() {
       const user = firebase.auth().currentUser;
@@ -86,13 +88,12 @@ export default function SidebarRight() {
         ).data();
         let friendsArray = [...dbUserData.friends];
         setFriendList(friendsArray);
-        // console.log(dbUserData.friends);
       } else {
         console.log("user not found");
       }
     }
     fetchMyData();
-  }, [friendList]);
+  }, [userFriend]);
 
   const handlePersonClick = (uid) => {
     setUid(uid);

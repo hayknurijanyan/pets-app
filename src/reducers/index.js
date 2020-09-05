@@ -1,12 +1,14 @@
 import userReducer from "./isUser";
 import urlReducer from "./isUrl";
-import { combineReducers } from "redux";
 import userDataReducer from "./userData";
+import userFriendsReducer from "./userFriends";
+import { combineReducers } from "redux";
 
 const allReducers = combineReducers({
   user: userReducer,
   isUrl: urlReducer,
   userData: userDataReducer,
+  userFriends: userFriendsReducer,
 });
 
 export default allReducers;
