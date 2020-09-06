@@ -100,8 +100,6 @@ function User(props) {
     }
   };
 
-  log(asd, "asd");
-
   return (
     <div className={classes.root}>
       {result.length

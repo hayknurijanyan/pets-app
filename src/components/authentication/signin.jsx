@@ -105,7 +105,7 @@ function SignIn() {
       .catch((e) => e.message);
   };
 
-  const handleSignIn = async () => {
+  const handleSignIn = async (e) => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)

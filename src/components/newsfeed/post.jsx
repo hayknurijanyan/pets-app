@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import ImageAvatar from "../profile/avatar";
 import EditPopup from "./editpopup";
 import Comment from "./comment";
+import uniqid from "uniqid";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -221,7 +222,7 @@ export default function Post(props) {
           {props.postComments.map((el) => (
             <Comment
               onCommentDelete={() => props.onCommentDelete(el.commentID)}
-              key={el.id}
+              key={uniqid()}
               content={el.content}
               name={el.name}
               userAvatar={el.userAvatar}

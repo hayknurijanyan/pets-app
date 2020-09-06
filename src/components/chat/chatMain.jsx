@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { db, auth, storage } from "../../firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
@@ -6,6 +6,7 @@ import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import SaveIcon from "@material-ui/icons/Save";
 import firebase from "firebase";
 import Loader from "./loader";
+import uniqid from "uniqid";
 import "./styles.css";
 import {
   Card,
@@ -61,6 +62,7 @@ export default function ChatMain() {
   const [content, setContent] = useState("");
   const [user, setUser] = useState([]);
   const myRef = React.createRef();
+  const mountedRef = useRef(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,6 +83,8 @@ export default function ChatMain() {
             chats.sort(function (a, b) {
               return a.timestamp - b.timestamp;
             });
+            if (!mountedRef.current) return null;
+
             setChats(chats);
             chatArea.scrollBy(0, chatArea.scrollHeight);
             setLoadingChats(false);
@@ -91,6 +95,9 @@ export default function ChatMain() {
       }
     };
     fetchData();
+    return () => {
+      mountedRef.current = false;
+    };
   }, []);
 
   const userData = useCurrentUserData();
@@ -144,9 +151,8 @@ export default function ChatMain() {
           {/* chat area */}
           {chats.slice(chats.length - 150, chats.length).map((chat) => {
             return (
-              <div>
+              <div key={uniqid()}>
                 <p
-                  key={chat.timestamp}
                   className={
                     "chat-bubble " +
                     (user.uid === chat.uid ? "current-user" : "")

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Drawer,
@@ -14,7 +14,6 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import { Avatar } from "@material-ui/core";
 import ChatBox from "./chat/chatBox";
-import { useState } from "react";
 import firebase from "firebase";
 import { db } from "../firebase.js";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -78,6 +77,7 @@ export default function SidebarRight() {
   const [uid, setUid] = useState({});
   const [open, setOpen] = useState(false);
   const userFriend = useSelector((state) => state.userFriends);
+  const mountedRef = useRef(true);
   useEffect(() => {
     async function fetchMyData() {
       const user = firebase.auth().currentUser;
@@ -93,6 +93,9 @@ export default function SidebarRight() {
       }
     }
     fetchMyData();
+    return () => {
+      mountedRef.current = false;
+    };
   }, [userFriend]);
 
   const handlePersonClick = (uid) => {
