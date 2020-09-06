@@ -71,6 +71,7 @@ export default function ImageDrop(props) {
         await db
           .collection("users")
           .doc(auth().currentUser.uid)
+
           .update({
             photos: firebase.firestore.FieldValue.arrayUnion(newUrl),
           });

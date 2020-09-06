@@ -121,15 +121,6 @@ function PhotoSlider(props) {
   const [likesComponent, setLikesComponent] = useState(false);
   const [images, setImages] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async function () {
-      const userRef = db.collection("users").doc(auth().currentUser.uid);
-      const data = await userRef.get();
-      setImages(data.data().photos);
-    };
-    fetchData();
-  }, [props]);
-
   function likesComponentOpen() {
     setLikesComponent(!likesComponent);
   }
@@ -232,7 +223,7 @@ function PhotoSlider(props) {
               <ExpandMoreIcon />
             </IconButton>
             <Typography>
-              Comments {props.images[index].comments.length}
+              Comments {props.images[props.index].comments.length}
             </Typography>
           </div>
           <div>
@@ -259,7 +250,7 @@ function PhotoSlider(props) {
                       Add
                     </Button>
                   </div>
-                  <SliderComment />
+                  <SliderComment images={props.images} index={props.index} />
                 </div>
               </CardContent>
             </Collapse>
