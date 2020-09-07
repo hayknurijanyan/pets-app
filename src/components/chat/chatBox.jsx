@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -11,8 +10,7 @@ import Slide from "@material-ui/core/Slide";
 import Fab from "@material-ui/core/Fab";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import ChatMain from "./chatMain";
-import ChatWithClass from "./chatWithClass.js";
-import ChatWIthStyle from "./chatWithStyle";
+
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: "relative",
@@ -70,8 +68,6 @@ export default function ChatBox() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        {/* <ChatWithClass /> */}
-        {/* <ChatWIthStyle /> */}
         <ChatMain />
       </Dialog>
     </div>

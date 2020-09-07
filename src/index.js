@@ -16,6 +16,7 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 import autoMergeLevel1 from "redux-persist/lib/stateReconciler/autoMergeLevel1";
 import Loader from "./components/loader";
 import Main from "./main";
+import logger from "./services/logService";
 
 const persistConfig = {
   key: "root",
@@ -31,6 +32,8 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 );
 const persistor = persistStore(store);
+
+logger.init();
 
 ReactDOM.render(
   <React.StrictMode>

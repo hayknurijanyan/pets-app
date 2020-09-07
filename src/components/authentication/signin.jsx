@@ -20,6 +20,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { db } from "../../firebase";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import logger from "../../services/logService";
 let log = console.log;
 
 function Alert(props) {
@@ -122,6 +123,7 @@ function SignIn() {
         setError(err);
         checkError(error);
         setOpen(true);
+        logger.log(error);
       });
   };
 

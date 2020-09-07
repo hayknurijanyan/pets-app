@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { db, auth, storage } from "../../firebase";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-import SaveIcon from "@material-ui/icons/Save";
+
 import firebase from "firebase";
 import Loader from "./loader";
 import uniqid from "uniqid";
