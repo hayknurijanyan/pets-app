@@ -76,12 +76,9 @@ export default function SidebarRight() {
   const [user, setUser] = useState({});
   const [uid, setUid] = useState({});
   const [open, setOpen] = useState(false);
-<<<<<<< HEAD
-
-=======
   const userFriend = useSelector((state) => state.userFriends);
   const mountedRef = useRef(true);
->>>>>>> afd77430eb3af811056adf1eb8c28cecdc791b52
+
   useEffect(() => {
     async function fetchMyData() {
       const user = firebase.auth().currentUser;
@@ -92,23 +89,15 @@ export default function SidebarRight() {
         ).data();
         let friendsArray = [...dbUserData.friends];
         setFriendList(friendsArray);
-<<<<<<< HEAD
-        console.log("friendsArray", friendsArray);
-=======
->>>>>>> afd77430eb3af811056adf1eb8c28cecdc791b52
       } else {
         console.log("user not found");
       }
     }
     fetchMyData();
-<<<<<<< HEAD
-  }, []);
-=======
     return () => {
       mountedRef.current = false;
     };
   }, [userFriend]);
->>>>>>> afd77430eb3af811056adf1eb8c28cecdc791b52
 
   const handlePersonClick = (uid) => {
     setUid(uid);

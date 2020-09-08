@@ -99,7 +99,7 @@ function CreatePost(props) {
       }
     }
     fetchMyData();
-  });
+  }, []);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
