@@ -87,13 +87,13 @@ export default function SidebarRight() {
         ).data();
         let friendsArray = [...dbUserData.friends];
         setFriendList(friendsArray);
-        // console.log(dbUserData.friends);
+        console.log("friendsArray", friendsArray);
       } else {
         console.log("user not found");
       }
     }
     fetchMyData();
-  }, [friendList]);
+  }, []);
 
   const handlePersonClick = (uid) => {
     setUid(uid);
