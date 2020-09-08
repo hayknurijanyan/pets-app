@@ -52,8 +52,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function ChatContainer(props) {
   const classes = useStyles();
+<<<<<<< HEAD
   const [open, setOpen] = React.useState(false);
   const [opened, setOpened] = React.useState(false);
+=======
+  const [open, setOpen] = useState(false);
+>>>>>>> afd77430eb3af811056adf1eb8c28cecdc791b52
   const [friendList, setFriendList] = useState([]);
   const [user, setUser] = useState({});
   useEffect(() => {

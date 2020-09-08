@@ -1,5 +1,14 @@
 import { AUTH_STATE_CHANGE } from "../reducers/isUser";
 import { PERSIST_USER_DATA } from "../reducers/userData";
+import { USER_FRIENDS } from "../reducers/userFriends";
+// userFriedsData
+
+export const userFriendsAction = (friends) => {
+  return {
+    type: USER_FRIENDS,
+    payload: friends,
+  };
+};
 
 /// isUserAction
 

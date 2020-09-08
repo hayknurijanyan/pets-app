@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import * as firebase from "firebase";
-import { useDispatch, useSelector } from "react-redux";
-import { isUserAction, userDataAction } from "../../actions";
 import {
   Avatar,
   Button,
@@ -10,14 +8,11 @@ import {
   Link,
   CssBaseline,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Paper,
   Box,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { db } from "../../firebase";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 let log = console.log;

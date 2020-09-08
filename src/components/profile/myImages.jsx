@@ -71,13 +71,30 @@ const useStyles = makeStyles({
 });
 
 export default function ImageGridList() {
-  const [images, setImages] = useState({ a: 5 });
+  const [images, setImages] = useState(null);
   const [isSlider, setIsSlider] = useState("grid");
   const [imgIndex, setImgIndex] = useState(0);
+  const [asd, setAsd] = useState(true);
+  const [urls, setUrls] = useState([]);
   const classes = useStyles();
   let toRender = null;
   let grid = null;
-  const urls = useCurrentUserData().photos;
+  // const urls = useCurrentUserData().photos;
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const user = firebase.auth().currentUser;
+      if (user) {
+        const ref = db.collection("users").doc(user.uid);
+        const collection = await ref.get();
+
+        setUrls([...collection.data().photos]);
+      } else {
+        console.log("user data not found");
+      }
+    };
+    fetchUserData();
+  }, [asd]);
+  console.log(urls, "nnnneeewwwwww");
   function toSlide(index) {
     setImgIndex(index);
     setIsSlider("slider");
@@ -85,36 +102,40 @@ export default function ImageGridList() {
   function backToList() {
     setIsSlider("grid");
   }
+  function toDrop() {
+    setIsSlider("drop");
+  }
   function changeIndexHandler(arg) {
     setImgIndex(arg);
   }
   function setLike(index, likeOwner) {
     const imagesArray = [...urls];
+    console.log(imagesArray, "all images");
     const imageLikes = [...imagesArray[index].likes];
-    console.log(imageLikes, likeOwner);
+    console.log(imageLikes, "old likes");
     if (imageLikes.includes(likeOwner)) {
       imageLikes.splice(imageLikes.indexOf(likeOwner), 1);
     } else {
       imageLikes.push(likeOwner);
     }
-    console.log(imageLikes);
+    console.log(imageLikes, "newLikes");
     imagesArray[index] = {
       url: imagesArray[index].url,
       comments: [...imagesArray[index].comments],
       likes: [...imageLikes],
     };
     console.log(imagesArray, "newImages");
+    db.collection("users").doc(auth.currentUser.uid).update({
+      photos: firebase.firestore.FieldValue.delete(),
+    });
     db.collection("users")
       .doc(auth.currentUser.uid)
       .update({
-        photos: firebase.firestore.FieldValue.arrayUnion({
-          ...imagesArray,
-        }),
-      });
+        photos: firebase.firestore.FieldValue.arrayUnion(...imagesArray),
+      })
+      .then(() => setAsd(!asd));
   }
-  function toDrop() {
-    setIsSlider("drop");
-  }
+
   if (urls) {
     const cols = [2, 1, 1, 1, 1, 1, 2, 1, 1, 1];
     let col = 0;

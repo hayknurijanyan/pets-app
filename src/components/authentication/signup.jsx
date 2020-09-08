@@ -17,10 +17,7 @@ import {
   Link,
   CssBaseline,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Paper,
-  Box,
   Divider,
 } from "@material-ui/core";
 import AlertFn from "./alert";

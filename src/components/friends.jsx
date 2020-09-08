@@ -10,6 +10,7 @@ import firebase from "firebase";
 import uniqid from "uniqid";
 import { Card, Typography, Toolbar } from "@material-ui/core";
 import Loader from "./loader.jsx";
+import { userFriendsAction } from "../actions/index.js";
 
 let log = console.log;
 
@@ -72,28 +73,28 @@ function Friends() {
     const friendAvatar = el.avatar;
     const friendUid = el.uid;
 
-    let friendsArray = [...friendList];
-    friendsArray = friendList.filter((e) => e.email !== email);
-
-    setFriendList(friendsArray);
-
     const user = firebase.auth().currentUser;
     if (user) {
       db.collection("users")
-        .get()
-        .then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            db.collection("users")
-              .doc(doc.id)
-              .update({
-                friends: firebase.firestore.FieldValue.arrayRemove({
-                  name: friendName,
-                  email: friendEmail,
-                  avatar: friendAvatar,
-                  uid: friendUid,
-                }),
-              });
-          });
+        .doc(user.uid)
+        .update({
+          friends: firebase.firestore.FieldValue.arrayRemove({
+            name: friendName,
+            email: friendEmail,
+            avatar: friendAvatar,
+            uid: friendUid,
+          }),
+        })
+        .then(() => {
+          let friendsArray = [...friendList];
+          friendsArray = friendList.filter((e) => e.email !== email);
+          setFriendList(friendsArray);
+        })
+        .then(() => {
+          dispatch(userFriendsAction(friendList));
+        })
+        .catch((err) => {
+          log(err.message);
         });
     } else {
       alert("user not found");

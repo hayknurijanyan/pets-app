@@ -8,7 +8,7 @@ import {
   FormControl,
   InputLabel,
 } from "@material-ui/core";
-import { db, storage } from "../../firebase";
+import { db } from "../../firebase";
 import PropTypes from "prop-types";
 
 let log = console.log;

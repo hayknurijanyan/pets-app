@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Drawer,
@@ -14,7 +14,6 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import { Avatar } from "@material-ui/core";
 import ChatBox from "./chat/chatBox";
-import { useState } from "react";
 import firebase from "firebase";
 import { db } from "../firebase.js";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -30,6 +29,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import ChatMain from "./chat/chatMain";
+import { useSelector } from "react-redux";
 
 let log = console.log;
 const drawerWidth = 260;
@@ -76,7 +76,12 @@ export default function SidebarRight() {
   const [user, setUser] = useState({});
   const [uid, setUid] = useState({});
   const [open, setOpen] = useState(false);
+<<<<<<< HEAD
 
+=======
+  const userFriend = useSelector((state) => state.userFriends);
+  const mountedRef = useRef(true);
+>>>>>>> afd77430eb3af811056adf1eb8c28cecdc791b52
   useEffect(() => {
     async function fetchMyData() {
       const user = firebase.auth().currentUser;
@@ -87,13 +92,23 @@ export default function SidebarRight() {
         ).data();
         let friendsArray = [...dbUserData.friends];
         setFriendList(friendsArray);
+<<<<<<< HEAD
         console.log("friendsArray", friendsArray);
+=======
+>>>>>>> afd77430eb3af811056adf1eb8c28cecdc791b52
       } else {
         console.log("user not found");
       }
     }
     fetchMyData();
+<<<<<<< HEAD
   }, []);
+=======
+    return () => {
+      mountedRef.current = false;
+    };
+  }, [userFriend]);
+>>>>>>> afd77430eb3af811056adf1eb8c28cecdc791b52
 
   const handlePersonClick = (uid) => {
     setUid(uid);
