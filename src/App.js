@@ -74,15 +74,14 @@ function App() {
         <Route path="/signup" component={SignUp} />
         <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/" component={SignIn} />
-        {/* <Redirect to='notfound'/> */}
+        {/* <Redirect to="newsfeed" /> */}
       </Switch>
     </Router>
   ) : (
     <Router>
-      <Switch>
-        {" "}
-        <Route path="/notfound" component={NotFound} />{" "}
-      </Switch>
+      {/* <Switch>
+        <Route path="/notfound" component={NotFound} />
+      </Switch> */}
       <Navbar />
       <div className={classes.root}>
         <Hidden mdDown>
@@ -93,13 +92,14 @@ function App() {
             <Route path="/friends" component={Friends} />
             <Route path="/users" component={Users} />
             <Route path="/newsfeed" component={Newsfeed} />
+            <Route path="/signin" component={Newsfeed} refresh="true" />
             <Route path="/profile" component={Profile} />
             <Route path="/services" component={Services} />
             <Route path="/petfinder" component={Petfinder} />
             {/* <Route path="/:id" component={NotFound} /> */}
             {/* <Route path="/logout" component={Logout} /> */}
             <Route path="/" exact component={Newsfeed} />
-            <Redirect to="/notfound" />
+            <Redirect to="/notfound" component={NotFound} />
           </Switch>
         </main>
         <ChatBox />

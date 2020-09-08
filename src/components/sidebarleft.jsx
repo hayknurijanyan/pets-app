@@ -80,9 +80,8 @@ export default function SidebarLeft() {
     firebase
       .auth()
       .signOut()
-      // .then(() => alert("logout succsess"))
+      .then(() => window.location.reload(false))
       .catch((e) => e.message);
-    // window.location.reload(false);
   };
 
   useEffect(() => {
