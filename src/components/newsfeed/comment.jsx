@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 50,
     minHeight: 40,
     overflow: "wrap",
+    marginLeft: 30,
   },
   name: { marginLeft: 2, marginBottom: 5 },
   avatar: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   commentText: {
     display: "flex",
-
+    marginLeft: 3,
     overflowWrap: "anywhere",
   },
   addButton: {
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 3,
   },
   commentLine: {
-    backgroundColor: "#fafafa",
+    // backgroundColor: "#fafafa",
     borderRadius: 30,
   },
   main: { display: "flex" },
