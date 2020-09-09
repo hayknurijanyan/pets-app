@@ -185,23 +185,8 @@ function SignUp() {
               behavior: "",
             },
             friends: [],
-          })
-          .then(() => {
-            db.collection("petsFinder")
-              .doc("petsID")
-              .update({
-                allPetsSearch: firebase.firestore.FieldValue.arrayUnion({
-                  owner: { firstName, lastName },
-                  pet,
-                  defaultPetUrl,
-                  petInfo,
-                  userId: data.user.uid,
-                }),
-              })
-              .catch((err) => {
-                log(err);
-              });
           });
+
         const fetchUserData = async () => {
           const user = firebase.auth().currentUser;
           const ref = db.collection("users").doc(user.uid);
