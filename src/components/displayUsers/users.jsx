@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { db, auth } from "../../firebase";
-import firebase from "firebase";
 import { Toolbar, Switch } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -22,6 +21,7 @@ import {
 } from "@material-ui/core";
 import ChatBox from "../chat/chatBox";
 import ChatMain from "../chat/chatMain";
+import logger from "../../services/logService";
 let log = console.log;
 
 function Alert(props) {
@@ -65,7 +65,6 @@ const Users = () => {
   const [open, setOpen] = useState(false);
   const [userData, setUserData] = useState({});
   const [emailArray, setEmailArray] = useState([]);
-  // const [petBreed, setPetBreed] = useState("");
   const [showArr, setShowArr] = useState([]);
 
   useEffect(() => {
@@ -119,7 +118,6 @@ const Users = () => {
     setShowArr(searchArr);
     setSearchVal("");
   };
-
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -136,11 +134,6 @@ const Users = () => {
       );
     }
   };
-
-  const handleFilterAge = () => {};
-  const handleFilterBreed = () => {};
-  const handleFilterName = () => {};
-  const handleFilterBehavior = () => {};
 
   return (
     <>
@@ -169,24 +162,8 @@ const Users = () => {
             {/* <Switched>
               <Route path="pathName/:searchValue" component={Pet} />
             </Switched> */}
-            {/* <Pet result={searchResult} /> */}
           </CardContent>
           <CardActions className={classes.button}>
-            {/* <FilterBreed
-              onHandlePetBreed={setPetBreed}
-              searchResult={searchResult}
-              petBreed={petBreed}
-              filterBy={"Breed"}
-              searchResult={searchResult}
-              onAge={handleFilterAge}
-            /> */}
-            {/* <FilterGender
-              onHandlePetGender={setPetGender}
-              petGender={petGender}
-              filterBy={"Breed"}
-              searchResult={searchResult}
-              onBreed={handleFilterBreed}
-            /> */}
             <Button
               onClick={handleReset}
               variant="contained"
@@ -211,7 +188,6 @@ const Users = () => {
           result={showArr}
           setEmailArray={setEmailArray}
         />
-        {/* <EveryPet result={searchResult} /> */}
       </div>
     </>
   );

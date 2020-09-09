@@ -21,6 +21,7 @@ import {
   Divider,
 } from "@material-ui/core";
 import AlertFn from "./alert";
+import logger from "../../services/logService";
 let log = console.log;
 
 function Alert(props) {
@@ -199,6 +200,7 @@ function SignUp() {
         setError(err);
         checkError(error);
         setOpen(true);
+        logger.log(err);
       });
   };
 

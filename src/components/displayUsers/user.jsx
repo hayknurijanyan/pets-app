@@ -12,8 +12,7 @@ import {
   Typography,
   Button,
 } from "@material-ui/core";
-import useCurrentUserData from "../customHooks/useCurrentUserData";
-import useAllUsersData from "../customHooks/useAllUsersData";
+import logger from "../../services/logService";
 import { db, auth } from "../../firebase";
 import firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -96,6 +95,9 @@ function User(props) {
             result.push(obj.email);
           });
           setAsd(result);
+        })
+        .catch((error) => {
+          logger.log(error);
         });
     }
   };

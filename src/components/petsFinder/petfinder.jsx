@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../firebase";
 import { Toolbar, Switch } from "@material-ui/core";
-import EveryPet from "./everyPet";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -20,6 +19,7 @@ import {
   FormControl,
   OutlinedInput,
 } from "@material-ui/core";
+import logger from "../../services/logService";
 let log = console.log;
 
 function Alert(props) {
@@ -65,13 +65,17 @@ const Petfinder = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const newArray = [];
-      const snapshot = await db.collection("users").get();
-      snapshot.docs.forEach((doc) => {
-        newArray.push(doc.data());
-      });
-      setSearchArr(newArray);
-      setShowPets(newArray);
+      try {
+        const newArray = [];
+        const snapshot = await db.collection("users").get();
+        snapshot.docs.forEach((doc) => {
+          newArray.push(doc.data());
+        });
+        setSearchArr(newArray);
+        setShowPets(newArray);
+      } catch (err) {
+        logger.log(err);
+      }
     };
     fetchData();
   }, []);
@@ -142,13 +146,9 @@ const Petfinder = () => {
         const sVal = searchVal.toLowerCase().trim();
         const newArr = [...searchArr];
         const myArr = newArr.filter((animal) => animal.pet.includes(sVal));
-        // const result = myArr.filter(
-        //   (animal) => animal.userPetInfo.breed === petBreed
-        // );
         const resultGender = myArr.filter(
           (animal) => animal.userPetInfo.petsGender === petGender
         );
-        log("petGender", petGender);
         setShowPets(resultGender);
         const breedSet = new Set();
         myArr.map((obj) => {

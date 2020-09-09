@@ -1,27 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { db, auth, storage } from "../../firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-import SaveIcon from "@material-ui/icons/Save";
+import logger from "../../services/logService";
 import firebase from "firebase";
 import Loader from "./loader";
 import "./styles.css";
-import {
-  Card,
-  Toolbar,
-  ListItem,
-  List,
-  Avatar,
-  ListItemAvatar,
-  ListItemText,
-  Typography,
-  TextField,
-  Button,
-  CardContent,
-} from "@material-ui/core";
+import { Card, TextField, Button, CardContent } from "@material-ui/core";
 import useCurrentUserData from "../customHooks/useCurrentUserData";
-
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
@@ -63,7 +48,6 @@ export default function SingleChatMain(props) {
   const [content, setContent] = useState("");
   const [user, setUser] = useState([]);
   const [chatName, setChatName] = useState("");
-
   const myRef = React.createRef();
   const userData = useCurrentUserData();
 
@@ -105,6 +89,7 @@ export default function SingleChatMain(props) {
         log("error", error.message);
         setReadError(error.message);
         setLoadingChats(false);
+        logger.log(error);
       }
     };
     fetchData();
@@ -152,6 +137,7 @@ export default function SingleChatMain(props) {
     } catch (error) {
       log("error", error.message);
       setWriteError(error.message);
+      logger.log(error);
     }
   };
 
@@ -193,7 +179,6 @@ export default function SingleChatMain(props) {
             );
           })}
         </div>
-        {/* </CardContent> */}
       </Card>
       <Card className={classes.inputArea}>
         <CardContent>

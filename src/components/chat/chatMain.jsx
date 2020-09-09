@@ -1,27 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { db, auth, storage } from "../../firebase";
 import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-
+import logger from "../../services/logService";
 import firebase from "firebase";
 import Loader from "./loader";
 import uniqid from "uniqid";
 import "./styles.css";
-import {
-  Card,
-  Toolbar,
-  ListItem,
-  List,
-  Avatar,
-  ListItemAvatar,
-  ListItemText,
-  Typography,
-  TextField,
-  Button,
-  CardContent,
-} from "@material-ui/core";
+import { Card, TextField, Button, CardContent } from "@material-ui/core";
 import useCurrentUserData from "../customHooks/useCurrentUserData";
-
 let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
@@ -89,6 +75,7 @@ export default function ChatMain() {
             setLoadingChats(false);
           });
       } catch (error) {
+        logger.log(error);
         setReadError(error.message);
         setLoadingChats(false);
       }
@@ -137,6 +124,7 @@ export default function ChatMain() {
       chatArea.scrollBy(0, chatArea.scrollHeight);
     } catch (error) {
       setWriteError(error.message);
+      logger.log(error);
     }
   };
 
@@ -177,7 +165,6 @@ export default function ChatMain() {
             );
           })}
         </div>
-        {/* </CardContent> */}
       </Card>
       <Card className={classes.inputArea}>
         <CardContent>

@@ -9,9 +9,8 @@ import {
   InputLabel,
 } from "@material-ui/core";
 import { db } from "../../firebase";
+import logger from "../../services/logService";
 import PropTypes from "prop-types";
-
-let log = console.log;
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -67,7 +66,7 @@ export default function PetsSelectFiled(props) {
         setList(newArray);
       })
       .catch((error) => {
-        console.log("Error getting document:", error);
+        logger.log(error);
       });
   }, []);
 
