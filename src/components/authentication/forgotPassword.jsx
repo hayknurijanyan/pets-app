@@ -15,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import logger from "../../services/logService";
 let log = console.log;
 
 function Alert(props) {
@@ -89,6 +90,7 @@ function ForgotPassword() {
         setEmail("");
       })
       .catch((err) => {
+        logger.log(err);
         setError(err);
         checkError(error);
         setOpen(true);

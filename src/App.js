@@ -15,7 +15,6 @@ import Friends from "./components/friends";
 import Navbar from "./components/navbar";
 import Petfinder from "./components/petsFinder/petfinder";
 import { makeStyles } from "@material-ui/core/styles";
-import NotFound from "./components/notFound/notFound";
 import Users from "./components/displayUsers/users";
 import firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,6 +29,8 @@ import ChatBox from "./components/chat/chatBox";
 import ChatContainer from "./components/chatSingle/chatContainer";
 import ForgotPassword from "./components/authentication/forgotPassword";
 import FriendsCard from "./components/profile/friendscard";
+import NotFound from "./components/notfound";
+import XalxiProfile from "./components/profile/xalxiProfile/xalxiProfile";
 
 let log = console.log;
 
@@ -83,6 +84,7 @@ function App() {
         <Route path="/notfound" component={NotFound} />
       </Switch> */}
       <Navbar />
+      <Route path="/notfound" component={NotFound} />
       <div className={classes.root}>
         <Hidden mdDown>
           <SidebarLeft />
@@ -96,7 +98,7 @@ function App() {
             <Route path="/profile" component={Profile} />
             <Route path="/services" component={Services} />
             <Route path="/petfinder" component={Petfinder} />
-            {/* <Route path="/:id" component={NotFound} /> */}
+            <Route path="/:id" component={XalxiProfile} />
             {/* <Route path="/logout" component={Logout} /> */}
             <Route path="/" exact component={Newsfeed} />
             <Redirect to="/notfound" component={NotFound} />

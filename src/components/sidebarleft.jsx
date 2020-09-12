@@ -26,6 +26,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import firebase, { auth } from "firebase";
 import { db } from "../firebase";
 import { useSelector } from "react-redux";
+import RecentActorsIcon from "@material-ui/icons/RecentActors";
 
 const drawerWidth = 260;
 
@@ -76,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SidebarLeft() {
   const toRender = useSelector((state) => state.sideBarLeftRender);
+  let id = "12334w";
   const [avatarUrl, setAvatarUrl] = useState("");
   const classes = useStyles();
   const handleLogout = () => {
@@ -191,8 +193,17 @@ export default function SidebarLeft() {
                 Services
               </Typography>
             </ListItem>
-            {/* )
-            )} */}
+            <ListItem
+              className={classes.listItem}
+              button
+              component={Link}
+              to={id}
+            >
+              <RecentActorsIcon />
+              <Typography className={classes.listText} variant="body1">
+                Visit
+              </Typography>
+            </ListItem>
             <Divider />
             <ListItem
               component={Link}

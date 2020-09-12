@@ -21,6 +21,7 @@ import {
   Divider,
 } from "@material-ui/core";
 import AlertFn from "./alert";
+import logger from "../../services/logService";
 let log = console.log;
 
 function Alert(props) {
@@ -185,23 +186,8 @@ function SignUp() {
               behavior: "",
             },
             friends: [],
-          })
-          .then(() => {
-            db.collection("petsFinder")
-              .doc("petsID")
-              .update({
-                allPetsSearch: firebase.firestore.FieldValue.arrayUnion({
-                  owner: { firstName, lastName },
-                  pet,
-                  defaultPetUrl,
-                  petInfo,
-                  userId: data.user.uid,
-                }),
-              })
-              .catch((err) => {
-                log(err);
-              });
           });
+
         const fetchUserData = async () => {
           const user = firebase.auth().currentUser;
           const ref = db.collection("users").doc(user.uid);
@@ -214,6 +200,7 @@ function SignUp() {
         setError(err);
         checkError(error);
         setOpen(true);
+        logger.log(err);
       });
   };
 

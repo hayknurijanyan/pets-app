@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { storage } from "../../firebase";
 import PropTypes from "prop-types";
-let log = console.log;
+import logger from "../../services/logService";
 
 function SetDefaultPictureUrl(props) {
   const { onHandlePetUrlSet, pet } = props;
@@ -13,8 +13,8 @@ function SetDefaultPictureUrl(props) {
         const storageRef = storage.ref();
         const fileRef = storageRef.child(`petPictures/${pet}.jpg`);
         setFileUrl(await fileRef.getDownloadURL());
-      } catch (e) {
-        // log(e.message);
+      } catch (err) {
+        logger.log(err);
       }
     };
     handleChange();

@@ -98,14 +98,6 @@ function SignIn() {
     setPassword(e.target.value);
   };
 
-  const handleLogout = () => {
-    firebase
-      .auth()
-      .signOut()
-      // .then(() => alert("logout succsess"))
-      .catch((e) => e.message);
-  };
-
   const handleSignIn = async (e) => {
     firebase
       .auth()

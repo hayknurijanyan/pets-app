@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import logger from "../../services/logService";
 import firebase from "firebase";
 import { db } from "../../firebase";
 let log = console.log;
@@ -13,7 +14,7 @@ function useCurrentUserData() {
 
         setUserData({ ...collection.data() });
       } else {
-        log("user data not found");
+        logger.log("user data not found");
       }
     };
     fetchUserData();
