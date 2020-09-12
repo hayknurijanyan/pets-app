@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import DeleteIcon from "@material-ui/icons/Delete";
 import uniqid from "uniqid";
 import {
   Box,
@@ -12,6 +11,7 @@ import {
   Divider,
 } from "@material-ui/core";
 import { useParams } from "react-router-dom";
+import logger from "../../services/logService";
 import PropTypes from "prop-types";
 let log = console.log;
 

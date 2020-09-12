@@ -78,7 +78,6 @@ export default function SidebarRight() {
   const [open, setOpen] = useState(false);
   const userFriend = useSelector((state) => state.userFriends);
   const mountedRef = useRef(true);
-
   useEffect(() => {
     async function fetchMyData() {
       const user = firebase.auth().currentUser;
