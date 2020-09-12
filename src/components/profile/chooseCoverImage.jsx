@@ -23,6 +23,7 @@ export default function CoverImageChoose(props) {
 
     props.backToAccount();
     props.snap();
+    props.toRender();
   }
   const useStyles = makeStyles((theme) => ({
     img: {

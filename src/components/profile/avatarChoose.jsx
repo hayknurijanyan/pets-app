@@ -10,19 +10,28 @@ import useCurrentUserData from "../customHooks/useCurrentUserData";
 import Loader from "../loader";
 import { db } from "../../firebase";
 import { auth } from "firebase";
+import logger from "redux-logger";
+import { useDispatch } from "react-redux";
+import { sidebarLeftRender } from "../../actions";
 
 export default function AvatarChoose(props) {
   const [open, setOpen] = useState(props.form);
   let images = null;
   const urls = useCurrentUserData().photos;
-
+  const dispatch = useDispatch();
   function setAvatarImage(url) {
-    db.collection("users").doc(auth().currentUser.uid).update({
-      avatar: url,
-    });
-
-    props.backToAccount();
-    props.snap();
+    db.collection("users")
+      .doc(auth().currentUser.uid)
+      .update({
+        avatar: url,
+      })
+      .then(() => {
+        props.backToAccount();
+        props.snap();
+        props.toRender();
+        dispatch(sidebarLeftRender());
+      })
+      .catch((error) => logger.log(error));
   }
   const useStyles = makeStyles((theme) => ({
     img: {

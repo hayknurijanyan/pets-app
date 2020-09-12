@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
+
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import {
-  Toolbar,
-  Grid,
-  Divider,
-  IconButton,
-  Snackbar,
-} from "@material-ui/core";
+import { Toolbar, Grid, IconButton, Snackbar } from "@material-ui/core";
 import ImageAvatar from "./avatar";
 import Popup from "../popup";
 import Message from "../message";
@@ -24,6 +17,8 @@ import { auth } from "../../firebase";
 import AvatarChoose from "./avatarChoose";
 import CoverImageChoose from "./chooseCoverImage";
 import MuiAlert from "@material-ui/lab/Alert";
+import logger from "redux-logger";
+import CreatePost from "../newsfeed/createpost";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -64,6 +59,8 @@ export default function MediaCard() {
   const [coverPhoto, setCoverPhoto] = useState("");
   const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState("");
+  const [goRender, setGoRender] = useState(true);
+  const [postOpen, setPostOpen] = useState(false);
   const [chooseAvatar, setChooseAvatar] = useState({
     open: false,
     target: "",
@@ -73,6 +70,7 @@ export default function MediaCard() {
     target: "",
   });
   const [name, setName] = useState("");
+
   useEffect(() => {
     const fetchData = async function () {
       const ref = db.collection("users").doc(auth.currentUser.uid);
@@ -82,8 +80,8 @@ export default function MediaCard() {
       setCoverPhoto(data.coverPhoto);
       setName(`${data.firstName}  ${data.lastName}`);
     };
-    fetchData();
-  }, []);
+    fetchData().catch((error) => logger.log(error));
+  }, [goRender]);
   const checkSuccessMessage = (suc) => {
     return (
       <Alert onClose={handleClose} severity="success">
@@ -97,6 +95,15 @@ export default function MediaCard() {
     }
     setOpen(false);
   };
+  const postHandleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setPostOpen(!postOpen);
+  };
+  function toRender() {
+    setGoRender(!goRender);
+  }
   function smthSet() {
     setSuccess({ message: "Photo changed" });
     checkSuccessMessage(success);
@@ -121,18 +128,21 @@ export default function MediaCard() {
           <Typography gutterBottom variant="h5" component="h2">
             {name}
             <Typography variant="body2" color="textSecondary" component="p">
-              <div className={classes.popups}>
-                <Popup />
-                <Button variant="outlined" size="small">
-                  +
-                </Button>
-              </div>
+              <div className={classes.popups}>{/* <Popup /> */}</div>
             </Typography>
           </Typography>
         </div>
         <Grid container className={classes.buttons}>
           <div>
-            <Message />
+            {/* <Button
+              onClick={postHandleClose}
+              className={classes.button}
+              variant="contained"
+              size="medium"
+              color="primary"
+            >
+              Create Post
+            </Button> */}
           </div>
           <div>
             <Button
@@ -185,6 +195,9 @@ export default function MediaCard() {
 
   return (
     <>
+      <Snackbar open={postOpen} onClose={postHandleClose}>
+        <CreatePost />
+      </Snackbar>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         {checkSuccessMessage(success)}
       </Snackbar>
@@ -192,11 +205,13 @@ export default function MediaCard() {
         form={{ ...chooseAvatar }}
         backToAccount={toChoose}
         snap={smthSet}
+        toRender={toRender}
       />
       <CoverImageChoose
         form={{ ...chooseCoverPhoto }}
         backToAccount={toCoverPhotoChoose}
         snap={smthSet}
+        toRender={toRender}
       />
 
       {account}

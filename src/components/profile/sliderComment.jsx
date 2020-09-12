@@ -56,7 +56,6 @@ export default function SliderComment(props) {
   };
   const { images, index } = props;
   if (images[index].comments.length) {
-    console.log(images[index].comments);
     comments = (
       <div className={classes.mainDiv}>
         {images[index].comments.map((user) => {

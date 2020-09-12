@@ -6,6 +6,8 @@ import {
   FormControl,
   InputLabel,
   OutlinedInput,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +29,6 @@ export default function AboutEdit(props) {
   let dataArray = [
     { text: "Name", value: name, key: "petsName" },
     { text: "Breed", value: breed, key: "petsBreed" },
-    { text: "Gender", value: petsGender, key: "petsGender" },
     { text: "Age", value: age, key: "petsAge" },
     { text: "Behavior", value: behavior, key: "petsBehavior" },
   ];
@@ -47,6 +48,18 @@ export default function AboutEdit(props) {
           />
         </FormControl>
       ))}
+      <FormControl variant="outlined" className={classes.margin}>
+        <InputLabel name="petsGender">Gender</InputLabel>
+        <Select
+          label="petsGender"
+          defaultValue={petsGender}
+          name="petsGender"
+          onChange={(e) => props.handlerInput(e)}
+        >
+          <MenuItem value={"Male"}>Male</MenuItem>
+          <MenuItem value={"Female"}>Female</MenuItem>
+        </Select>
+      </FormControl>
     </Card>
   );
 }

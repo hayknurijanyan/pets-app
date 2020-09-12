@@ -25,6 +25,7 @@ import BusinessCenterIcon from "@material-ui/icons/BusinessCenter";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import firebase, { auth } from "firebase";
 import { db } from "../firebase";
+import { useSelector } from "react-redux";
 
 const drawerWidth = 260;
 
@@ -74,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SidebarLeft() {
+  const toRender = useSelector((state) => state.sideBarLeftRender);
   const [avatarUrl, setAvatarUrl] = useState("");
   const classes = useStyles();
   const handleLogout = () => {
@@ -92,7 +94,7 @@ export default function SidebarLeft() {
       setAvatarUrl(data.avatar);
     };
     fetchData();
-  });
+  }, [toRender]);
 
   return (
     <div className={classes.root}>
