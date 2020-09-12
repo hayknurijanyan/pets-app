@@ -84,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Post(props) {
+  let id = props.id;
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -147,7 +148,7 @@ export default function Post(props) {
             <Typography
               className={classes.name}
               component={Link}
-              to="/profile"
+              to={id}
               variant="h6"
             >
               {props.name}
