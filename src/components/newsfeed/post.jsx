@@ -115,7 +115,7 @@ export default function Post(props) {
           avatar={
             <Avatar
               component={Link}
-              to="/profile/"
+              to={id}
               aria-label="recipe"
               className={classes.large}
               src={props.userAvatar}

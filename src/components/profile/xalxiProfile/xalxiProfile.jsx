@@ -56,10 +56,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const XalxiProfile = (props) => {
+  console.log("this is props", props.match.params.id);
+  const userId = props.match.params.id;
   const classes = useStyles();
   const [content, setContent] = useState("about");
   const [userData, setUserData] = useState({});
-  const userId = "6Qwqbg4PP9exnVSZRK6QuRLwy6d2";
+
   const petInfoHardcode = {
     name: "Jako",
     age: 5,
