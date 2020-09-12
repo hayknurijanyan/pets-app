@@ -98,7 +98,13 @@ function App() {
             <Route path="/profile" component={Profile} />
             <Route path="/services" component={Services} />
             <Route path="/petfinder" component={Petfinder} />
-            <Route path="/:id" component={XalxiProfile} />
+            {/* <Route path="/:id" component={XalxiProfile} /> */}
+            <Route
+              path="/:id"
+              render={(props) => (
+                <XalxiProfile {...props} title={`Props through render`} />
+              )}
+            />
             {/* <Route path="/logout" component={Logout} /> */}
             <Route path="/" exact component={Newsfeed} />
             <Redirect to="/notfound" component={NotFound} />
