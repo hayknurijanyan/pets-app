@@ -100,11 +100,7 @@ export default function SidebarLeft() {
       }
     };
     fetchData();
-<<<<<<< HEAD
-  }, []);
-=======
   }, [toRender]);
->>>>>>> d993a6f80eed967c9dfa77ef3ddcbd60d6d4fbf1
 
   return (
     <div className={classes.root}>
