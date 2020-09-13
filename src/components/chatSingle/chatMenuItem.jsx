@@ -1,32 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
-import Fab from "@material-ui/core/Fab";
-import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
-import SingleChatMain from "./singleChatMain";
 import ChatContainer from "./chatContainer";
 import firebase from "firebase";
 import { db } from "../../firebase.js";
-import { Link } from "react-router-dom";
-import Avatar from "@material-ui/core/Avatar";
-import MailIcon from "@material-ui/icons/Mail";
-import ChatBoxOpen from "./chatBoxOpen";
-import {
-  Drawer,
-  List,
-  Divider,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  MenuItem,
-} from "@material-ui/core";
+
+import { MenuItem } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -61,17 +40,21 @@ export default function ChatMenuItem(props) {
   const [user, setUser] = useState({});
   useEffect(() => {
     async function fetchMyData() {
-      const user = firebase.auth().currentUser;
-      if (user) {
-        setUser(user);
-        const dbUserData = (
-          await db.collection("users").doc(user.uid).get()
-        ).data();
-        let friendsArray = [...dbUserData.friends];
-        setFriendList(friendsArray);
-        // console.log(dbUserData.friends);
-      } else {
-        console.log("user not found");
+      try {
+        const user = firebase.auth().currentUser;
+        if (user) {
+          setUser(user);
+          const dbUserData = (
+            await db.collection("users").doc(user.uid).get()
+          ).data();
+          let friendsArray = [...dbUserData.friends];
+          setFriendList(friendsArray);
+          // console.log(dbUserData.friends);
+        } else {
+          console.log("user not found");
+        }
+      } catch (err) {
+        console.log(err);
       }
     }
     fetchMyData();

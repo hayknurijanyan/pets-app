@@ -21,6 +21,7 @@ import { db } from "../../firebase";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import logger from "../../services/logService";
+import SignInWithServices from "./signInWithServices";
 let log = console.log;
 
 function Alert(props) {
@@ -201,6 +202,7 @@ function SignIn() {
               </Grid>
             </Grid>
             <Box mt={5}>
+              <SignInWithServices />
               <Copyright />
             </Box>
           </form>

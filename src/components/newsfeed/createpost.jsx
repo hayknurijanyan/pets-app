@@ -87,15 +87,19 @@ function CreatePost(props) {
 
   useEffect(() => {
     async function fetchMyData() {
-      const user = firebase.auth().currentUser;
-      if (user) {
-        const dbUserData = (
-          await db.collection("users").doc(user.uid).get()
-        ).data();
+      try {
+        const user = firebase.auth().currentUser;
+        if (user) {
+          const dbUserData = (
+            await db.collection("users").doc(user.uid).get()
+          ).data();
 
-        setAvatarUrl(dbUserData.avatar);
-      } else {
-        console.log("user not found");
+          setAvatarUrl(dbUserData.avatar);
+        } else {
+          console.log("user not found");
+        }
+      } catch (err) {
+        log(err);
       }
     }
     fetchMyData();

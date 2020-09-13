@@ -86,13 +86,17 @@ export default function SidebarLeft() {
 
   useEffect(() => {
     const fetchData = async function () {
-      const ref = db.collection("users").doc(auth().currentUser.uid);
-      const collection = await ref.get();
-      const data = collection.data();
-      setAvatarUrl(data.avatar);
+      try {
+        const ref = db.collection("users").doc(auth().currentUser.uid);
+        const collection = await ref.get();
+        const data = collection.data();
+        setAvatarUrl(data.avatar);
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchData();
-  });
+  }, []);
 
   return (
     <div className={classes.root}>

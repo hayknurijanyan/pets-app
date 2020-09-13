@@ -58,17 +58,21 @@ export default function ChatContainer(props) {
   const [user, setUser] = useState({});
   useEffect(() => {
     async function fetchMyData() {
-      const user = firebase.auth().currentUser;
-      if (user) {
-        setUser(user);
-        const dbUserData = (
-          await db.collection("users").doc(user.uid).get()
-        ).data();
-        let friendsArray = [...dbUserData.friends];
-        setFriendList(friendsArray);
-        // console.log(dbUserData.friends);
-      } else {
-        console.log("user not found");
+      try {
+        const user = firebase.auth().currentUser;
+        if (user) {
+          setUser(user);
+          const dbUserData = (
+            await db.collection("users").doc(user.uid).get()
+          ).data();
+          let friendsArray = [...dbUserData.friends];
+          setFriendList(friendsArray);
+          // console.log(dbUserData.friends);
+        } else {
+          console.log("user not found");
+        }
+      } catch (err) {
+        console.log(err);
       }
     }
     fetchMyData();
