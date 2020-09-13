@@ -4,6 +4,7 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { db } from "../../firebase";
 import defaultUser from "./defaultUser";
 import { Redirect } from "react-router-dom";
+import logger from "../../services/logService";
 let log = console.log;
 
 function SignInWithServices() {
@@ -18,24 +19,29 @@ function SignInWithServices() {
     ],
     callbacks: {
       signInSuccess: async () => {
-        const user = firebase.auth().currentUser;
-        if (user) {
-          const ref = db.collection("users").doc(user.uid);
-          const collection = await ref.get();
-          if (collection.data() === undefined) {
-            db.collection("users")
-              .doc(user.uid)
-              .set({
-                userId: db.doc(`users/${user.uid}`),
-                email: user.email,
-                ...defaultUser(),
-              })
-              .then(() => {
-                window.location = "/";
-              });
-          } else {
-            return;
+        try {
+          const user = firebase.auth().currentUser;
+          if (user) {
+            const ref = db.collection("users").doc(user.uid);
+            const collection = await ref.get();
+            if (collection.data() === undefined) {
+              db.collection("users")
+                .doc(user.uid)
+                .set({
+                  userId: db.doc(`users/${user.uid}`),
+                  email: user.email,
+                  ...defaultUser(),
+                })
+                .then(() => {
+                  window.location = "/";
+                });
+            } else {
+              return;
+            }
           }
+        } catch (err) {
+          logger.log(err);
+          log(err);
         }
       },
     },
