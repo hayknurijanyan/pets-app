@@ -6,6 +6,8 @@ import {
   OutlinedInput,
   InputAdornment,
   FormControl,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -13,6 +15,10 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 275,
     marginTop: 20,
     marginBottom: 30,
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
   },
   margin: {
     margin: theme.spacing(1),
@@ -39,7 +45,6 @@ export default function AboutEdit(props) {
     { text: "Prof", value: profession, name: "profession" },
     { text: "City", value: props.data.location.city, name: "city" },
     { text: "Country", value: props.data.location.country, name: "country" },
-    { text: "Gender", value: gender, name: "gender" },
     { text: "Age", value: age, name: "age" },
     { text: "Email", value: email, name: "email" },
     { text: "Number", value: number, name: "number" },
@@ -61,6 +66,18 @@ export default function AboutEdit(props) {
           />
         </FormControl>
       ))}
+      <FormControl variant="outlined" className={classes.margin}>
+        <InputLabel name="gender">Gender</InputLabel>
+        <Select
+          label="gender"
+          defaultValue={gender}
+          name="gender"
+          onChange={(e) => props.handlerInput(e)}
+        >
+          <MenuItem value={"Male"}>Male</MenuItem>
+          <MenuItem value={"Female"}>Female</MenuItem>
+        </Select>
+      </FormControl>
     </Card>
   );
 }

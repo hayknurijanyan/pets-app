@@ -13,6 +13,7 @@ import Loader from "../loader";
 import EditTabPanel from "./editTabPanel";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import logger from "redux-logger";
 
 let log = console.log;
 function Alert(props) {
@@ -108,7 +109,9 @@ export default function About() {
       setNumber(data.contactNumber);
       setUserPetInfo({ ...data.userPetInfo });
     }
-    fetchMyData();
+    fetchMyData().catch((error) => {
+      logger.log(error);
+    });
   }, []);
   function editHandler() {
     setEdit(!edit);
@@ -155,7 +158,10 @@ export default function About() {
         };
         fetchUser();
       })
-      .catch((err) => log(err));
+      .catch((err) => {
+        log(err);
+        logger.log(error);
+      });
   }
 
   function handlerInput(e) {

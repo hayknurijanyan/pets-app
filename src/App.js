@@ -30,6 +30,7 @@ import ChatContainer from "./components/chatSingle/chatContainer";
 import ForgotPassword from "./components/authentication/forgotPassword";
 import FriendsCard from "./components/profile/friendscard";
 import NotFound from "./components/notfound";
+import XalxiProfile from "./components/profile/xalxiProfile/xalxiProfile";
 
 let log = console.log;
 
@@ -97,7 +98,13 @@ function App() {
             <Route path="/profile" component={Profile} />
             <Route path="/services" component={Services} />
             <Route path="/petfinder" component={Petfinder} />
-            {/* <Route path="/:id" component={NotFound} /> */}
+            {/* <Route path="/:id" component={XalxiProfile} /> */}
+            <Route
+              path="/:id"
+              render={(props) => (
+                <XalxiProfile {...props} title={`Props through render`} />
+              )}
+            />
             {/* <Route path="/logout" component={Logout} /> */}
             <Route path="/" exact component={Newsfeed} />
             <Redirect to="/notfound" component={NotFound} />

@@ -13,6 +13,7 @@ import {
   CardContent,
   TextField,
   Divider,
+  Avatar,
 } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
@@ -101,6 +102,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  avatar: {
+    width: "400px",
+    height: "300px",
+  },
   likesHeader: {
     marginTop: "3px",
     width: "100%",
@@ -119,14 +124,27 @@ function PhotoSlider(props) {
   const [index, setIndex] = useState(props.index);
   const [open, setOpen] = useState(true);
   const [likesComponent, setLikesComponent] = useState(false);
-  const [images, setImages] = useState(null);
+  const [likes, setLikes] = useState(null);
 
+  useEffect(() => {
+    async function fetchData() {
+      const userRef = db.collection("users").doc(auth().currentUser.uid);
+      const user = await userRef.get();
+      const likesArray = user.data().photos[props.index].likes;
+      setLikes(likesArray);
+    }
+    fetchData();
+  }, [index]);
   function likesComponentOpen() {
     setLikesComponent(!likesComponent);
   }
   function handleClose() {
     setOpen({ open: false });
     props.backClickHandler();
+  }
+  function commentSubmit() {
+    props.commentTextChange("");
+    props.commentSubmit();
   }
   function setLike() {}
   const classes = useStyles();
@@ -178,12 +196,17 @@ function PhotoSlider(props) {
           >
             prev
           </Button>
-          <div className={classes.imgDiv}>
+          <Avatar
+            src={props.images[props.index].img}
+            variant="square"
+            className={classes.avatar}
+          ></Avatar>
+          {/* <div className={classes.imgDiv}>
             <img
               src={props.images[props.index].img}
               className={classes.img}
             ></img>
-          </div>
+          </div> */}
           <Button
             color="primary"
             onClick={() => props.changeIndex(props.index + 1)}
@@ -232,9 +255,11 @@ function PhotoSlider(props) {
                 <div className={classes.commentArea}>
                   <div className={classes.commentInput}>
                     <TextField
+                      defaultValue={props.commentText}
                       id="outlined-full-width"
                       style={{ margin: 6 }}
                       placeholder="Write a comment"
+                      onChange={(e) => props.commentTextChange(e.target.value)}
                       margin="normal"
                       fullWidth
                       InputLabelProps={{
@@ -246,6 +271,8 @@ function PhotoSlider(props) {
                       className={classes.addButton}
                       variant="contained"
                       color="primary"
+                      value={props.commentText}
+                      onClick={commentSubmit}
                     >
                       Add
                     </Button>

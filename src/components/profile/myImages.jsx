@@ -1,26 +1,18 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  CardContent,
-  CardActions,
-  CardHeader,
-  Card,
-  Divider,
-} from "@material-ui/core";
+import { CardContent, CardActions, CardHeader, Card } from "@material-ui/core";
 import { Typography, Button } from "@material-ui/core";
-import ImageAvatar from "./avatar";
-import EditPopover from "../newsfeed/editpopup";
+
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
-import { catdog } from "../../images/catdog.png";
+
 import PhotoSlider from "./photoSlider";
 import ImageDrop from "./imageDrop";
-import UpLoad from "../upLoadingFiles/upLoad";
+
 import firebase, { storage } from "firebase";
 import { useEffect } from "react";
 import noImage from "../../images/noImage.png";
-import useCurrentUserData from "../customHooks/useCurrentUserData";
 import Loader from "../loader";
 import { db, auth } from "../../firebase";
 
@@ -76,6 +68,10 @@ export default function ImageGridList() {
   const [imgIndex, setImgIndex] = useState(0);
   const [asd, setAsd] = useState(true);
   const [urls, setUrls] = useState([]);
+  const [avatar, setAvatar] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [commentValue, setCommentValue] = useState("");
   const classes = useStyles();
   let toRender = null;
   let grid = null;
@@ -88,13 +84,16 @@ export default function ImageGridList() {
         const collection = await ref.get();
 
         setUrls([...collection.data().photos]);
+        setAvatar(collection.data().avatar);
+        setFirstName(collection.data().firstName);
+        setLastName(collection.data().lastName);
       } else {
         console.log("user data not found");
       }
     };
     fetchUserData();
-  }, [asd]);
-  console.log(urls, "nnnneeewwwwww");
+  }, [asd, commentValue]);
+
   function toSlide(index) {
     setImgIndex(index);
     setIsSlider("slider");
@@ -108,23 +107,58 @@ export default function ImageGridList() {
   function changeIndexHandler(arg) {
     setImgIndex(arg);
   }
+  function commentTextChangeHandler(text) {
+    setCommentValue(text);
+    console.log(commentValue, "ddd");
+  }
+  async function commentSubmitHandler() {
+    const imagesArray = [...urls];
+    const id = auth.currentUser.uid;
+    const newComments = [...urls[imgIndex].comments];
+    const newComment = {
+      avatar,
+      id,
+      firstName,
+      lastName,
+      text: commentValue,
+    };
+
+    newComments.push({ ...newComment });
+    imagesArray[imgIndex] = {
+      url: imagesArray[imgIndex].url,
+      comments: [...newComments],
+      likes: [...imagesArray[imgIndex].likes],
+    };
+    db.collection("users").doc(auth.currentUser.uid).update({
+      photos: firebase.firestore.FieldValue.delete(),
+    });
+    db.collection("users")
+      .doc(auth.currentUser.uid)
+      .update({
+        photos: firebase.firestore.FieldValue.arrayUnion(...imagesArray),
+      })
+      .then(() => {
+        setAsd(!asd);
+      });
+    setCommentValue("");
+  }
   function setLike(index, likeOwner) {
     const imagesArray = [...urls];
-    console.log(imagesArray, "all images");
+
     const imageLikes = [...imagesArray[index].likes];
-    console.log(imageLikes, "old likes");
+
     if (imageLikes.includes(likeOwner)) {
       imageLikes.splice(imageLikes.indexOf(likeOwner), 1);
     } else {
       imageLikes.push(likeOwner);
     }
-    console.log(imageLikes, "newLikes");
+
     imagesArray[index] = {
       url: imagesArray[index].url,
       comments: [...imagesArray[index].comments],
       likes: [...imageLikes],
     };
-    console.log(imagesArray, "newImages");
+
     db.collection("users").doc(auth.currentUser.uid).update({
       photos: firebase.firestore.FieldValue.delete(),
     });
@@ -240,6 +274,9 @@ export default function ImageGridList() {
         index={imgIndex}
         changeIndex={changeIndexHandler}
         handlerSetLike={setLike}
+        commentTextChange={commentTextChangeHandler}
+        commentText={commentValue}
+        commentSubmit={commentSubmitHandler}
       />
     );
   } else if (isSlider === "drop") {

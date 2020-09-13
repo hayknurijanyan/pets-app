@@ -1,8 +1,16 @@
 import { AUTH_STATE_CHANGE } from "../reducers/isUser";
 import { PERSIST_USER_DATA } from "../reducers/userData";
 import { USER_FRIENDS } from "../reducers/userFriends";
-// userFriedsData
+import { SIDEBAR_LEFT_RENDER } from "../reducers/sidebarLeftRender";
 
+// sidebarLeftRender
+export const sidebarLeftRender = () => {
+  return {
+    type: SIDEBAR_LEFT_RENDER,
+  };
+};
+
+// userFriedsData
 export const userFriendsAction = (friends) => {
   return {
     type: USER_FRIENDS,
