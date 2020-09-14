@@ -342,7 +342,7 @@ export default function About() {
           <Divider />
           <CardContent>
             {petArr.map((title) => (
-              <div className={classes.bio}>
+              <div key={uniqid()} className={classes.bio}>
                 <Typography
                   className={classes.text}
                   variant="body1"
