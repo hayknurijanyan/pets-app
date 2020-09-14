@@ -86,6 +86,7 @@ function CreatePost(props) {
   const [avatarUrl, setAvatarUrl] = useState("");
 
   useEffect(() => {
+    let unmounted = false;
     async function fetchMyData() {
       try {
         const user = firebase.auth().currentUser;
@@ -93,8 +94,9 @@ function CreatePost(props) {
           const dbUserData = (
             await db.collection("users").doc(user.uid).get()
           ).data();
-
-          setAvatarUrl(dbUserData.avatar);
+          if (!unmounted) {
+            setAvatarUrl(dbUserData.avatar);
+          }
         } else {
           console.log("user not found");
         }
@@ -103,6 +105,10 @@ function CreatePost(props) {
       }
     }
     fetchMyData();
+
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   const handleClose = (event, reason) => {

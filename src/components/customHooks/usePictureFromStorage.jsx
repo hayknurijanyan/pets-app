@@ -7,16 +7,22 @@ function usePictureFromStorage(folderName, picName) {
   const [fileUrl, setFileUrl] = useState("");
 
   useEffect(() => {
+    let unmounted = false;
     const getPic = async () => {
       try {
         const storageRef = storage.ref();
         const fileRef = storageRef.child(`${folderName}/${picName}.jpg`);
-        setFileUrl(await fileRef.getDownloadURL());
+        if (!unmounted) {
+          setFileUrl(await fileRef.getDownloadURL());
+        }
       } catch (error) {
         logger.log(error);
       }
     };
     getPic();
+    return () => {
+      unmounted = true;
+    };
   }, []);
   return fileUrl;
 }

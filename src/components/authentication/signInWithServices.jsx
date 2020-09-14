@@ -48,9 +48,15 @@ function SignInWithServices() {
   };
 
   useEffect(() => {
+    let unmounted = false;
     firebase.auth().onAuthStateChanged((user) => {
-      setSignIn(!!user);
+      if (!unmounted) {
+        setSignIn(!!user);
+      }
     });
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   return (

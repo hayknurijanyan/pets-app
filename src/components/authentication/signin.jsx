@@ -81,15 +81,24 @@ function SignIn() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
+
   useEffect(() => {
+    let unmounted = false;
+
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         dispatch(isUserAction(user));
-        setUser(user);
+        if (!unmounted) {
+          setUser(user);
+        }
       } else {
         log("redux not done");
       }
     });
+
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   const handleEmail = (e) => {

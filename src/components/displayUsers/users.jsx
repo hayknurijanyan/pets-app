@@ -68,16 +68,23 @@ const Users = () => {
   const [showArr, setShowArr] = useState([]);
 
   useEffect(() => {
+    let unmounted = false;
     const fetchData = async () => {
       const newArray = [];
       const snapshot = await db.collection("users").get();
       snapshot.docs.forEach((doc) => {
         newArray.push(doc.data());
       });
-      setSearchArr(newArray);
-      setShowArr(newArray);
+      if (!unmounted) {
+        setSearchArr(newArray);
+        setShowArr(newArray);
+      }
     };
     fetchData();
+
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   useEffect(() => {

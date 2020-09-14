@@ -54,9 +54,15 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      dispatch(authStateChangeAction(user));
-    });
+    let unmounted = false;
+    if (!unmounted) {
+      firebase.auth().onAuthStateChanged((user) => {
+        dispatch(authStateChangeAction(user));
+      });
+    }
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   const user = useSelector((state) => state.user);
