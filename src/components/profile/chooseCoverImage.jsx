@@ -10,6 +10,7 @@ import useCurrentUserData from "../customHooks/useCurrentUserData";
 import Loader from "../loader";
 import { db } from "../../firebase";
 import { auth } from "firebase";
+import uniqid from "uniqid";
 
 export default function CoverImageChoose(props) {
   const [open, setOpen] = useState(props.form);
@@ -61,6 +62,7 @@ export default function CoverImageChoose(props) {
           {urls.map((photo) => {
             return (
               <div
+                key={uniqid()}
                 style={{
                   display: "flex",
                   flexDirection: "row",

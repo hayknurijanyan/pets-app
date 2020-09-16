@@ -23,6 +23,7 @@ import { ImageAvatarSmall } from "./avatar";
 import { db } from "../../firebase";
 import LikeRow from "./likeRow";
 import { auth } from "firebase";
+import uniqid from "uniqid";
 
 const useStyles = makeStyles((theme) => ({
   img: {
@@ -119,12 +120,14 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
   },
 }));
+let log = console.log;
 
 function PhotoSlider(props) {
   const [index, setIndex] = useState(props.index);
   const [open, setOpen] = useState(true);
   const [likesComponent, setLikesComponent] = useState(false);
   const [likes, setLikes] = useState(null);
+  log(props.images[props.index], "asd");
 
   useEffect(() => {
     async function fetchData() {
@@ -173,7 +176,7 @@ function PhotoSlider(props) {
           <div className={classes.likes}>
             <Divider variant="middle" color="secondary" />
             {props.images[props.index].likes.map((url) => (
-              <LikeRow url={url} />
+              <LikeRow key={uniqid()} url={url} />
             ))}
           </div>
           <Button
@@ -287,10 +290,7 @@ function PhotoSlider(props) {
           <Button onClick={handleClose} color="primary">
             Close
           </Button>
-          <Button
-            onClick={() => props.onDelete(props.images[index].img)}
-            color="secondary"
-          >
+          <Button onClick={() => props.onDelete(index)} color="secondary">
             Delete
           </Button>
         </DialogActions>
