@@ -25,6 +25,7 @@ import XalxiAbout from "./xalxiAbout";
 import XalxiImages from "./xalxiImages";
 import XalxiFriends from "./xalxiFriends";
 import { db } from "../../../firebase";
+import defaultImage from "../../../images/defaultCoverPhoto.jpg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +33,14 @@ const useStyles = makeStyles((theme) => ({
     width: "50rem",
     marginTop: 10,
     borderRadius: 20,
+  },
+  glob: {
+    width: "100%",
+    marginTop: "20px",
+    padding: "0px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
   },
   media: {
     marginTop: -40,
@@ -56,42 +65,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const XalxiProfile = (props) => {
-  console.log("this is props", props.match.params.id);
   const userId = props.match.params.id;
   const classes = useStyles();
   const [content, setContent] = useState("about");
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(null);
+  let imageHardcode = [];
+  let petInfoHardcode = {};
+  let userInfoHardcode = {};
 
-  const petInfoHardcode = {
-    name: "Jako",
-    age: 5,
-    gender: "male",
-    behavior: "lazy",
-    breed: "tuzik",
-  };
-  const userInfoHardcode = {
-    fName: "Poxos",
-    lName: "poxosyan",
-    age: 99,
-    gender: "male",
-    city: "San Francisco",
-    country: "Mozambik",
-    profession: "Pinachi",
-    email: "dzempchem@drel.dxk",
-    number: "077777777",
-  };
-  const imageHardcode = [
-    "https://coverfiles.alphacoders.com/927/92705.jpg",
-    "https://coverfiles.alphacoders.com/927/92705.jpg",
-    "https://coverfiles.alphacoders.com/927/92705.jpg",
-    "https://coverfiles.alphacoders.com/927/92705.jpg",
-    "https://coverfiles.alphacoders.com/927/92705.jpg",
-    "https://coverfiles.alphacoders.com/927/92705.jpg",
-    "https://coverfiles.alphacoders.com/927/92705.jpg",
-    "https://coverfiles.alphacoders.com/927/92705.jpg",
-    "https://coverfiles.alphacoders.com/927/92705.jpg",
-    "https://coverfiles.alphacoders.com/927/92705.jpg",
-  ];
+  if (userData !== null) {
+    petInfoHardcode = {
+      name: userData.userPetInfo.name,
+      age: userData.userPetInfo.age,
+      gender: userData.userPetInfo.petsGender,
+      behavior: userData.userPetInfo.behavior,
+      breed: userData.userPetInfo.breed,
+    };
+    userInfoHardcode = {
+      avatar: userData.avatar,
+      coverPhoto: userData.coverPhoto,
+      fName: userData.firstName,
+      lName: userData.lastName,
+      age: userData.age,
+      gender: userData.maleFemale,
+      city: userData.location.city,
+      country: userData.location.country,
+      profession: userData.profession,
+      email: userData.email,
+      number: userData.contactNumber,
+    };
+    imageHardcode = [...userData.photos];
+  }
   let toRender = null;
   function toFriends() {
     setContent("friends");
@@ -110,18 +114,18 @@ const XalxiProfile = (props) => {
     }
     fetchMyData();
   }, []);
-  const avatarUrl = "https://coverfiles.alphacoders.com/927/92705.jpg";
   switch (content) {
     case "about":
       toRender = (
         <XalxiAbout
           petInfo={{ ...petInfoHardcode }}
           userInfo={{ ...userInfoHardcode }}
+          className={classes.glob}
         />
       );
       break;
     case "photos":
-      toRender = <XalxiImages images={imageHardcode} />;
+      toRender = <XalxiImages images={imageHardcode} userId={userId} />;
       break;
     case "friends":
       toRender = <XalxiFriends />;
@@ -129,21 +133,24 @@ const XalxiProfile = (props) => {
   }
 
   return (
-    <div>
-      <Card className={classes.root}>
+    <div className={classes.glob}>
+      <Card className={classes.glob}>
         <Toolbar />
         <CardMedia
           className={classes.media}
-          image="https://coverfiles.alphacoders.com/927/92705.jpg"
+          image={
+            userInfoHardcode.coverPhoto === ""
+              ? defaultImage
+              : userInfoHardcode.coverPhoto
+          }
           title="Contemplative Reptile"
         />
         <CardContent>
           <div className={classes.avatar}>
-            <ImageAvatar imageUrl={avatarUrl} />
+            <ImageAvatar imageUrl={userInfoHardcode.avatar} />
 
             <Typography gutterBottom variant="h5" component="h2">
-              {/* {userData.firstName} */}
-              asd
+              {`${userInfoHardcode.fName} ${userInfoHardcode.lName}`}
             </Typography>
           </div>
           <Grid container className={classes.buttons}>

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { db } from "../../firebase";
-import ImageAvatar, { ImageAvatarSmall } from "./avatar";
+import { db } from "../../../firebase";
+import ImageAvatar, { ImageAvatarSmall } from ".././avatar";
 import { useEffect } from "react";
 import { makeStyles, Divider } from "@material-ui/core";
 
-export default function LikeRow(props) {
+export default function XalxiLikeRow(props) {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [avatar, setAvatar] = useState("");

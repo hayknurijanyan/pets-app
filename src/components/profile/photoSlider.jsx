@@ -201,12 +201,6 @@ function PhotoSlider(props) {
             variant="square"
             className={classes.avatar}
           ></Avatar>
-          {/* <div className={classes.imgDiv}>
-            <img
-              src={props.images[props.index].img}
-              className={classes.img}
-            ></img>
-          </div> */}
           <Button
             color="primary"
             onClick={() => props.changeIndex(props.index + 1)}

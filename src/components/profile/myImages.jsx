@@ -212,11 +212,7 @@ export default function ImageGridList() {
             />
             <CardContent className={classes.content}>
               <div className={classes.root}>
-                <GridList
-                  cellHeight={160}
-                  className={classes.gridList}
-                  cols={3}
-                >
+                <GridList cellHeight={160} cols={3}>
                   {tileData.map((tile, index) => (
                     <GridListTile key={tile.img} cols={tile.cols}>
                       <img
