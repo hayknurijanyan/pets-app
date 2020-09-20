@@ -6,6 +6,7 @@ import * as firebase from "firebase";
 import PetsSelectFiled from "./petsSelectField";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserAction, userDataAction } from "../../actions";
+import { Redirect } from "react-router-dom";
 import SetDefaultPictureUrl from "./setDefaultPictureUrl";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -81,7 +82,7 @@ function SignUp() {
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [pet, setPet] = useState("");
@@ -195,6 +196,7 @@ function SignUp() {
           dispatch(userDataAction({ ...collection.data() }));
         };
         fetchUserData();
+        setUser(true);
       })
       .catch((err) => {
         setError(err);
@@ -221,6 +223,7 @@ function SignUp() {
 
   return (
     <Grid container component="main" className={classes.root}>
+      {user ? <Redirect to="/newsFeed" /> : null}
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         {checkError(error)}
       </Snackbar>

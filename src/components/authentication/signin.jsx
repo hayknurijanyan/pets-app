@@ -21,6 +21,7 @@ import { db } from "../../firebase";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import logger from "../../services/logService";
+import SignInWithServices from "./signInWithServices";
 let log = console.log;
 
 function Alert(props) {
@@ -80,15 +81,24 @@ function SignIn() {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
+
   useEffect(() => {
+    let unmounted = false;
+
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         dispatch(isUserAction(user));
-        setUser(user);
+        if (!unmounted) {
+          setUser(user);
+        }
       } else {
         log("redux not done");
       }
     });
+
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   const handleEmail = (e) => {
@@ -201,6 +211,7 @@ function SignIn() {
               </Grid>
             </Grid>
             <Box mt={5}>
+              <SignInWithServices />
               <Copyright />
             </Box>
           </form>

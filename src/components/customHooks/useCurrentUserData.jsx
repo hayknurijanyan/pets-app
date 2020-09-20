@@ -6,18 +6,23 @@ let log = console.log;
 function useCurrentUserData() {
   const [userData, setUserData] = useState({});
   useEffect(() => {
+    let unmounted = false;
     const fetchUserData = async () => {
       const user = firebase.auth().currentUser;
       if (user) {
         const ref = db.collection("users").doc(user.uid);
         const collection = await ref.get();
-
-        setUserData({ ...collection.data() });
+        if (!unmounted) {
+          setUserData({ ...collection.data() });
+        }
       } else {
         logger.log("user data not found");
       }
     };
     fetchUserData();
+    return () => {
+      unmounted = true;
+    };
   }, []);
   return userData;
 }

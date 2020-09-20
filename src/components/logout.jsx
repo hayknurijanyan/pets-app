@@ -14,7 +14,7 @@ const Logout = () => {
       .signOut()
       // .then(() => alert("logout succsess"))
       .catch((e) => e.message);
-    window.location.reload(false);
+    window.location.reload(false); //window.location = "/"
   };
   // useEffect(() => {
   //   firebase.auth().onAuthStateChanged((user) => {

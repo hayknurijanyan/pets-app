@@ -51,20 +51,26 @@ function Friends() {
   const classes = useStyles();
 
   useEffect(() => {
+    let unmounted = false;
     async function fetchMyData() {
       const user = firebase.auth().currentUser;
       if (user) {
         const dbUserData = (
           await db.collection("users").doc(user.uid).get()
         ).data();
-        setUserData(dbUserData);
-        let friendsArray = [...dbUserData.friends];
-        setFriendList(friendsArray);
+        if (!unmounted) {
+          setUserData(dbUserData);
+          let friendsArray = [...dbUserData.friends];
+          setFriendList(friendsArray);
+        }
       } else {
         console.log("user not found");
       }
     }
     fetchMyData();
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   const handleUnfollow = (el, email) => {

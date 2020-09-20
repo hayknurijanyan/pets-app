@@ -86,19 +86,29 @@ function CreatePost(props) {
   const [avatarUrl, setAvatarUrl] = useState("");
 
   useEffect(() => {
+    let unmounted = false;
     async function fetchMyData() {
-      const user = firebase.auth().currentUser;
-      if (user) {
-        const dbUserData = (
-          await db.collection("users").doc(user.uid).get()
-        ).data();
-
-        setAvatarUrl(dbUserData.avatar);
-      } else {
-        console.log("user not found");
+      try {
+        const user = firebase.auth().currentUser;
+        if (user) {
+          const dbUserData = (
+            await db.collection("users").doc(user.uid).get()
+          ).data();
+          if (!unmounted) {
+            setAvatarUrl(dbUserData.avatar);
+          }
+        } else {
+          console.log("user not found");
+        }
+      } catch (err) {
+        log(err);
       }
     }
     fetchMyData();
+
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   const handleClose = (event, reason) => {

@@ -29,6 +29,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import ChatMain from "./chat/chatMain";
+import ChatMainForSideBar from "./chat/chatMainForSideBar";
 import { useSelector } from "react-redux";
 
 let log = console.log;
@@ -80,16 +81,20 @@ export default function SidebarRight() {
   const mountedRef = useRef(true);
   useEffect(() => {
     async function fetchMyData() {
-      const user = firebase.auth().currentUser;
-      if (user) {
-        setUser(user);
-        const dbUserData = (
-          await db.collection("users").doc(user.uid).get()
-        ).data();
-        let friendsArray = [...dbUserData.friends];
-        setFriendList(friendsArray);
-      } else {
-        console.log("user not found");
+      try {
+        const user = firebase.auth().currentUser;
+        if (user) {
+          setUser(user);
+          const dbUserData = (
+            await db.collection("users").doc(user.uid).get()
+          ).data();
+          let friendsArray = [...dbUserData.friends];
+          setFriendList(friendsArray);
+        } else {
+          console.log("user not found");
+        }
+      } catch (err) {
+        console.log(err);
       }
     }
     fetchMyData();
@@ -143,7 +148,8 @@ export default function SidebarRight() {
             )
           )
         ) : (
-          <ChatMain />
+          <ChatMainForSideBar />
+          // <ChatMain />
         )}
 
         <Dialog

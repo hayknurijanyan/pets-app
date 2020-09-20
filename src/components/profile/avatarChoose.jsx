@@ -13,6 +13,7 @@ import { auth } from "firebase";
 import logger from "redux-logger";
 import { useDispatch } from "react-redux";
 import { sidebarLeftRender } from "../../actions";
+import uniqid from "uniqid";
 
 export default function AvatarChoose(props) {
   const [open, setOpen] = useState(props.form);
@@ -69,6 +70,7 @@ export default function AvatarChoose(props) {
           {urls.map((photo) => {
             return (
               <div
+                key={uniqid()}
                 style={{
                   display: "flex",
                   flexDirection: "row",

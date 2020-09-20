@@ -14,6 +14,7 @@ import EditTabPanel from "./editTabPanel";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import logger from "redux-logger";
+import uniqid from "uniqid";
 
 let log = console.log;
 function Alert(props) {
@@ -323,7 +324,7 @@ export default function About() {
           <Divider />
           <CardContent>
             {userArr.map((title) => (
-              <div className={classes.bio}>
+              <div key={uniqid()} className={classes.bio}>
                 <Typography
                   className={classes.text}
                   variant="body1"
@@ -341,7 +342,7 @@ export default function About() {
           <Divider />
           <CardContent>
             {petArr.map((title) => (
-              <div className={classes.bio}>
+              <div key={uniqid()} className={classes.bio}>
                 <Typography
                   className={classes.text}
                   variant="body1"

@@ -111,6 +111,7 @@ export default function ImageGridList() {
     setCommentValue(text);
     console.log(commentValue, "ddd");
   }
+
   async function commentSubmitHandler() {
     const imagesArray = [...urls];
     const id = auth.currentUser.uid;
@@ -142,6 +143,18 @@ export default function ImageGridList() {
       });
     setCommentValue("");
   }
+
+  function onDelete(index) {
+    // db.collection("users")
+    //   .doc(auth.currentUser.uid)
+    //   .update({
+    //     photos: firebase.firestore.FieldValue.arrayUnion(...imagesArray),
+    //   })
+    //   .then(() => {
+    //     setAsd(!asd);
+    //   });
+  }
+
   function setLike(index, likeOwner) {
     const imagesArray = [...urls];
 
@@ -273,6 +286,7 @@ export default function ImageGridList() {
         commentTextChange={commentTextChangeHandler}
         commentText={commentValue}
         commentSubmit={commentSubmitHandler}
+        onDelete={onDelete}
       />
     );
   } else if (isSlider === "drop") {
