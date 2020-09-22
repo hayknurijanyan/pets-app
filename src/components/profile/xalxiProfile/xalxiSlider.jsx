@@ -123,10 +123,11 @@ function XalxiSlider(props) {
   const [likesComponent, setLikesComponent] = useState(false);
   const [likes, setLikes] = useState(null);
   const [expanded, setExpanded] = React.useState(false);
-  console.log(props, "prprpr");
+
   function handleClose() {
     setOpen({ open: false });
     props.backClickHandler();
+    props.commentInputHandler({ target: { value: "" } });
   }
   function likesComponentOpen() {
     setLikesComponent(!likesComponent);
@@ -261,11 +262,12 @@ function XalxiSlider(props) {
                 <div className={classes.commentArea}>
                   <div className={classes.commentInput}>
                     <TextField
-                      defaultValue={props.commentText}
+                      value={props.commentText}
+                      placeholder="type the comment here"
                       id="outlined-full-width"
                       style={{ margin: 6 }}
                       placeholder="Write a comment"
-                      onChange={() => console.log("asd")}
+                      onChange={(e) => props.commentInputHandler(e)}
                       margin="normal"
                       fullWidth
                       InputLabelProps={{
@@ -277,8 +279,9 @@ function XalxiSlider(props) {
                       className={classes.addButton}
                       variant="contained"
                       color="primary"
+                      disabled={!props.commentText.length}
                       value={props.commentText}
-                      onClick={() => console.log("asd")}
+                      onClick={() => props.commentSubmit(props.index)}
                     >
                       Add
                     </Button>

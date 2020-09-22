@@ -106,6 +106,15 @@ const XalxiProfile = (props) => {
   function toAbout() {
     setContent("about");
   }
+  function addLike(index, id) {
+    imageHardcode[index].likes.push(id);
+  }
+  function delLike(index, id) {
+    imageHardcode[index].likes.splice(
+      imageHardcode[index].likes.indexOf(id),
+      1
+    );
+  }
   useEffect(() => {
     async function fetchMyData() {
       const ref = db.collection("users").doc(userId);
@@ -125,7 +134,14 @@ const XalxiProfile = (props) => {
       );
       break;
     case "photos":
-      toRender = <XalxiImages images={imageHardcode} userId={userId} />;
+      toRender = (
+        <XalxiImages
+          images={imageHardcode}
+          userId={userId}
+          addLike={addLike}
+          delLike={delLike}
+        />
+      );
       break;
     case "friends":
       toRender = <XalxiFriends />;

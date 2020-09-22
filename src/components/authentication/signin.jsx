@@ -184,10 +184,6 @@ function SignIn() {
               autoComplete="current-password"
               onChange={handlePassword}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
 
             <Button
               fullWidth

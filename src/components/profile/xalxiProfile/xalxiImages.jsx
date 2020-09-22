@@ -12,14 +12,10 @@ import { useEffect } from "react";
 import firebase from "firebase";
 
 const useStyles = makeStyles({
-  main: {
-    width: "80%",
-    // minWidth: 800,
-  },
   root: {
     width: "100%",
     marginTop: 20,
-    // maxWidth: 900,
+
     paddingLeft: 35,
     paddingRight: 33,
   },
@@ -50,17 +46,45 @@ export default function XalxiImages(props) {
   const [isSlider, setIsSlider] = useState("grid");
   const [imgIndex, setImgIndex] = useState(0);
   const [asd, setAsd] = useState(false);
+  const [commentText, setCommentText] = useState("");
   const classes = useStyles();
   let toRender = null;
   let grid = null;
   useEffect(() => {
     setImages(props.images);
   }, [asd]);
-  console.log(images, "forLike");
   function toSlide(index) {
     setImgIndex(index);
     setIsSlider("slider");
   }
+  function commentInputHandler(e) {
+    setCommentText(e.target.value);
+  }
+  async function commentSubmit(index) {
+    const imagesArray = [...images];
+    const userRef = db.collection("users").doc(auth.currentUser.uid);
+    const collection = await userRef.get();
+    const { firstName, lastName, avatar } = collection.data();
+    imagesArray[index].comments.push({
+      avatar,
+      firstName,
+      lastName,
+      id: auth.currentUser.uid,
+      text: commentText,
+    });
+    db.collection("users").doc(props.userId).update({
+      photos: firebase.firestore.FieldValue.delete(),
+    });
+    db.collection("users")
+      .doc(props.userId)
+      .update({
+        photos: firebase.firestore.FieldValue.arrayUnion(...imagesArray),
+      })
+      .then(() => {
+        setCommentText("");
+      });
+  }
+
   function setLike(index, likeOwner) {
     const imagesArray = [...images];
 
@@ -68,8 +92,10 @@ export default function XalxiImages(props) {
 
     if (imageLikes.includes(likeOwner)) {
       imageLikes.splice(imageLikes.indexOf(likeOwner), 1);
+      props.delLike(index, likeOwner);
     } else {
       imageLikes.push(likeOwner);
+      props.addLike(index, likeOwner);
     }
 
     imagesArray[index] = {
@@ -174,6 +200,9 @@ export default function XalxiImages(props) {
         handlePrev={prevIndex}
         handleNext={nextIndex}
         setLike={setLike}
+        commentText={commentText}
+        commentInputHandler={commentInputHandler}
+        commentSubmit={commentSubmit}
       />
     );
   }

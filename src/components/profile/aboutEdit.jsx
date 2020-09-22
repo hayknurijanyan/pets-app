@@ -9,6 +9,7 @@ import {
   Select,
   MenuItem,
 } from "@material-ui/core";
+import uniqid from "uniqid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +54,11 @@ export default function AboutEdit(props) {
   return (
     <Card className={classes.root}>
       {dataArray.map((value) => (
-        <FormControl className={classes.margin} variant="outlined">
+        <FormControl
+          className={classes.margin}
+          variant="outlined"
+          key={uniqid()}
+        >
           <InputLabel htmlFor="outlined-adornment-amount">
             {value.text}
           </InputLabel>
